@@ -806,9 +806,9 @@ static krui_err  krio_writeSiteDefinitions(void)
 
   err = fprintf( file_out, "\n\n%s :\n\n", title[8] );
   retchk( err );
-  err = fprintf( file_out, fmt_hdr1 );
+  err = fprintf( file_out, "%s", fmt_hdr1 );
   retchk( err );
-  err = fprintf( file_out, fmt_hdr2 );
+  err = fprintf( file_out, "%s", fmt_hdr2 );
   retchk( err );
 
   do
@@ -819,7 +819,7 @@ static krui_err  krio_writeSiteDefinitions(void)
   }
   while (krui_getNextSiteTableEntry( &site_name, &site_func ) );
 
-  err = fprintf( file_out, fmt_hdr2 );
+  err = fprintf( file_out, "%s", fmt_hdr2 );
   retchk( err );
   return( 0 );
 }
@@ -850,9 +850,9 @@ static krui_err  krio_writeTypeDefinitions(void)
 
   err = fprintf( file_out, "\n\n%s :\n\n", title[9] );
   retchk( err );
-  err = fprintf( file_out, fmt_hdr1 );
+  err = fprintf( file_out, "%s", fmt_hdr1 );
   retchk( err );
-  err = fprintf( file_out, fmt_hdr2 );
+  err = fprintf( file_out, "%s", fmt_hdr2 );
   retchk( err );
 
   do  {
@@ -865,7 +865,7 @@ static krui_err  krio_writeTypeDefinitions(void)
       second = FALSE;
       do  {
         if (second)  {
-	  err = fprintf( file_out, fmt_blank );
+	  err = fprintf( file_out, "%s", fmt_blank );
           retchk( err );
 	}
 
@@ -881,7 +881,7 @@ static krui_err  krio_writeTypeDefinitions(void)
   }
   while (krui_setNextFTypeEntry() );
 
-  err = fprintf( file_out, fmt_hdr2 );
+  err = fprintf( file_out, "%s", fmt_hdr2 );
   if (err <= 0)  return( err );
 
   return( 0 );
@@ -950,9 +950,9 @@ static krui_err  krio_writeDefaultDefinitions(void)
 
   err = fprintf( file_out, "\n\n%s :\n\n", title[13] );
   retchk( err );
-  err = fprintf( file_out, fmt_hdr1 );
+  err = fprintf( file_out, "%s", fmt_hdr1 );
   retchk( err );
-  err = fprintf( file_out, fmt_hdr2 );
+  err = fprintf( file_out, "%s", fmt_hdr2 );
   retchk( err );
 
   krui_getUnitDefaults( &act, &bias, &st, &subnet_no, &layer_no,
@@ -969,7 +969,7 @@ static krui_err  krio_writeDefaultDefinitions(void)
 
   retchk( err );
 
-  err = fprintf( file_out, fmt_hdr2 );
+  err = fprintf( file_out, "%s", fmt_hdr2 );
   retchk( err );
 
   return( 0 );
@@ -1017,9 +1017,9 @@ static krui_err  krio_writeUnitDefinitions(void)
 
   err = fprintf( file_out, "\n\n%s :\n\n", title[10] );
   retchk( err );
-  err = fprintf( file_out, fmt_hdr1 );
+  err = fprintf( file_out, "%s", fmt_hdr1 );
   retchk( err );
-  err = fprintf( file_out, fmt_hdr2 );
+  err = fprintf( file_out, "%s", fmt_hdr2 );
   retchk( err );
 
   krui_getUnitDefaults( &act_def, &bias_def, &st_def, &subnet_no, &layer_no,
@@ -1089,7 +1089,7 @@ static krui_err  krio_writeUnitDefinitions(void)
         second = FALSE;
         do  {
           if (second)  {
-	    err = fprintf( file_out, fmt_blank );
+	    err = fprintf( file_out, "%s", fmt_blank );
 	    retchk( err );
 	  }
 
@@ -1107,7 +1107,7 @@ static krui_err  krio_writeUnitDefinitions(void)
   }
   while ( (unit_no = krui_getNextUnit() ) > 0);
 
-  err = fprintf( file_out, fmt_hdr2 );
+  err = fprintf( file_out, "%s", fmt_hdr2 );
   retchk( err );
 
   return( KRERR_NO_ERROR );
@@ -1217,7 +1217,7 @@ static krui_err  krio_writeSourcesAndWeights(void)
 
     if (++i > max_connects_per_line)  {
       i = 1;
-      err = fprintf( file_out, fmt_blank );
+      err = fprintf( file_out, "%s", fmt_blank );
       retchk( err );
     }
     if ((tacoma_mode)&&((val_a != 0.0)&&(val_b != 0.0)))
@@ -1263,9 +1263,9 @@ static krui_err  krio_writeConnectionDefs(void)
 
   err = fprintf( file_out, "\n\n%s :\n\n", title[11] );
   retchk( err );
-  err = fprintf( file_out, fmt_hdr1 );
+  err = fprintf( file_out, "%s", fmt_hdr1 );
   retchk( err );
-  err = fprintf( file_out, fmt_hdr2 );
+  err = fprintf( file_out, "%s", fmt_hdr2 );
   retchk( err );
 
   unit_no = krui_getFirstUnit();
@@ -1312,7 +1312,7 @@ static krui_err  krio_writeConnectionDefs(void)
   }
   while ( (unit_no = krui_getNextUnit()) > 0 );
 
-  err = fprintf( file_out, fmt_hdr2 );
+  err = fprintf( file_out, "%s", fmt_hdr2 );
   retchk( err );
   return( KRERR_NO_ERROR );
 }
@@ -1344,9 +1344,9 @@ static krui_err  krio_writeSubnetDefs(void)
 
   err = fprintf( file_out, "\n\n%s :\n\n", title[12] );
   retchk( err );
-  err = fprintf( file_out, fmt_hdr1 );
+  err = fprintf( file_out, "%s", fmt_hdr1 );
   retchk( err );
-  err = fprintf( file_out, fmt_hdr2 );
+  err = fprintf( file_out, "%s", fmt_hdr2 );
   retchk( err );
 
   /*  get default subnet number  */
@@ -1383,7 +1383,7 @@ static krui_err  krio_writeSubnetDefs(void)
 		      retchk( err );
 
 		      if ( (++elem_no % max_subnets_per_line) == 0)  {
-			  err = fprintf( file_out, fmt_blank );
+			  err = fprintf( file_out, "%s", fmt_blank );
 			  retchk( err );
 		      }
 
@@ -1394,7 +1394,7 @@ static krui_err  krio_writeSubnetDefs(void)
 	  }
       }
 
-  err = fprintf( file_out, fmt_hdr2 );
+  err = fprintf( file_out, "%s", fmt_hdr2 );
   retchk( err );
   err = fprintf( file_out, "\n" );
   retchk( err );
@@ -1430,9 +1430,9 @@ static krui_err  krio_writeLayerDefs(void)
 
   err = fprintf( file_out, "\n\n%s :\n\n", title[15] );
   retchk( err );
-  err = fprintf( file_out, fmt_hdr1 );
+  err = fprintf( file_out, "%s", fmt_hdr1 );
   retchk( err );
-  err = fprintf( file_out, fmt_hdr2 );
+  err = fprintf( file_out, "%s", fmt_hdr2 );
   retchk( err );
 
   /*  get default layer number	*/
@@ -1468,7 +1468,7 @@ static krui_err  krio_writeLayerDefs(void)
 		      retchk( err );
 
 		      if ( (++elem_no % max_layers_per_line) == 0)  {
-			  err = fprintf( file_out, fmt_blank );
+			  err = fprintf( file_out, "%s", fmt_blank );
 			  retchk( err );
 		      }
 
@@ -1479,7 +1479,7 @@ static krui_err  krio_writeLayerDefs(void)
 	  }
       }
 
-  err = fprintf( file_out, fmt_hdr2 );
+  err = fprintf( file_out, "%s", fmt_hdr2 );
   retchk( err );
   err = fprintf( file_out, "\n" );
   retchk( err );
@@ -3090,13 +3090,13 @@ krui_err krio_saveResult(char *filename, bool create, int startpattern,
   /* write additional format information */
   if (includeinput)
   {
-    ret = fprintf(file_out, resHeader[7]);
+    ret = fprintf(file_out, "%s", resHeader[7]);
     RETCHKGTO( ret );
     lineno += 1;
   }
   if (includeoutput)
   {
-    ret = fprintf(file_out, resHeader[8]);
+    ret = fprintf(file_out, "%s", resHeader[8]);
     RETCHKGTO( ret );
     lineno += 1;
   }
