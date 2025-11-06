@@ -167,18 +167,15 @@ static char *resHeader[] = {
     "teaching output included\n"
     };
 
-static char  *headers[] = {
-    " site name | site function",
-    " name | act func | out func | sites",
-    " act | bias | st | subnet | layer | act func | out func",
-    " no. | typeName | unitName | act | bias | st | position | act func | out func | sites",
-    " target | site | source:weight",
-    " subnet | unitNo.",
-    " layer | unitNo.",
-    " delta x | delta y | z",
-    " no. | LLN | LUN | Toff | Soff | Ctype"
-    };
-
+#define KR_IO_HEADER_0 " site name | site function"
+#define KR_IO_HEADER_1 " name | act func | out func | sites"
+#define KR_IO_HEADER_2 " act | bias | st | subnet | layer | act func | out func"
+#define KR_IO_HEADER_3 " no. | typeName | unitName | act | bias | st | position | act func | out func | sites"
+#define KR_IO_HEADER_4 " target | site | source:weight"
+#define KR_IO_HEADER_5 " subnet | unitNo."
+#define KR_IO_HEADER_6 " layer | unitNo."
+#define KR_IO_HEADER_7 " delta x | delta y | z"
+#define KR_IO_HEADER_8 " no. | LLN | LUN | Toff | Soff | Ctype"
 
 
 /*

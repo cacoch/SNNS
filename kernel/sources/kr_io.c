@@ -1146,7 +1146,7 @@ static krui_err    krio_writeTimeDelayDefs(void)
   
      err = fprintf( file_out, "\n\n%s :\n\n", title[18] ); 
      retchk( err );
-     err = fprintf (file_out, "%s\n", headers[8]);
+     err = fprintf (file_out, "%s\n", KR_IO_HEADER_8);
      retchk (err);
      err = fprintf (file_out, "-----|-----|-----|------|------|-------\n");
      retchk (err);
@@ -2202,7 +2202,7 @@ static int  str_to_Ttype(char *str)
 static void  krio_readSiteDefinitions(void)
 {
   if ( !skipComments() )  return;
-  if ((fscanf( file_in, headers[0] ) != 0) ||
+  if ((fscanf( file_in, KR_IO_HEADER_0 ) != 0) ||
       !matchHead2( 1 ) )  {
     KernelErrorCode = KRERR_FILE_SYNTAX;
     return;
@@ -2247,7 +2247,7 @@ static void  krio_readTypeDefinitions(void)
   NoOfUnitTypes = 0;
 
   if ( !skipComments() )  return;
-  if ((fscanf( file_in, headers[1] ) != 0) ||
+  if ((fscanf( file_in, KR_IO_HEADER_1 ) != 0) ||
       !matchHead2( 3 ) )  {
     KernelErrorCode = KRERR_FILE_SYNTAX;
     return;
@@ -2330,7 +2330,7 @@ static void  krio_readDefaultDefinitions(void)
 
 
   if ( !skipComments() )  return;
-  if ((fscanf( file_in, headers[2] ) != 0) ||
+  if ((fscanf( file_in, KR_IO_HEADER_2 ) != 0) ||
       !matchHead2( 6 ) )  {
     KernelErrorCode = KRERR_FILE_SYNTAX;
     return;
@@ -2374,7 +2374,7 @@ static void  krio_readUnitDefinitions(void)
 
 
   if ( !skipComments() )  return;
-  if ((fscanf( file_in, headers[3] ) != 0) ||
+  if ((fscanf( file_in, KR_IO_HEADER_3 ) != 0) ||
       !matchHead2( 9 ) )  {
     KernelErrorCode = KRERR_FILE_SYNTAX;
     return;
@@ -2588,7 +2588,7 @@ static void  krio_readConnectionDefs(void)
 
 
   if ( !skipComments() )  return;
-  if ((fscanf( file_in, headers[4] ) != 0) ||
+  if ((fscanf( file_in, KR_IO_HEADER_4 ) != 0) ||
      (!matchHead2( 2 )) )  {
     KernelErrorCode = KRERR_FILE_SYNTAX;
     return;
@@ -2684,7 +2684,7 @@ static void  krio_readSubnetDefs(void)
 
 
   if ( !skipComments() )  return;
-  if ((fscanf( file_in, headers[5] ) != 0) ||
+  if ((fscanf( file_in, KR_IO_HEADER_5 ) != 0) ||
       !matchHead2( 1 ) )  {
     KernelErrorCode = KRERR_FILE_SYNTAX;
     return;
@@ -2733,7 +2733,7 @@ static void  krio_readLayerDefs(void)
 
 
   if ( !skipComments() )  return;
-  if ((fscanf( file_in, headers[6] ) != 0) ||
+  if ((fscanf( file_in, KR_IO_HEADER_6 ) != 0) ||
       !matchHead2( 1 ) )  {
     KernelErrorCode = KRERR_FILE_SYNTAX;
     return;
@@ -2785,7 +2785,7 @@ static void  readXYTransTable(void)
   kr_xyTransTable( OP_TRANSTABLE_CLEAR, &x, &y, 0 );
 
   if ( !skipComments() )  return;
-  if ((fscanf( file_in, headers[7] ) != 0) ||
+  if ((fscanf( file_in, KR_IO_HEADER_7 ) != 0) ||
       !matchHead2( 2 ) )  {
     KernelErrorCode = KRERR_FILE_SYNTAX;
     return;
@@ -2834,7 +2834,7 @@ void krio_readTimeDelayDefs(void)
    struct Unit *unit_ptr;
  
   if ( !skipComments() )  return;
-  if (fscanf( file_in, headers[8] ) != 0)
+  if (fscanf( file_in, KR_IO_HEADER_8 ) != 0)
     {  KernelErrorCode = KRERR_FILE_SYNTAX;  return;  }
   if ( !matchHead2( 5 ) )
     {  KernelErrorCode = KRERR_FILE_SYNTAX;  return;  }
