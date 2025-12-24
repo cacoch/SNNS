@@ -1,1 +1,22 @@
 *.o
+# virtual enviroment
+python/venv
+
+# binaries
+tools/sources/analyze
+tools/sources/batchman
+tools/sources/convert2snns
+tools/sources/feedback-gennet
+tools/sources/ff_bignet
+tools/sources/isnns
+tools/sources/linknets
+tools/sources/mkhead
+tools/sources/mkout
+tools/sources/mkpat
+tools/sources/netlearn
+tools/sources/netperf
+tools/sources/pat_sel
+tools/sources/pat_sel_simple
+tools/sources/snns2c
+tools/sources/snnsbat
+tools/sources/td_bignet
