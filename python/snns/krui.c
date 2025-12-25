@@ -47,22 +47,22 @@ static PyObject *make_exception(krui_err err)
 	return NULL;
 }
 
-//typedef krui_err (*int_arg_with_err_func)(int);
-//
-//static PyObject *
-//snns_int_arg_with_err(PyObject *arg, int_arg_with_err_func func)
-//{
-//	long num;
-//	krui_err err;
-//	num = PyInt_AsLong(arg);
-//	if(PyErr_Occurred()) return NULL;
-//	err = func(num);
-//	if(err) {
-//		return make_exception(err);
-//	}	
-//	return Py_BuildValue("");
-//}
-//
+typedef krui_err (*int_arg_with_err_func)(int);
+
+static PyObject *
+snns_int_arg_with_err(PyObject *arg, int_arg_with_err_func func)
+{
+	long num;
+	krui_err err;
+	num = PyInt_AsLong(arg);
+	if(PyErr_Occurred()) return NULL;
+	err = func(num);
+	if(err) {
+		return make_exception(err);
+	}	
+	return Py_BuildValue("");
+}
+
 //typedef krui_err (*string_arg_with_err_func)(char *);
 //
 //static PyObject *
@@ -338,17 +338,17 @@ snns_saveNet(PyObject *self, PyObject *args)
 //	krui_deleteNet();
 //	return Py_BuildValue("");
 //}
-//
-//static PyObject *
-//snns_setSeedNo(PyObject *self, PyObject *arg)
-//{
-//	long num;
-//	num = PyInt_AsLong(arg);
-//	if(PyErr_Occurred()) return NULL;
-//	krui_setSeedNo(num);
-//	return Py_BuildValue("");
-//}
-//
+
+static PyObject *
+snns_setSeedNo(PyObject *self, PyObject *arg)
+{
+	long num;
+	num = PyInt_AsLong(arg);
+	if(PyErr_Occurred()) return NULL;
+	krui_setSeedNo(num);
+	return Py_BuildValue("");
+}
+
 //static PyObject *
 //snns_setPatternNo(PyObject *self, PyObject *arg)
 //{
@@ -1374,13 +1374,13 @@ snns_saveNewPatterns(PyObject *self, PyObject *args)
 //	if(err) return make_exception(err);
 //	return Py_BuildValue("");
 //}
-//
-//static PyObject *
-//snns_getErrorCode(PyObject *self, PyObject *args)
-//{
-//	return PyInt_FromLong(krui_getErrorCode());
-//}
-//
+
+static PyObject *
+snns_getErrorCode(PyObject *self, PyObject *args)
+{
+	return PyInt_FromLong(krui_getErrorCode());
+}
+
 //static PyObject *
 //snns_deleteLink(PyObject *self, PyObject *args)
 //{
@@ -2079,21 +2079,21 @@ snns_getUnitDefaults(PyObject *self, PyObject *args)
 		actfunc,outfunc);
 }
 
-//static PyObject *
-//snns_setUnitDefaults(PyObject *self, PyObject *args)
-//{
-//	FlintType act, bias;
-//	int iot, subnet, layer;
-//	char *actfunc, *outfunc;
-//	krui_err err;
-//	if(!PyArg_ParseTuple(args,"ffiiiss", &act, &bias, &iot,
-//		&subnet, &layer, &actfunc, &outfunc)) return NULL;
-//	err = krui_setUnitDefaults(act, bias, iot, subnet, layer,
-//		actfunc, outfunc);
-//	if(err) return make_exception(err);
-//	else return Py_BuildValue("");
-//}
-//
+static PyObject *
+snns_setUnitDefaults(PyObject *self, PyObject *args)
+{
+	FlintType act, bias;
+	int iot, subnet, layer;
+	char *actfunc, *outfunc;
+	krui_err err;
+	if(!PyArg_ParseTuple(args,"ffiiiss", &act, &bias, &iot,
+		&subnet, &layer, &actfunc, &outfunc)) return NULL;
+	err = krui_setUnitDefaults(act, bias, iot, subnet, layer,
+		actfunc, outfunc);
+	if(err) return make_exception(err);
+	else return Py_BuildValue("");
+}
+
 static PyMethodDef MylibMethods[] = {
      {"getUnitDefaults",snns_getUnitDefaults,METH_NOARGS,
       "getUnitDefaults() -> (activation, bias, io_type, subnet number,\n"
@@ -2101,12 +2101,12 @@ static PyMethodDef MylibMethods[] = {
       "output function)\n\n"
       "Returns the default values for generating units" },
       
-//     {"setUnitDefaults",snns_setUnitDefaults,METH_VARARGS,
-//      "setUnitDefaults(activation, bias, io_type, subnet number, "
-//      "layer number,\n" 
-//      "                activation function, output function)\n\n"
-//      "Sets the default values for generating units" },
-//      
+     {"setUnitDefaults",snns_setUnitDefaults,METH_VARARGS,
+      "setUnitDefaults(activation, bias, io_type, subnet number, "
+      "layer number,\n" 
+      "                activation function, output function)\n\n"
+      "Sets the default values for generating units" },
+      
 //     {"deleteUnitList",snns_deleteUnitList,METH_VARARGS,
 //      "deleteUnitList(sequence of unit numbers)\n\n"
 //      "Deletes all units given in the sequence"},
@@ -2780,11 +2780,11 @@ static PyMethodDef MylibMethods[] = {
 //      "OUTPUT_* modes: OUTPUT_NOTHING stores input patterns into unit\n"
 //      "activations, OUTPUT_ACT also stores output patterns into output units\n"
 //      "activations, OUTPUT_OUT also updates the output units outputs."}, 
-//     
-//     {"setSeedNo",snns_setSeedNo,METH_O,  
-//      "setSeedNo(number)\n\n"
-//      "Initalize the pseudo random generator. 0 reinitializes."},
-//     
+     
+     {"setSeedNo",snns_setSeedNo,METH_O,  
+      "setSeedNo(number)\n\n"
+      "Initalize the pseudo random generator. 0 reinitializes."},
+     
 //     {"GetShapeOfSubPattern",snns_GetShapeOfSubPattern,METH_O,
 //      "GetShapeOfSubPattern(number of subpattern)\n"
 //      "                     -> (insize, outsize, inpos, outpos)\n\n"
@@ -2818,11 +2818,11 @@ static PyMethodDef MylibMethods[] = {
 //      "Aligns the given sub pattern (by input and output position sequences)\n"
 //      "to a valid position which fits the sub pattern training scheme.\n"
 //      "Returns the subpattern number."},
-//     
-//     {"getErrorCode",snns_getErrorCode,METH_NOARGS,
-//      "getErrorCode() -> error code\n\n"
-//      "Returns the code of the last error. The string representation\n"
-//      "can be fetched with error(code)."},
+     
+     {"getErrorCode",snns_getErrorCode,METH_NOARGS,
+      "getErrorCode() -> error code\n\n"
+      "Returns the code of the last error. The string representation\n"
+      "can be fetched with error(code)."},
 
      {NULL, NULL, 0, NULL}        /* Sentinel */
 };
