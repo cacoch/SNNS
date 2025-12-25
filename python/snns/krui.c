@@ -1834,24 +1834,24 @@ snns_getUnitLayerNo(PyObject *self, PyObject *args)
 //	pos->z = i;
 //	return TRUE;
 //}
-//
-//static PyObject *
-//buildPosType(struct PosType *pos)
-//{
-//	return Py_BuildValue("(iii)",pos->x, pos->y, pos->z);
-//}
-//
-//static PyObject *
-//snns_getUnitPosition(PyObject *self, PyObject *args)
-//{
-//	int unit;
-//	struct PosType pos;
-//	unit = PyInt_AsLong(args);
-//	if(PyErr_Occurred()) return NULL;
-//	krui_getUnitPosition(unit, &pos);
-//	return buildPosType(&pos);
-//}
-//
+
+static PyObject *
+buildPosType(struct PosType *pos)
+{
+	return Py_BuildValue("(iii)",pos->x, pos->y, pos->z);
+}
+
+static PyObject *
+snns_getUnitPosition(PyObject *self, PyObject *args)
+{
+	int unit;
+	struct PosType pos;
+	unit = PyInt_AsLong(args);
+	if(PyErr_Occurred()) return NULL;
+	krui_getUnitPosition(unit, &pos);
+	return buildPosType(&pos);
+}
+
 //static PyObject *
 //snns_setUnitPosition(PyObject *self, PyObject *args)
 //{
@@ -1885,19 +1885,19 @@ snns_getUnitLayerNo(PyObject *self, PyObject *args)
 //	   !short_check(net) || !fillPosType(seq,&pos)) return NULL;
 //	return PyInt_FromLong(krui_getUnitNoNearPosition(&pos,net,range,width));   
 //}
-//
-//static PyObject *
-//snns_getUnitCenters(PyObject *self, PyObject *args)
-//{
-//	struct PositionVector *pv;
-//	int a,b;
-//	krui_err err;
-//	if(!PyArg_ParseTuple(args,"ii",&a,&b)) return NULL;
-//	err = krui_getUnitCenters(a,b,&pv);
-//	if(err) return make_exception(err);
-//	else return Py_BuildValue("(ffff)",pv->x, pv->y, pv->z, pv->w);
-//}
-//
+
+static PyObject *
+snns_getUnitCenters(PyObject *self, PyObject *args)
+{
+	struct PositionVector *pv;
+	int a,b;
+	krui_err err;
+	if(!PyArg_ParseTuple(args,"ii",&a,&b)) return NULL;
+	err = krui_getUnitCenters(a,b,&pv);
+	if(err) return make_exception(err);
+	else return Py_BuildValue("(ffff)",pv->x, pv->y, pv->z, pv->w);
+}
+
 //static PyObject *
 //snns_setUnitCenters(PyObject *self, PyObject *args)
 //{
@@ -2175,13 +2175,13 @@ static PyMethodDef MylibMethods[] = {
 //      "               sequence of four float values giving position)\n\n"
 //      "Sets the 3D transformation center of the specified unit and center\n"
 //      "number. (Currently the only valid center number seems to be 0)."},
-//     
-//     {"getUnitCenters",snns_getUnitCenters, METH_VARARGS,
-//      "getUnitCenters(unit number, center number) -> sequence of four\n"
-//      "float values giving the position\n\n"
-//      "Returns the 3D transformation center of the specified unit and center\n"
-//      "number. (Currently the only valid center number seems to be 0)."},
-//     
+
+     {"getUnitCenters",snns_getUnitCenters, METH_VARARGS,
+      "getUnitCenters(unit number, center number) -> sequence of four\n"
+      "float values giving the position\n\n"
+      "Returns the 3D transformation center of the specified unit and center\n"
+      "number. (Currently the only valid center number seems to be 0)."},
+     
 //     {"getUnitNoNearPosition",snns_getUnitNoNearPosition, METH_VARARGS,
 //      "getUnitNoNearPosition(integer sequence giving position, subnet number,\n"
 //      "                      range, grid width) -> unit number\n\n"
@@ -2197,11 +2197,11 @@ static PyMethodDef MylibMethods[] = {
 //     {"setUnitPosition",snns_setUnitPosition, METH_VARARGS,
 //      "setUnitPosition(unit number, integer sequence giving position)\n\n"
 //      "Sets the graphical position of the given unit"},
-//     
-//     {"getUnitPosition",snns_getUnitPosition, METH_O,
-//      "getUnitPosition(unit number) -> integer sequence giving position\n\n"
-//      "Gets the graphical position of the given unit"},
-//     
+     
+     {"getUnitPosition",snns_getUnitPosition, METH_O,
+      "getUnitPosition(unit number) -> integer sequence giving position\n\n"
+      "Gets the graphical position of the given unit"},
+     
 //     {"setUnitSubnetNo",snns_setUnitSubnetNo, METH_VARARGS,
 //      "setUnitSubnetNo(unit number, subnet number)\n\n"
 //      "Sets the subnet number of the given unit (16 bit range)"},
