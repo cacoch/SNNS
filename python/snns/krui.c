@@ -1910,27 +1910,27 @@ snns_getUnitLayerNo(PyObject *self, PyObject *args)
 //	if(err) return make_exception(err);
 //	else return Py_BuildValue("");
 //}
-//
-//static PyObject *
-//snns_getUnitTType(PyObject *self, PyObject *args)
-//{
-//	int ret,unit;
-//	unit = PyInt_AsLong(args);
-//	if(PyErr_Occurred()) return NULL;
-//	ret = krui_getUnitTType(unit);
-//	return PyInt_FromLong(ret);
-//}
-//
-//static PyObject *
-//snns_isUnitFrozen(PyObject *self, PyObject *args)
-//{
-//	int ret,unit;
-//	unit = PyInt_AsLong(args);
-//	if(PyErr_Occurred()) return NULL;
-//	ret = krui_isUnitFrozen(unit);
-//	return PyInt_FromLong(ret);
-//}
-//
+
+static PyObject *
+snns_getUnitTType(PyObject *self, PyObject *args)
+{
+	int ret,unit;
+	unit = PyInt_AsLong(args);
+	if(PyErr_Occurred()) return NULL;
+	ret = krui_getUnitTType(unit);
+	return PyInt_FromLong(ret);
+}
+
+static PyObject *
+snns_isUnitFrozen(PyObject *self, PyObject *args)
+{
+	int ret,unit;
+	unit = PyInt_AsLong(args);
+	if(PyErr_Occurred()) return NULL;
+	ret = krui_isUnitFrozen(unit);
+	return PyInt_FromLong(ret);
+}
+
 //static PyObject *
 //snns_getUnitInputType(PyObject *self, PyObject *args)
 //{
@@ -1952,18 +1952,18 @@ snns_getUnitLayerNo(PyObject *self, PyObject *args)
 //{
 //	return snns_int_arg_with_err(args,krui_unfreezeUnit);
 //}
-//
-//static PyObject *
-//snns_getUnitValueA(PyObject *self, PyObject *args)
-//{
-//	int unit;
-//	double ret;
-//	unit = PyInt_AsLong(args);
-//	if(PyErr_Occurred()) return NULL;
-//	ret = krui_getUnitValueA(unit);
-//	return PyFloat_FromDouble(ret);
-//}
-//
+
+static PyObject *
+snns_getUnitValueA(PyObject *self, PyObject *args)
+{
+	int unit;
+	double ret;
+	unit = PyInt_AsLong(args);
+	if(PyErr_Occurred()) return NULL;
+	ret = krui_getUnitValueA(unit);
+	return PyFloat_FromDouble(ret);
+}
+
 //static PyObject *
 //snns_setUnitTType(PyObject *self, PyObject *args)
 //{
@@ -2149,21 +2149,21 @@ static PyMethodDef MylibMethods[] = {
 //     {"unfreezeUnit",snns_unfreezeUnit,METH_O,
 //      "unfreezeUnit(unit number)\n\n"
 //      "Unfreezes the output and activation value of the given unit"},
-//     
-//     {"getUnitValueA",snns_getUnitValueA,METH_O,
-//      "getUnitValueA(unit number) -> float\n\n" 
-//      "Gets the value A field of the given unit"},
-//     
-//     {"getUnitTType",snns_getUnitTType,METH_O,
-//      "getUnitTType(unit number) -> io_type\n\n"
-//      "Gets the IO-Type (aka T-type) of the given unit.\n"
-//      "Textual representations can be found in the\n"
-//      "snns.util.unit_types dictionary."},
-//     
-//     {"isUnitFrozen",snns_isUnitFrozen,METH_O,
-//      "isUnitFrozen(unit number) -> boolean\n\n"
-//      "Checks if the given unit is frozen"},
-//     
+     
+     {"getUnitValueA",snns_getUnitValueA,METH_O,
+      "getUnitValueA(unit number) -> float\n\n" 
+      "Gets the value A field of the given unit"},
+     
+     {"getUnitTType",snns_getUnitTType,METH_O,
+      "getUnitTType(unit number) -> io_type\n\n"
+      "Gets the IO-Type (aka T-type) of the given unit.\n"
+      "Textual representations can be found in the\n"
+      "snns.util.unit_types dictionary."},
+     
+     {"isUnitFrozen",snns_isUnitFrozen,METH_O,
+      "isUnitFrozen(unit number) -> boolean\n\n"
+      "Checks if the given unit is frozen"},
+     
 //     {"getUnitInputType",snns_getUnitInputType,METH_O,
 //      "getUnitInputType(unit number)\n\n"
 //      "Gets the input type of the unit.\n"
