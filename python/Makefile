@@ -3,6 +3,13 @@
 SNNSDIR="SNNSv4.2"
 TOCOPY = setup.py ChangeLog README Makefile examples snns
 
+pyext: snns/krui.c
+	python setup.py build_ext
+
+test:
+	python setup.py  install -f 
+	python examples/customtest.py
+
 tarball :
 	rm -rf dist
 	mkdir -p dist/$(SNNSDIR)/python
