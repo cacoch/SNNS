@@ -24,6 +24,11 @@
 #include <kr_typ.h>
 #include <kernel.h>
 
+// defines  python2 -> python3
+#define PyInt_FromLong PyLong_FromLong
+#define PyString_FromString PyUnicode_FromString
+#define PyInt_AsLong(x) (PyLong_AsLong((x)))
+
 //
 //struct Unit;
 //
@@ -34,14 +39,14 @@
 //
 //extern int (*kr_getNoOfPythonFunctionsHook)();
 //extern krui_err (*kr_getPythonFuncInfoHook)(int mode, struct FuncInfoDescriptor *descr);
-//
-//static PyObject *make_exception(krui_err err)
-//{
-//	if(err > 0) return PyInt_FromLong(err);
-//	PyErr_SetString(PyExc_RuntimeError, krui_error(err));
-//	return NULL;
-//}
-//
+
+static PyObject *make_exception(krui_err err)
+{
+	if(err > 0) return PyInt_FromLong(err);
+	PyErr_SetString(PyExc_RuntimeError, krui_error(err));
+	return NULL;
+}
+
 //typedef krui_err (*int_arg_with_err_func)(int);
 //
 //static PyObject *
@@ -413,13 +418,13 @@
 //{
 //	return Py_BuildValue("i",krui_getNoOfInputUnits());
 //}
-//
-//static PyObject *
-//snns_getPatternNo(PyObject *self, PyObject *arg)
-//{
-//	return Py_BuildValue("i",krui_getPatternNo());
-//}
-//
+
+static PyObject *
+snns_getPatternNo(PyObject *self, PyObject *arg)
+{
+	return Py_BuildValue("i",krui_getPatternNo());
+}
+
 //static PyObject *
 //snns_getNoOfPatterns(PyObject *self, PyObject *arg)
 //{
@@ -431,17 +436,17 @@
 //{
 //	return Py_BuildValue("i",krui_getTotalNoOfSubPatterns());
 //}
-//
-//static PyObject *
-//snns_newPattern(PyObject *self, PyObject *arg)
-//{
-//	krui_err err;
-//	if((err = krui_newPattern())) {
-//		return make_exception(err);
-//	}
-//	return Py_BuildValue("");
-//}
-//
+
+static PyObject *
+snns_newPattern(PyObject *self, PyObject *arg)
+{
+	krui_err err;
+	if((err = krui_newPattern())) {
+		return make_exception(err);
+	}
+	return Py_BuildValue("");
+}
+
 //static PyObject *
 //snns_allocNewPatternSet(PyObject *self, PyObject *arg)
 //{
@@ -507,13 +512,13 @@
 //{
 //	return snns_string_arg_with_err(name,krui_setInitialisationFunc);
 //}
-//
-//static PyObject *
-//snns_getUpdateFunc(PyObject *self, PyObject *arg)
-//{
-//	return PyString_FromString(krui_getUpdateFunc());
-//}
-//
+
+static PyObject *
+snns_getUpdateFunc(PyObject *self, PyObject *arg)
+{
+	return PyString_FromString(krui_getUpdateFunc());
+}
+
 //static PyObject *
 //snns_setUpdateFunc(PyObject *self, PyObject *name)
 //{
@@ -1765,17 +1770,17 @@
 //	ret = krui_getUnitSubnetNo(unit);
 //	return PyInt_FromLong(ret);
 //}
-//
-//static PyObject *
-//snns_getUnitLayerNo(PyObject *self, PyObject *args)
-//{
-//	int ret,unit;
-//	unit = PyInt_AsLong(args);
-//	if(PyErr_Occurred()) return NULL;
-//	ret = krui_getUnitLayerNo(unit);
-//	return PyInt_FromLong(ret);
-//}
-//
+
+static PyObject *
+snns_getUnitLayerNo(PyObject *self, PyObject *args)
+{
+	int ret,unit;
+	unit = PyInt_AsLong(args);
+	if(PyErr_Occurred()) return NULL;
+	ret = krui_getUnitLayerNo(unit);
+	return PyInt_FromLong(ret);
+}
+
 //static bool short_check(int i)
 //{
 //	short s;
@@ -1987,19 +1992,19 @@
 //	if(ret < 0) return make_exception(ret);
 //	else return PyInt_FromLong(ret);
 //}
-//
-//static PyObject *
-//snns_createUnit(PyObject *self, PyObject *args)
-//{
-//	char *uname, *fname, *actname;
-//	int ret;
-//	double a,b;
-//	if(!PyArg_ParseTuple(args,"sssff",&uname,&fname,&actname,&a,&b)) return NULL;
-//	ret=krui_createUnit(uname,fname,actname,a,b);
-//	if(ret < 0) return make_exception(ret);
-//	else return PyInt_FromLong(ret);
-//}
-//
+
+static PyObject *
+snns_createUnit(PyObject *self, PyObject *args)
+{
+	char *uname, *fname, *actname;
+	int ret;
+	double a,b;
+	if(!PyArg_ParseTuple(args,"sssff",&uname,&fname,&actname,&a,&b)) return NULL;
+	ret=krui_createUnit(uname,fname,actname,a,b);
+	if(ret < 0) return make_exception(ret);
+	else return PyInt_FromLong(ret);
+}
+
 //static PyObject *
 //snns_setUnitFType(PyObject *self, PyObject *args)
 //{
@@ -2121,13 +2126,13 @@ static PyMethodDef MylibMethods[] = {
 //      "setUnitFtype(unit number, ftype name)\n\n"
 //      "Changes the structure of the given unit to the intersection of the\n"
 //      "current type of the unit with the prototype (ftype)"},
-//     
-//     {"createUnit",snns_createUnit, METH_VARARGS,
-//      "createUnit(name, output function, activation function,\n"
-//      "           activation, bias) -> unit number\n\n"
-//      "Creates a unit with the given name, output function, activation\n"
-//      "function, activation and bias"},
-//     
+
+     {"createUnit",snns_createUnit, METH_VARARGS,
+      "createUnit(name, output function, activation function,\n"
+      "           activation, bias) -> unit number\n\n"
+      "Creates a unit with the given name, output function, activation\n"
+      "function, activation and bias"},
+     
 //     {"createDefaultUnit",snns_createDefaultUnit, METH_NOARGS,
 //      "createDefaultUnit() -> unit number\n\n"
 //      "Creates a unit with the default values of the kernel"},
@@ -2203,11 +2208,11 @@ static PyMethodDef MylibMethods[] = {
 //     {"setUnitLayerNo",snns_setUnitLayerNo, METH_VARARGS,
 //      "setUnitLayerNo(unit number, layer number)\n\n"
 //      "Sets the layer number of the given unit (16 bit range)"},
-//     
-//     {"getUnitLayerNo",snns_getUnitLayerNo,METH_O,
-//      "getUnitLayerNo(unit number) -> layer number\n\n"
-//      "Gets the layer number of the unit"},
-//     
+
+     {"getUnitLayerNo",snns_getUnitLayerNo,METH_O,
+      "getUnitLayerNo(unit number) -> layer number\n\n"
+      "Gets the layer number of the unit"},
+     
 //     {"getUnitSubnetNo",snns_getUnitSubnetNo,METH_O,
 //      "getUnitSubnetNo(unit number) -> subnet number\n\n"
 //      "Gets the subnet number of the unit"},
@@ -2579,11 +2584,11 @@ static PyMethodDef MylibMethods[] = {
 //     {"error", snns_error, METH_O,
 //      "error(error code) -> error message\n\n"
 //      "Returns an error message depending on the error code"},
-//     
-//     {"getUpdateFunc",snns_getUpdateFunc, METH_NOARGS,
-//      "getUpdateFunc() -> update function\n\n"
-//      "Returns the name of the current update function"},
-//     
+
+     {"getUpdateFunc",snns_getUpdateFunc, METH_NOARGS,
+      "getUpdateFunc() -> update function\n\n"
+      "Returns the name of the current update function"},
+     
 //     {"setUpdateFunc",snns_setUpdateFunc, METH_O,
 //      "setUpdateFunc(update function)\n\n"
 //      "Changes the update function"},
@@ -2737,15 +2742,15 @@ static PyMethodDef MylibMethods[] = {
 //     {"modifyPattern",snns_modifyPattern,METH_NOARGS,
 //      "modifyPattern()\n\n"
 //      "Modifies the current pattern (sets to current unit activations)"},
-//     
-//     {"newPattern",snns_newPattern,METH_NOARGS,
-//      "newPattern()\n\n"
-//      "Creates a new pattern. Switches pattern shuffling off."},
-//     
-//     {"getPatternNo",snns_getPatternNo,METH_NOARGS,
-//      "getPatternNo() -> pattern number\n\n"
-//      "Gets the number of the current pattern"},
-//     
+     
+     {"newPattern",snns_newPattern,METH_NOARGS,
+      "newPattern()\n\n"
+      "Creates a new pattern. Switches pattern shuffling off."},
+     
+     {"getPatternNo",snns_getPatternNo,METH_NOARGS,
+      "getPatternNo() -> pattern number\n\n"
+      "Gets the number of the current pattern"},
+     
 //     {"setPatternNo",snns_setPatternNo,METH_O,
 //      "setPatternNo(pattern number)\n\n"
 //      "Sets the current pattern"},
