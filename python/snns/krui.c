@@ -875,13 +875,13 @@ bool fill_int_array(PyObject *seq, int *array)
 //	if(PyErr_Occurred()) return NULL;
 //	return Py_BuildValue("");
 //}
-//
-//static PyObject *
-//snns_showPattern(PyObject *self, PyObject *arg)
-//{
-//	return snns_int_arg_with_err(arg,krui_showPattern);
-//}
-//
+
+static PyObject *
+snns_showPattern(PyObject *self, PyObject *arg)
+{
+	return snns_int_arg_with_err(arg,krui_showPattern);
+}
+
 //static PyObject *
 //snns_deletePatSet(PyObject *self, PyObject *arg)
 //{
@@ -1761,16 +1761,16 @@ snns_getErrorCode(PyObject *self, PyObject *args)
 //	if(err) return make_exception(err);
 //	return Py_BuildValue("");
 //}	
-//
-//static PyObject *
-//snns_getUnitSubnetNo(PyObject *self, PyObject *args)
-//{
-//	int ret,unit;
-//	unit = PyInt_AsLong(args);
-//	if(PyErr_Occurred()) return NULL;
-//	ret = krui_getUnitSubnetNo(unit);
-//	return PyInt_FromLong(ret);
-//}
+
+static PyObject *
+snns_getUnitSubnetNo(PyObject *self, PyObject *args)
+{
+	int ret,unit;
+	unit = PyInt_AsLong(args);
+	if(PyErr_Occurred()) return NULL;
+	ret = krui_getUnitSubnetNo(unit);
+	return PyInt_FromLong(ret);
+}
 
 static PyObject *
 snns_getUnitLayerNo(PyObject *self, PyObject *args)
@@ -2214,10 +2214,10 @@ static PyMethodDef MylibMethods[] = {
       "getUnitLayerNo(unit number) -> layer number\n\n"
       "Gets the layer number of the unit"},
      
-//     {"getUnitSubnetNo",snns_getUnitSubnetNo,METH_O,
-//      "getUnitSubnetNo(unit number) -> subnet number\n\n"
-//      "Gets the subnet number of the unit"},
-//     
+     {"getUnitSubnetNo",snns_getUnitSubnetNo,METH_O,
+      "getUnitSubnetNo(unit number) -> subnet number\n\n"
+      "Gets the subnet number of the unit"},
+     
 //     {"setUnitInitialActivation",snns_setUnitInitialActivation, METH_VARARGS,
 //      "setUnitInitialActivation(unit number, initial activation value)\n\n"
 //      "Sets the initial activation of the given unit to the given value"},
@@ -2774,13 +2774,13 @@ static PyMethodDef MylibMethods[] = {
 //      "                max pattern number, boolean include input,\n"
 //      "                boolean include output, (sequence of update parameters))\n\n"
 //      "Saves the network result which depends on the loaded patterns.\n"},
-//     
-//     {"showPattern",snns_showPattern,METH_O,
-//      "showPattern(mode)\n\n"
-//      "Outputs a pattern on the units of the network with one of the\n"
-//      "OUTPUT_* modes: OUTPUT_NOTHING stores input patterns into unit\n"
-//      "activations, OUTPUT_ACT also stores output patterns into output units\n"
-//      "activations, OUTPUT_OUT also updates the output units outputs."}, 
+     
+     {"showPattern",snns_showPattern,METH_O,
+      "showPattern(mode)\n\n"
+      "Outputs a pattern on the units of the network with one of the\n"
+      "OUTPUT_* modes: OUTPUT_NOTHING stores input patterns into unit\n"
+      "activations, OUTPUT_ACT also stores output patterns into output units\n"
+      "activations, OUTPUT_OUT also updates the output units outputs."}, 
      
      {"setSeedNo",snns_setSeedNo,METH_O,  
       "setSeedNo(number)\n\n"
