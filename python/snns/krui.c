@@ -28,6 +28,7 @@
 #define PyInt_FromLong PyLong_FromLong
 #define PyString_FromString PyUnicode_FromString
 #define PyInt_AsLong(x) (PyLong_AsLong((x)))
+#define PyString_AsString PyBytes_AsString
 
 //
 //struct Unit;
@@ -644,23 +645,23 @@ snns_saveNewPatterns(PyObject *self, PyObject *args)
 //	if(PyErr_Occurred()) return NULL;
 //	return ret;
 //}
-//
-///*
-//	Fill an integer array from a tuple
-//	The array must be large enough, this function
-//	does not check the size
-//*/
-//
-//bool fill_int_array(PyObject *seq, int *array)
-//{
-//	int i;
-//	for(i=0; i < PySequence_Size(seq); ++i) {
-//		array[i]=PyInt_AsLong(PySequence_GetItem(seq,i));	
-//	}
-//	if(PyErr_Occurred()) return FALSE;
-//	return TRUE;
-//}
-//
+
+/*
+	Fill an integer array from a tuple
+	The array must be large enough, this function
+	does not check the size
+*/
+
+bool fill_int_array(PyObject *seq, int *array)
+{
+	int i;
+	for(i=0; i < PySequence_Size(seq); ++i) {
+		array[i]=PyInt_AsLong(PySequence_GetItem(seq,i));	
+	}
+	if(PyErr_Occurred()) return FALSE;
+	return TRUE;
+}
+
 //static PyObject *
 //snns_GetShapeOfSubPattern(PyObject *self, PyObject *args)
 //{
@@ -2010,62 +2011,62 @@ snns_createUnit(PyObject *self, PyObject *args)
 //{
 //	return snns_int_char_args_with_err(args,krui_setUnitFType);
 //}
-//
-//static PyObject *
-//snns_copyUnit(PyObject *self, PyObject *args)
-//{
-//	int a,b,ret;
-//	if(!PyArg_ParseTuple(args,"ii",&a,&b)) return NULL;
-//	ret = krui_copyUnit(a,b);
-//	if(ret < 0) return make_exception(ret);
-//	else return PyInt_FromLong(ret);
-//}
-//
-//static PyObject *
-//snns_createFTypeUnit(PyObject *self, PyObject *args)
-//{
-//	int ret;
-//	char *name;
-//	name = PyString_AsString(args);
-//	if(PyErr_Occurred()) return NULL;
-//	ret = krui_createFTypeUnit(name);
-//	if(ret < 0) return make_exception(ret);
-//	else return PyInt_FromLong(ret);
-//}
-//
-//static PyObject *
-//snns_deleteUnitList(PyObject *self, PyObject *args)
-//{
-//	int *array;
-//	krui_err err;
-//	int size;
-//	PyObject *ret=NULL, *tmp=NULL;
-//	if(PySequence_Size(args) < 1) return Py_BuildValue("");
-//	tmp = PySequence_GetItem(args,0);	
-//	if(PySequence_Check(tmp)) {
-//		if(PySequence_Size(args) > 1) {
-//			PyErr_SetString(PyExc_RuntimeError,
-//			 "sorry, no nested types here!");
-//			 return NULL;
-//		}
-//		args = tmp;
-//	}
-//	if(!PySequence_Check(args)) {
-//		PyErr_SetString(PyExc_RuntimeError,
-//		 "expecting a sequence of unit numbers");
-//		return NULL;
-//	}
-//	size=PySequence_Size(args);
-//	array = PyMem_New(int,size);
-//	if(!array) return NULL;
-//	if(fill_int_array(args,array)) {
-//		err = krui_deleteUnitList(size,array);
-//		if(err) make_exception(err);
-//		else ret = Py_BuildValue("");
-//	}
-//	PyMem_Del(array);
-//	return ret;
-//}
+
+static PyObject *
+snns_copyUnit(PyObject *self, PyObject *args)
+{
+	int a,b,ret;
+	if(!PyArg_ParseTuple(args,"ii",&a,&b)) return NULL;
+	ret = krui_copyUnit(a,b);
+	if(ret < 0) return make_exception(ret);
+	else return PyInt_FromLong(ret);
+}
+
+static PyObject *
+snns_createFTypeUnit(PyObject *self, PyObject *args)
+{
+	int ret;
+	char *name;
+	name = PyString_AsString(args);
+	if(PyErr_Occurred()) return NULL;
+	ret = krui_createFTypeUnit(name);
+	if(ret < 0) return make_exception(ret);
+	else return PyInt_FromLong(ret);
+}
+
+static PyObject *
+snns_deleteUnitList(PyObject *self, PyObject *args)
+{
+	int *array;
+	krui_err err;
+	int size;
+	PyObject *ret=NULL, *tmp=NULL;
+	if(PySequence_Size(args) < 1) return Py_BuildValue("");
+	tmp = PySequence_GetItem(args,0);	
+	if(PySequence_Check(tmp)) {
+		if(PySequence_Size(args) > 1) {
+			PyErr_SetString(PyExc_RuntimeError,
+			 "sorry, no nested types here!");
+			 return NULL;
+		}
+		args = tmp;
+	}
+	if(!PySequence_Check(args)) {
+		PyErr_SetString(PyExc_RuntimeError,
+		 "expecting a sequence of unit numbers");
+		return NULL;
+	}
+	size=PySequence_Size(args);
+	array = PyMem_New(int,size);
+	if(!array) return NULL;
+	if(fill_int_array(args,array)) {
+		err = krui_deleteUnitList(size,array);
+		if(err) make_exception(err);
+		else ret = Py_BuildValue("");
+	}
+	PyMem_Del(array);
+	return ret;
+}
 
 static PyObject *
 snns_getUnitDefaults(PyObject *self, PyObject *args)
@@ -2107,21 +2108,21 @@ static PyMethodDef MylibMethods[] = {
       "                activation function, output function)\n\n"
       "Sets the default values for generating units" },
       
-//     {"deleteUnitList",snns_deleteUnitList,METH_VARARGS,
-//      "deleteUnitList(sequence of unit numbers)\n\n"
-//      "Deletes all units given in the sequence"},
-//     
-//     {"createFTypeUnit",snns_createFTypeUnit,METH_O,
-//      "createFTypeUnit(ftype name) -> unit number\n\n"
-//      "Creates a unit with the properties of the (previously defined) "
-//      "prototype"},
-//    
-//     {"copyUnit",snns_copyUnit, METH_VARARGS,
-//      "copyUnit(unit number,copy mode) -> unit number\n\n"
-//      "Copies a unit according to the copy mode which determines if links\n"
-//      "are copied. Available modes:\n"
-//      "INPUTS_AND_OUTPUTS, ONLY_INPUTS, ONLY_OUTPUTS, ONLY_UNIT"},
-//
+     {"deleteUnitList",snns_deleteUnitList,METH_VARARGS,
+      "deleteUnitList(sequence of unit numbers)\n\n"
+      "Deletes all units given in the sequence"},
+     
+    {"createFTypeUnit",snns_createFTypeUnit,METH_O,
+     "createFTypeUnit(ftype name) -> unit number\n\n"
+     "Creates a unit with the properties of the (previously defined) "
+     "prototype"},
+   
+    {"copyUnit",snns_copyUnit, METH_VARARGS,
+     "copyUnit(unit number,copy mode) -> unit number\n\n"
+     "Copies a unit according to the copy mode which determines if links\n"
+     "are copied. Available modes:\n"
+     "INPUTS_AND_OUTPUTS, ONLY_INPUTS, ONLY_OUTPUTS, ONLY_UNIT"},
+
 //     {"setUnitFType",snns_setUnitFType, METH_VARARGS,
 //      "setUnitFtype(unit number, ftype name)\n\n"
 //      "Changes the structure of the given unit to the intersection of the\n"
