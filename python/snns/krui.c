@@ -14,15 +14,16 @@
 
 
 #include <Python.h>
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <glob_typ.h>
-//#include <krui_typ.h>
-//#include <kr_ui.h>
-//#include <kr_const.h>
-//#include <ext_typ.h>
-//#include <kr_typ.h>
-//#include <kernel.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <glob_typ.h>
+#include <krui_typ.h>
+#include <kr_ui.h>
+#include <kr_const.h>
+#include <ext_typ.h>
+#include <kr_typ.h>
+#include <kernel.h>
+
 //
 //struct Unit;
 //
@@ -2060,19 +2061,19 @@
 //	PyMem_Del(array);
 //	return ret;
 //}
-//
-//static PyObject *
-//snns_getUnitDefaults(PyObject *self, PyObject *args)
-//{
-//	FlintType act, bias;
-//	int iot, subnet, layer;
-//	char *actfunc, *outfunc;
-//	krui_getUnitDefaults(&act, &bias, &iot, &subnet, &layer,
-//		&actfunc, &outfunc);
-//	return Py_BuildValue("(ffiiiss)",act,bias,iot,subnet,layer,
-//		actfunc,outfunc);
-//}
-//
+
+static PyObject *
+snns_getUnitDefaults(PyObject *self, PyObject *args)
+{
+	FlintType act, bias;
+	int iot, subnet, layer;
+	char *actfunc, *outfunc;
+	krui_getUnitDefaults(&act, &bias, &iot, &subnet, &layer,
+		&actfunc, &outfunc);
+	return Py_BuildValue("(ffiiiss)",act,bias,iot,subnet,layer,
+		actfunc,outfunc);
+}
+
 //static PyObject *
 //snns_setUnitDefaults(PyObject *self, PyObject *args)
 //{
@@ -2089,12 +2090,12 @@
 //}
 //
 static PyMethodDef MylibMethods[] = {
-//     {"getUnitDefaults",snns_getUnitDefaults,METH_NOARGS,
-//      "getUnitDefaults() -> (activation, bias, io_type, subnet number,\n"
-//      "                      layer number, activation function, "
-//      "output function)\n\n"
-//      "Returns the default values for generating units" },
-//      
+     {"getUnitDefaults",snns_getUnitDefaults,METH_NOARGS,
+      "getUnitDefaults() -> (activation, bias, io_type, subnet number,\n"
+      "                      layer number, activation function, "
+      "output function)\n\n"
+      "Returns the default values for generating units" },
+      
 //     {"setUnitDefaults",snns_setUnitDefaults,METH_VARARGS,
 //      "setUnitDefaults(activation, bias, io_type, subnet number, "
 //      "layer number,\n" 
