@@ -1,11 +1,11 @@
 #!/usr/bin/python
 
-from setuptools import setup, Extension
+from setuptools import setup, Extension, find_packages
 
 #print extension_keywords
 
 module1 = Extension(
-        'krui',
+        'snns.krui',
         sources = ['snns/krui.c'],
 		include_dirs = ['../kernel/sources'],
         extra_compile_args=['-std=c99'],
@@ -14,14 +14,15 @@ module1 = Extension(
         )
 
 setup (
-       name = 'snns-kernel',
-       ext_package='snns',
+       name = 'snns',
+       # ext_package='snns',
        version = '0.1',
        author='Patrick Kursawe',
        author_email='Patrick.Kursawe@web.de',
        description = 'SNNS kernel functions',
-       packages = ['snns'],
+       packages=find_packages(),
+       # packages = ['snns'],
        ext_modules = [module1],
-       py_modules = ['snns.util']
+       #py_modules = ['snns.util']
        )
 

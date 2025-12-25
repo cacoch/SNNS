@@ -4,11 +4,15 @@ SNNSDIR="SNNSv4.2"
 TOCOPY = setup.py ChangeLog README Makefile examples snns
 
 pyext: snns/krui.c
-	python setup.py build_ext
+	python setup.py build_ext --inplace
 
 test:
 	python setup.py  install -f 
 	python examples/customtest.py
+
+clean:
+	rm -rv build
+	rm -rv snns/__pycache__
 
 tarball :
 	rm -rf dist
