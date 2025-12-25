@@ -361,17 +361,17 @@ snns_setSeedNo(PyObject *self, PyObject *arg)
 //{
 //	return snns_int_arg_with_err(arg,krui_setCurrPatSet);
 //}
-//
-//static PyObject *
-//snns_deletePattern(PyObject *self, PyObject *arg)
-//{
-//	krui_err err;
-//	if((err = krui_deletePattern())) {
-//		return make_exception(err);
-//	}
-//	return Py_BuildValue("");
-//}
-//
+
+static PyObject *
+snns_deletePattern(PyObject *self, PyObject *arg)
+{
+	krui_err err;
+	if((err = krui_deletePattern())) {
+		return make_exception(err);
+	}
+	return Py_BuildValue("");
+}
+
 //static PyObject *
 //snns_deleteAllPatterns(PyObject *self, PyObject *arg)
 //{
@@ -379,19 +379,19 @@ snns_setSeedNo(PyObject *self, PyObject *arg)
 //	krui_deleteAllPatterns();
 //	return Py_BuildValue("");
 //}
-//
-//static PyObject *
-//snns_shufflePatterns(PyObject *self, PyObject *arg)
-//{
-//	return snns_int_arg_with_err(arg,krui_shufflePatterns);
-//}
-//
-//static PyObject *
-//snns_shuffleSubPatterns(PyObject *self, PyObject *arg)
-//{
-//	return snns_int_arg_with_err(arg,krui_shuffleSubPatterns);
-//}
-//
+
+static PyObject *
+snns_shufflePatterns(PyObject *self, PyObject *arg)
+{
+	return snns_int_arg_with_err(arg,krui_shufflePatterns);
+}
+
+static PyObject *
+snns_shuffleSubPatterns(PyObject *self, PyObject *arg)
+{
+	return snns_int_arg_with_err(arg,krui_shuffleSubPatterns);
+}
+
 //static PyObject *
 //snns_modifyPattern(PyObject *self, PyObject *arg)
 //{
@@ -2727,19 +2727,19 @@ static PyMethodDef MylibMethods[] = {
 //     {"deleteAllPatterns",snns_deleteAllPatterns,METH_NOARGS,
 //      "deleteAllPatterns()\n\n"
 //      "Deletes all patterns."},
-//     
-//     {"shufflePatterns",snns_shufflePatterns,METH_O,
-//      "shufflePatterns(boolean shuffle on or off)\n\n"
-//      "Switch shuffling of the pattern order on or off"},
-//     
-//     {"shuffleSubPatterns",snns_shuffleSubPatterns,METH_O,
-//      "shuffleSubPatterns(boolean shuffle on or off)\n\n"
-//      "Switch shuffling of sub pattern pairs on or off"},
-//     
-//     {"deletePattern",snns_deletePattern,METH_NOARGS,
-//      "deletePattern()\n\n"
-//      "Deletes the current pattern"},
-//     
+     
+     {"shufflePatterns",snns_shufflePatterns,METH_O,
+      "shufflePatterns(boolean shuffle on or off)\n\n"
+      "Switch shuffling of the pattern order on or off"},
+     
+     {"shuffleSubPatterns",snns_shuffleSubPatterns,METH_O,
+      "shuffleSubPatterns(boolean shuffle on or off)\n\n"
+      "Switch shuffling of sub pattern pairs on or off"},
+     
+     {"deletePattern",snns_deletePattern,METH_NOARGS,
+      "deletePattern()\n\n"
+      "Deletes the current pattern"},
+     
 //     {"modifyPattern",snns_modifyPattern,METH_NOARGS,
 //      "modifyPattern()\n\n"
 //      "Modifies the current pattern (sets to current unit activations)"},
