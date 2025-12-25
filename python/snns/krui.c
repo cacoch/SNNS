@@ -268,22 +268,22 @@ static PyObject *make_exception(krui_err err)
 //{
 //	return Py_BuildValue("s",krui_getVersion());
 //}
-//
-//static PyObject *
-//snns_saveNet(PyObject *self, PyObject *args)
-//{
-//	char *netname;
-//	char *filename;
-//	krui_err err;
-//	if(PyArg_ParseTuple(args,"sz",&filename,&netname) &&
-//	   (err=krui_saveNet(filename,netname))) {
-//			return make_exception(err);
-//	}
-//
-//	if(PyErr_Occurred()) return NULL;
-//	return Py_BuildValue("");
-//}
-//
+
+static PyObject *
+snns_saveNet(PyObject *self, PyObject *args)
+{
+	char *netname;
+	char *filename;
+	krui_err err;
+	if(PyArg_ParseTuple(args,"sz",&filename,&netname) &&
+	   (err=krui_saveNet(filename,netname))) {
+			return make_exception(err);
+	}
+
+	if(PyErr_Occurred()) return NULL;
+	return Py_BuildValue("");
+}
+
 //static PyObject *
 //snns_loadNet(PyObject *self, PyObject *name)
 //{
@@ -551,22 +551,22 @@ snns_getUpdateFunc(PyObject *self, PyObject *arg)
 //	if(PyErr_Occurred()) return NULL;
 //	return Py_BuildValue("i",setno);
 //}
-//
-//static PyObject *
-//snns_saveNewPatterns(PyObject *self, PyObject *args)
-//{
-//	int setnum;
-//	char *filename=NULL;
-//	krui_err err;
-//	if(PyArg_ParseTuple(args,"si",&filename,&setnum) &&
-//	   (err=krui_saveNewPatterns(filename,setnum))) {
-//			return make_exception(err);
-//	}
-//
-//	if(PyErr_Occurred()) return NULL;
-//	return Py_BuildValue("");
-//}
-//
+
+static PyObject *
+snns_saveNewPatterns(PyObject *self, PyObject *args)
+{
+	int setnum;
+	char *filename=NULL;
+	krui_err err;
+	if(PyArg_ParseTuple(args,"si",&filename,&setnum) &&
+	   (err=krui_saveNewPatterns(filename,setnum))) {
+			return make_exception(err);
+	}
+
+	if(PyErr_Occurred()) return NULL;
+	return Py_BuildValue("");
+}
+
 //static PyObject *
 //snns_saveResultParam(PyObject *self, PyObject *args)
 //{
@@ -2754,20 +2754,20 @@ static PyMethodDef MylibMethods[] = {
 //     {"setPatternNo",snns_setPatternNo,METH_O,
 //      "setPatternNo(pattern number)\n\n"
 //      "Sets the current pattern"},
-//     
-//     {"saveNet",snns_saveNet,METH_VARARGS,
-//      "saveNet(filename, network name)\n\n"
-//      "Save the network"},
-//     
+     
+    {"saveNet",snns_saveNet,METH_VARARGS,
+     "saveNet(filename, network name)\n\n"
+     "Save the network"},
+    
 //     {"setRemapFunc",snns_setRemapFunc,METH_VARARGS,
 //      "setRemapFunc(remap function name, (sequence of parameters))\n\n"
 //      "defines the pattern remapping function (by function name) and sets\n"
 //      "its parameters"},
-//     
-//     {"saveNewPatterns",snns_saveNewPatterns,METH_VARARGS,
-//      "saveNewPatterns(filename, pattern set number)\n\n"
-//      "Saves a pattern set."}, 
-//     
+     
+     {"saveNewPatterns",snns_saveNewPatterns,METH_VARARGS,
+      "saveNewPatterns(filename, pattern set number)\n\n"
+      "Saves a pattern set."}, 
+     
 //     {"saveResultParam",snns_saveResultParam,METH_VARARGS,
 //      "saveResultParam(filename, boolean create file, min pattern number,\n"
 //      "                max pattern number, boolean include input,\n"
