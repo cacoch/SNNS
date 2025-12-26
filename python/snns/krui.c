@@ -263,12 +263,12 @@ snns_int_arg_with_err(PyObject *arg, int_arg_with_err_func func)
 //	if(PyErr_Occurred()) return NULL;
 //	return PyString_FromString(krui_error(num));
 //}
-//
-//static PyObject *
-//snns_getVersion(PyObject *self, PyObject *arg)
-//{
-//	return Py_BuildValue("s",krui_getVersion());
-//}
+
+static PyObject *
+snns_getVersion(PyObject *self, PyObject *arg)
+{
+	return Py_BuildValue("s",krui_getVersion());
+}
 
 static PyObject *
 snns_saveNet(PyObject *self, PyObject *args)
@@ -476,25 +476,25 @@ snns_resetNet(PyObject *self, PyObject *arg)
 //	no = krui_getNoOfTTypeUnits(parm);
 //	return PyInt_FromLong(no);
 //}
-//
-//static PyObject *
-//snns_getLearnFunc(PyObject *self, PyObject *arg)
-//{
-//	return PyString_FromString(krui_getLearnFunc());
-//}
-//
-//static PyObject *
-//snns_getFFLearnFunc(PyObject *self, PyObject *arg)
-//{
-//	return PyString_FromString(krui_getFFLearnFunc());
-//}
-//
-//static PyObject *
-//snns_getPrunFunc(PyObject *self, PyObject *arg)
-//{
-//	return PyString_FromString(krui_getPrunFunc());
-//}
-//
+
+static PyObject *
+snns_getLearnFunc(PyObject *self, PyObject *arg)
+{
+	return PyString_FromString(krui_getLearnFunc());
+}
+
+static PyObject *
+snns_getFFLearnFunc(PyObject *self, PyObject *arg)
+{
+	return PyString_FromString(krui_getFFLearnFunc());
+}
+
+static PyObject *
+snns_getPrunFunc(PyObject *self, PyObject *arg)
+{
+	return PyString_FromString(krui_getPrunFunc());
+}
+
 //
 //static PyObject *
 //snns_setLearnFunc(PyObject *self, PyObject *name)
@@ -1133,16 +1133,16 @@ snns_deletePatSet(PyObject *self, PyObject *arg)
 //	if(PyErr_Occurred()) return NULL;
 //	return PyInt_FromLong(krui_setFTypeEntry(ftypename));
 //}
-//
-//static PyObject *
-//snns_getFTypeName(PyObject *self, PyObject *args)
-//{
-//	char *ftype;
-//	ftype = krui_getFTypeName();
-//	if(ftype) return PyString_FromString(krui_getFTypeName());
-//	else return Py_BuildValue("");
-//}
-//
+
+static PyObject *
+snns_getFTypeName(PyObject *self, PyObject *args)
+{
+	char *ftype;
+	ftype = krui_getFTypeName();
+	if(ftype) return PyString_FromString(krui_getFTypeName());
+	else return Py_BuildValue("");
+}
+
 //static PyObject *
 //snns_setFTypeName(PyObject *self, PyObject *args)
 //{
@@ -2478,11 +2478,11 @@ static PyMethodDef MylibMethods[] = {
 //     {"setFTypeEntry",snns_setFTypeEntry, METH_O,
 //      "setFTypeEntry() -> boolean\n\n"
 //      "Selects a prototype by name. Returns false if not available."},
-//     
-//     {"getFTypeName",snns_getFTypeName,METH_NOARGS,
-//      "getFTypeName() -> ftype/None\n\n"
-//      "Returns the name of the current prototype or None."},
-//     
+     
+     {"getFTypeName",snns_getFTypeName,METH_NOARGS,
+      "getFTypeName() -> ftype/None\n\n"
+      "Returns the name of the current prototype or None."},
+     
 //     {"setFTypeName",snns_setFTypeName,METH_O,
 //      "setFTypeName(ftype name)\n\n"
 //      "Changes the name of the current prototype"},
@@ -2617,19 +2617,19 @@ static PyMethodDef MylibMethods[] = {
 //     {"initializeNet",snns_initializeNet, METH_VARARGS,
 //      "initializeNet([sequence of/multiple] initialization parameters)\n\n"
 //      "Initializes the network with the current initialization function"},
-//     
-//     {"getLearnFunc",snns_getLearnFunc, METH_NOARGS,
-//      "getLearnFunc() -> learning function\n\n"
-//      "Returns the name of the current learning function"},
-//     
-//     {"getFFLearnFunc",snns_getFFLearnFunc, METH_NOARGS,
-//      "getFFLearnFunc() -> subordinate learning function\n\n"
-//      "Returns the name of the current subordinate learning function"},
-//     
-//     {"getPrunFunc",snns_getPrunFunc, METH_NOARGS,
-//      "getPrunFunc() -> pruning function\n\n"
-//      "Returns the name of the current pruning function"},
-//     
+     
+     {"getLearnFunc",snns_getLearnFunc, METH_NOARGS,
+      "getLearnFunc() -> learning function\n\n"
+      "Returns the name of the current learning function"},
+     
+     {"getFFLearnFunc",snns_getFFLearnFunc, METH_NOARGS,
+      "getFFLearnFunc() -> subordinate learning function\n\n"
+      "Returns the name of the current subordinate learning function"},
+     
+     {"getPrunFunc",snns_getPrunFunc, METH_NOARGS,
+      "getPrunFunc() -> pruning function\n\n"
+      "Returns the name of the current pruning function"},
+     
 //     {"getNoOfTTypeUnits",snns_getNoOfTTypeUnits,METH_O,
 //      "getNoOfTTypeUnits(io_type) -> number of units\n\n"
 //      "Returns the no. of units of the specified io_type"},
@@ -2661,10 +2661,10 @@ static PyMethodDef MylibMethods[] = {
 //     {"GetPatInfo",snns_GetPatInfo,METH_NOARGS,
 //      "GetPatInfo() -> (pattern_set_info, pattern_descriptor)\n\n"
 //      "Returns a pattern_set_info and a pattern_descriptor"},
-//     
-//     {"getVersion",snns_getVersion, METH_NOARGS,
-//      "getVersion() -> version string\n\n"
-//      "Returns the current version of the SNNS-Kernel"},
+     
+     {"getVersion",snns_getVersion, METH_NOARGS,
+      "getVersion() -> version string\n\n"
+      "Returns the current version of the SNNS-Kernel"},
 
      {"loadNet",snns_loadNet, METH_O,
       "loadNet(filename) -> network name\n\n"
