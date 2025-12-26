@@ -285,38 +285,38 @@ snns_saveNet(PyObject *self, PyObject *args)
 	return Py_BuildValue("");
 }
 
-//static PyObject *
-//snns_loadNet(PyObject *self, PyObject *name)
-//{
-//	char *netname=NULL;
-//	char *filename;
-//	krui_err err;
-//	if((filename = PyString_AsString(name))) {
-//		if((err=krui_loadNet(filename,&netname))) {
-//			return make_exception(err);
-//		}
-//	}
-//	if(PyErr_Occurred()) return NULL;
-//	return Py_BuildValue("s",netname);
-//}
-//
-//static PyObject *
-//snns_getNetInfo(PyObject *self, PyObject *arg)
-//{
-//	int nsites, nlinks,nstent, nftent;
-//	krui_getNetInfo(&nsites,&nlinks,&nstent,&nftent);	
-//	return Py_BuildValue("(iiii)",nsites, nlinks,nstent,nftent);
-//}
-//
-//static PyObject *
-//snns_getMemoryManagerInfo(PyObject *self, PyObject *arg)
-//{
-//	int ubytes, sbytes,lbytes,ntbytes,stbytes,ftbytes;
-//	krui_getMemoryManagerInfo(&ubytes,&sbytes,&lbytes,&ntbytes,&stbytes,&ftbytes);	
-//	return Py_BuildValue("(iiiii)",ubytes,sbytes,lbytes,ntbytes,
-//		stbytes,ftbytes);
-//}
-//
+static PyObject *
+snns_loadNet(PyObject *self, PyObject *name)
+{
+	char *netname=NULL;
+	char *filename;
+	krui_err err;
+	if((filename = PyString_AsString(name))) {
+		if((err=krui_loadNet(filename,&netname))) {
+			return make_exception(err);
+		}
+	}
+	if(PyErr_Occurred()) return NULL;
+	return Py_BuildValue("s",netname);
+}
+
+static PyObject *
+snns_getNetInfo(PyObject *self, PyObject *arg)
+{
+	int nsites, nlinks,nstent, nftent;
+	krui_getNetInfo(&nsites,&nlinks,&nstent,&nftent);	
+	return Py_BuildValue("(iiii)",nsites, nlinks,nstent,nftent);
+}
+
+static PyObject *
+snns_getMemoryManagerInfo(PyObject *self, PyObject *arg)
+{
+	int ubytes, sbytes,lbytes,ntbytes,stbytes,ftbytes;
+	krui_getMemoryManagerInfo(&ubytes,&sbytes,&lbytes,&ntbytes,&stbytes,&ftbytes);	
+	return Py_BuildValue("(iiiii)",ubytes,sbytes,lbytes,ntbytes,
+		stbytes,ftbytes);
+}
+
 //static PyObject *
 //snns_getSymbolTable(PyObject *self, PyObject *arg)
 //{
@@ -407,12 +407,12 @@ snns_shuffleSubPatterns(PyObject *self, PyObject *arg)
 //{
 //	return snns_int_arg_with_err(arg,krui_allocateUnits);
 //}
-//
-//static PyObject *
-//snns_getNoOfOutputUnits(PyObject *self, PyObject *arg)
-//{
-//	return Py_BuildValue("i",krui_getNoOfOutputUnits());
-//}
+
+static PyObject *
+snns_getNoOfOutputUnits(PyObject *self, PyObject *arg)
+{
+	return Py_BuildValue("i",krui_getNoOfOutputUnits());
+}
 
 static PyObject *
 snns_getNoOfInputUnits(PyObject *self, PyObject *arg)
@@ -537,21 +537,21 @@ snns_getUpdateFunc(PyObject *self, PyObject *arg)
 //{
 //	return snns_string_arg_with_err(name,krui_setPrunFunc);
 //}
-//
-//static PyObject *
-//snns_loadNewPatterns(PyObject *self, PyObject *arg)
-//{
-//	char *fn=NULL;
-//	krui_err err;
-//	int setno;
-//
-//	fn = PyString_AsString(arg);
-//	if(fn && (err=krui_loadNewPatterns(fn,&setno))) {
-//		return make_exception(err);
-//	}
-//	if(PyErr_Occurred()) return NULL;
-//	return Py_BuildValue("i",setno);
-//}
+
+static PyObject *
+snns_loadNewPatterns(PyObject *self, PyObject *arg)
+{
+	char *fn=NULL;
+	krui_err err;
+	int setno;
+
+	fn = PyString_AsString(arg);
+	if(fn && (err=krui_loadNewPatterns(fn,&setno))) {
+		return make_exception(err);
+	}
+	if(PyErr_Occurred()) return NULL;
+	return Py_BuildValue("i",setno);
+}
 
 static PyObject *
 snns_saveNewPatterns(PyObject *self, PyObject *args)
@@ -2665,30 +2665,30 @@ static PyMethodDef MylibMethods[] = {
 //     {"getVersion",snns_getVersion, METH_NOARGS,
 //      "getVersion() -> version string\n\n"
 //      "Returns the current version of the SNNS-Kernel"},
-//     
-//     {"loadNet",snns_loadNet, METH_O,
-//      "loadNet(filename) -> network name\n\n"
-//      "Loads a network file and create a network"},
-//     
-//     {"loadNewPatterns",snns_loadNewPatterns, METH_O,
-//      "loadNewPatterns(filename) -> pattern set number\n\n"
-//      "Loads a pattern file."},
-//     
-//     {"getMemoryManagerInfo",snns_getMemoryManagerInfo, METH_NOARGS,
-//      "getMemoryManagerInfo() -> (alloc bytes for units, sites, name-table,\n"
-//      "                           site-table, function-table)\n\n"
-//      "Returns the number of ALLOCATED (not the number of USED) bytes for\n"
-//      "the units, sites, name-table, site-table and function-table"},
-//     
-//     {"getNetInfo",snns_getNetInfo,METH_NOARGS,
-//      "getNetInfo() -> (number of sites, number of links,\n"
-//      "                 number of site table entries,\n"
-//      "                 number of ftype table entries)\n\n"
-//      "Returns miscellanous information about the current network."},
-//     
-//     {"getNoOfOutputUnits",snns_getNoOfOutputUnits, METH_NOARGS,
-//      "getNoOfOutputUnits() -> number of output units\n\n"
-//      "Returns the number of output units"},
+
+     {"loadNet",snns_loadNet, METH_O,
+      "loadNet(filename) -> network name\n\n"
+      "Loads a network file and create a network"},
+     
+     {"loadNewPatterns",snns_loadNewPatterns, METH_O,
+      "loadNewPatterns(filename) -> pattern set number\n\n"
+      "Loads a pattern file."},
+     
+     {"getMemoryManagerInfo",snns_getMemoryManagerInfo, METH_NOARGS,
+      "getMemoryManagerInfo() -> (alloc bytes for units, sites, name-table,\n"
+      "                           site-table, function-table)\n\n"
+      "Returns the number of ALLOCATED (not the number of USED) bytes for\n"
+      "the units, sites, name-table, site-table and function-table"},
+     
+     {"getNetInfo",snns_getNetInfo,METH_NOARGS,
+      "getNetInfo() -> (number of sites, number of links,\n"
+      "                 number of site table entries,\n"
+      "                 number of ftype table entries)\n\n"
+      "Returns miscellanous information about the current network."},
+     
+     {"getNoOfOutputUnits",snns_getNoOfOutputUnits, METH_NOARGS,
+      "getNoOfOutputUnits() -> number of output units\n\n"
+      "Returns the number of output units"},
      
      {"getNoOfInputUnits",snns_getNoOfInputUnits, METH_NOARGS,
       "getNoOfInputUnits() -> number of input units\n\n"
