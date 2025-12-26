@@ -254,15 +254,15 @@ snns_int_arg_with_err(PyObject *arg, int_arg_with_err_func func)
 //    Py_TPFLAGS_DEFAULT,        /*tp_flags*/
 //    "equivalent of the pattern_descriptor struct",           /* tp_doc */
 //};
-//
-//static PyObject *
-//snns_error(PyObject *self, PyObject *arg)
-//{
-//	int num;
-//	num = (int)PyInt_AsLong(arg);
-//	if(PyErr_Occurred()) return NULL;
-//	return PyString_FromString(krui_error(num));
-//}
+
+static PyObject *
+snns_error(PyObject *self, PyObject *arg)
+{
+	int num;
+	num = (int)PyInt_AsLong(arg);
+	if(PyErr_Occurred()) return NULL;
+	return PyString_FromString(krui_error(num));
+}
 
 static PyObject *
 snns_getVersion(PyObject *self, PyObject *arg)
@@ -332,13 +332,13 @@ snns_getMemoryManagerInfo(PyObject *self, PyObject *arg)
 //	if(PyErr_Occurred()) return NULL;
 //	return ret;
 //}
-//
-//static PyObject *
-//snns_deleteNet(PyObject *self, PyObject *arg)
-//{
-//	krui_deleteNet();
-//	return Py_BuildValue("");
-//}
+
+static PyObject *
+snns_deleteNet(PyObject *self, PyObject *arg)
+{
+	krui_deleteNet();
+	return Py_BuildValue("");
+}
 
 static PyObject *
 snns_setSeedNo(PyObject *self, PyObject *arg)
@@ -1525,16 +1525,16 @@ snns_getErrorCode(PyObject *self, PyObject *args)
 //	if(ret) return PyString_FromString(ret);
 //	else return Py_BuildValue("");
 //}	
-//
-//static PyObject *
-//snns_getSiteName(PyObject *self, PyObject *args)
-//{
-//	char *ret;
-//	ret = krui_getSiteName();
-//	if(ret) return PyString_FromString(ret);
-//	else return Py_BuildValue("");
-//}
-//
+
+static PyObject *
+snns_getSiteName(PyObject *self, PyObject *args)
+{
+	char *ret;
+	ret = krui_getSiteName();
+	if(ret) return PyString_FromString(ret);
+	else return Py_BuildValue("");
+}
+
 //static PyObject *
 //snns_setSiteName(PyObject *self, PyObject *args)
 //{
@@ -2362,11 +2362,11 @@ static PyMethodDef MylibMethods[] = {
 //      "setSiteName(site name)\n\n"
 //      "Changes the name (and thereby the site function) of the current site.\n"
 //      "The f-type of the unit is erased."},
-//     
-//     {"getSiteName",snns_getSiteName, METH_NOARGS,
-//      "getSiteName() -> site name\n\n"
-//      "Returns the name of the the current site"},
-//     
+     
+     {"getSiteName",snns_getSiteName, METH_NOARGS,
+      "getSiteName() -> site name\n\n"
+      "Returns the name of the the current site"},
+     
 //     {"addSite",snns_addSite, METH_O,
 //      "addSite(site name)\n\n"
 //      "Adds a new site to the current unit. The new site is inserted in front."},
@@ -2577,14 +2577,14 @@ static PyMethodDef MylibMethods[] = {
 //      "Defines the subpattern to be shown with the next showPattern call.\n"
 //      "insize, outsize, inpos, outpos are tuples for the subpattern\n"
 //      "sizes/positions for each dimension"},
-//     
-//     {"deleteNet",snns_deleteNet, METH_NOARGS,
-//      "deleteNet()\n\n"
-//      "Delete the network"},
-//     
-//     {"error", snns_error, METH_O,
-//      "error(error code) -> error message\n\n"
-//      "Returns an error message depending on the error code"},
+     
+     {"deleteNet",snns_deleteNet, METH_NOARGS,
+      "deleteNet()\n\n"
+      "Delete the network"},
+     
+     {"error", snns_error, METH_O,
+      "error(error code) -> error message\n\n"
+      "Returns an error message depending on the error code"},
 
      {"getUpdateFunc",snns_getUpdateFunc, METH_NOARGS,
       "getUpdateFunc() -> update function\n\n"
