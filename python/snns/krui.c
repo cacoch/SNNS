@@ -1571,50 +1571,50 @@ snns_getNoOfSpecialOutputUnits(PyObject *self, PyObject *args)
 	return PyInt_FromLong(krui_getNoOfSpecialOutputUnits());
 }	
 
-//static PyObject *
-//snns_getFirstUnit(PyObject *self, PyObject *args)
-//{	
-//	return PyInt_FromLong(krui_getFirstUnit());
-//}	
-//
-//static PyObject *
-//snns_getNextUnit(PyObject *self, PyObject *args)
-//{	
-//	return PyInt_FromLong(krui_getNextUnit());
-//}	
-//
+static PyObject *
+snns_getFirstUnit(PyObject *self, PyObject *args)
+{	
+	return PyInt_FromLong(krui_getFirstUnit());
+}	
+
+static PyObject *
+snns_getNextUnit(PyObject *self, PyObject *args)
+{	
+	return PyInt_FromLong(krui_getNextUnit());
+}	
+
 //static PyObject *
 //snns_setCurrentUnit(PyObject *self, PyObject *args)
 //{	
 //	return snns_int_arg_with_err(args,krui_setCurrentUnit);
 //}	
-//
-//static PyObject *
-//snns_getCurrentUnit(PyObject *self, PyObject *args)
-//{	
-//	return PyInt_FromLong(krui_getCurrentUnit());
-//}	
-//
-//typedef char * (*snns_int_arg_char_ret_func)(int);
-//
-//static PyObject *
-//snns_int_arg_char_ret(PyObject *arg, snns_int_arg_char_ret_func func)
-//{
-//	int i;
-//	char *ret;
-//	i = PyInt_AsLong(arg);
-//	if(PyErr_Occurred()) return NULL;
-//	ret = func(i);
-//	if(ret) return PyString_FromString(ret);
-//	else return Py_BuildValue("");
-//}	
-//
-//static PyObject *
-//snns_getUnitName(PyObject *self, PyObject *args)
-//{
-//	return snns_int_arg_char_ret(args,krui_getUnitName);
-//}	
-//
+
+static PyObject *
+snns_getCurrentUnit(PyObject *self, PyObject *args)
+{	
+	return PyInt_FromLong(krui_getCurrentUnit());
+}	
+
+typedef char * (*snns_int_arg_char_ret_func)(int);
+
+static PyObject *
+snns_int_arg_char_ret(PyObject *arg, snns_int_arg_char_ret_func func)
+{
+	int i;
+	char *ret;
+	i = PyInt_AsLong(arg);
+	if(PyErr_Occurred()) return NULL;
+	ret = func(i);
+	if(ret) return PyString_FromString(ret);
+	else return Py_BuildValue("");
+}	
+
+static PyObject *
+snns_getUnitName(PyObject *self, PyObject *args)
+{
+	return snns_int_arg_char_ret(args,krui_getUnitName);
+}	
+
 //typedef krui_err (*snns_int_char_args_with_err_func)(int, char *);
 //
 //static PyObject *
@@ -1661,13 +1661,13 @@ snns_getNoOfSpecialOutputUnits(PyObject *self, PyObject *args)
 //{
 //	return snns_int_arg_char_ret(args,krui_getUnitActFuncName);
 //}	
-//
-//static PyObject *
-//snns_getUnitFTypeName(PyObject *self, PyObject *args)
-//{
-//	return snns_int_arg_char_ret(args,krui_getUnitFTypeName);
-//}	
-//
+
+static PyObject *
+snns_getUnitFTypeName(PyObject *self, PyObject *args)
+{
+	return snns_int_arg_char_ret(args,krui_getUnitFTypeName);
+}	
+
 //static PyObject *
 //snns_setUnitOutFunc(PyObject *self, PyObject *args)
 //{
@@ -2265,11 +2265,11 @@ static PyMethodDef MylibMethods[] = {
 //     {"getUnitActFuncName",snns_getUnitActFuncName, METH_O,
 //      "getUnitActFuncName(unit number) -> activation function\n\n"
 //      "Gets the name of the activation function of the given unit"},
-//     
-//     {"getUnitFTypeName",snns_getUnitFTypeName, METH_O,
-//      "getUnitFTypeName(unit number) -> f-type\n\n"
-//      "Gets the name of the f-type of the given unit"},
-//     
+     
+     {"getUnitFTypeName",snns_getUnitFTypeName, METH_O,
+      "getUnitFTypeName(unit number) -> f-type\n\n"
+      "Gets the name of the f-type of the given unit"},
+     
 //     {"searchNextUnitName",snns_searchNextUnitName, METH_NOARGS,
 //      "searchNextUnitName() -> unit number\n\n"
 //      "Searches for the next unit with the name of the last searchUnitName\n"
@@ -2283,26 +2283,26 @@ static PyMethodDef MylibMethods[] = {
 //     {"setUnitName",snns_setUnitName, METH_VARARGS,
 //      "setUnitName(unit number, name)\n\n"
 //      "Sets the name of the given unit to the given value"},
-//     
-//     {"getUnitName",snns_getUnitName, METH_O,
-//      "getUnitName(unit number) -> name\n\n"
-//      "Gets the name of the given unit"},
-//     
-//     {"getCurrentUnit",snns_getCurrentUnit, METH_NOARGS,
-//      "getCurrentUnit() -> unit number\n\n"
-//      "Gets the number of the current unit or 0"},
-//     
+     
+     {"getUnitName",snns_getUnitName, METH_O,
+      "getUnitName(unit number) -> name\n\n"
+      "Gets the name of the given unit"},
+     
+     {"getCurrentUnit",snns_getCurrentUnit, METH_NOARGS,
+      "getCurrentUnit() -> unit number\n\n"
+      "Gets the number of the current unit or 0"},
+     
 //     {"setCurrentUnit",snns_setCurrentUnit, METH_O,
 //      "setCurrentUnit(unit number)\n\n"
 //      "Makes the given unit number the current unit"},
-//     
-//     {"getNextUnit",snns_getNextUnit, METH_NOARGS,
-//      "getNextUnit() -> unit number\n\n"
-//      "Selects the next unit in the network and makes it current"},
-//     
-//     {"getFirstUnit",snns_getFirstUnit, METH_NOARGS,
-//      "getFirstUnit() -> unit number\n\n"
-//      "Selects the first unit of the network and makes it current"},
+     
+     {"getNextUnit",snns_getNextUnit, METH_NOARGS,
+      "getNextUnit() -> unit number\n\n"
+      "Selects the next unit in the network and makes it current"},
+     
+     {"getFirstUnit",snns_getFirstUnit, METH_NOARGS,
+      "getFirstUnit() -> unit number\n\n"
+      "Selects the first unit of the network and makes it current"},
      
      {"getNoOfUnits",snns_getNoOfUnits, METH_NOARGS,
       "getNoOfUnits() -> number of units\n\n"
