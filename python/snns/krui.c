@@ -1242,36 +1242,36 @@ snns_getFTypeActFuncName(PyObject *self, PyObject *args)
 //	if(err) return make_exception(err);	
 //	return Py_BuildValue("");
 //}
-//
-//static PyObject *
-//snns_getFirstPredUnit(PyObject *self, PyObject *args)
-//{
-//	FlintType strength;
-//	int ret;
-//	ret = krui_getFirstPredUnit(&strength);
-//	return Py_BuildValue("(if)",ret,strength);
-//}
-//
-//static PyObject *
-//snns_getFirstPredUnitAndData(PyObject *self, PyObject *args)
-//{
-//	FlintType strength;
-//	float a,b,c;
-//	int ret;
-//	a = b = c = 0;
-//	ret = krui_getFirstPredUnitAndData(&strength,&a,&b,&c);
-//	return Py_BuildValue("(iffff)",ret,strength,a,b,c);
-//}
-//
-//
-//static PyObject *
-//snns_getNextPredUnit(PyObject *self, PyObject *args)
-//{
-//	FlintType strength;
-//	int ret;
-//	ret = krui_getNextPredUnit(&strength);
-//	return Py_BuildValue("(if)",ret,strength);
-//}
+
+static PyObject *
+snns_getFirstPredUnit(PyObject *self, PyObject *args)
+{
+	FlintType strength;
+	int ret;
+	ret = krui_getFirstPredUnit(&strength);
+	return Py_BuildValue("(if)",ret,strength);
+}
+
+static PyObject *
+snns_getFirstPredUnitAndData(PyObject *self, PyObject *args)
+{
+	FlintType strength;
+	float a,b,c;
+	int ret;
+	a = b = c = 0;
+	ret = krui_getFirstPredUnitAndData(&strength,&a,&b,&c);
+	return Py_BuildValue("(iffff)",ret,strength,a,b,c);
+}
+
+
+static PyObject *
+snns_getNextPredUnit(PyObject *self, PyObject *args)
+{
+	FlintType strength;
+	int ret;
+	ret = krui_getNextPredUnit(&strength);
+	return Py_BuildValue("(if)",ret,strength);
+}
 
 static PyObject *
 snns_getNextPredUnitAndData(PyObject *self, PyObject *args)
@@ -1510,21 +1510,21 @@ snns_deleteAllInputLinks(PyObject *self, PyObject *args)
 //{
 //	return snns_string_arg_with_err(args,krui_setSite);
 //}	
-//
-//static PyObject *
-//snns_getSiteValue(PyObject *self, PyObject *args)
-//{
-//	return PyFloat_FromDouble(krui_getSiteValue());
-//}	
-//
-//static PyObject *
-//snns_getSiteFuncName(PyObject *self, PyObject *args)
-//{
-//	char *ret;
-//	ret = krui_getSiteFuncName();
-//	if(ret) return PyString_FromString(ret);
-//	else return Py_BuildValue("");
-//}	
+
+static PyObject *
+snns_getSiteValue(PyObject *self, PyObject *args)
+{
+	return PyFloat_FromDouble(krui_getSiteValue());
+}	
+
+static PyObject *
+snns_getSiteFuncName(PyObject *self, PyObject *args)
+{
+	char *ret;
+	ret = krui_getSiteFuncName();
+	if(ret) return PyString_FromString(ret);
+	else return Py_BuildValue("");
+}	
 
 static PyObject *
 snns_getSiteName(PyObject *self, PyObject *args)
@@ -1546,13 +1546,13 @@ snns_getSiteName(PyObject *self, PyObject *args)
 //{
 //	return snns_string_arg_with_err(args,krui_addSite);
 //}	
-//
-//static PyObject *
-//snns_deleteSite(PyObject *self, PyObject *args)
-//{	
-//	return PyInt_FromLong(krui_deleteSite());
-//}	
-//
+
+static PyObject *
+snns_deleteSite(PyObject *self, PyObject *args)
+{	
+	return PyInt_FromLong(krui_deleteSite());
+}	
+
 //static PyObject *
 //snns_getNoOfUnits(PyObject *self, PyObject *args)
 //{	
@@ -2349,15 +2349,15 @@ static PyMethodDef MylibMethods[] = {
 //     {"setSite",snns_setSite, METH_O,
 //      "setSite(site name)\n\n"
 //      "Initializes the given site of the current unit"},
-//     
-//     {"getSiteValue",snns_getSiteValue, METH_NOARGS,
-//      "getSiteValue() -> site function\n\n"
-//      "Returns the value of the site function of the current site"},
-//     
-//     {"getSiteFuncName",snns_getSiteFuncName, METH_NOARGS,
-//      "getSiteFuncName() -> site function\n\n"
-//      "Returns the name of the site function of the current site"},
-//     
+     
+     {"getSiteValue",snns_getSiteValue, METH_NOARGS,
+      "getSiteValue() -> site function\n\n"
+      "Returns the value of the site function of the current site"},
+     
+     {"getSiteFuncName",snns_getSiteFuncName, METH_NOARGS,
+      "getSiteFuncName() -> site function\n\n"
+      "Returns the name of the site function of the current site"},
+     
 //     {"setSiteName",snns_setSiteName, METH_O,
 //      "setSiteName(site name)\n\n"
 //      "Changes the name (and thereby the site function) of the current site.\n"
@@ -2370,32 +2370,32 @@ static PyMethodDef MylibMethods[] = {
 //     {"addSite",snns_addSite, METH_O,
 //      "addSite(site name)\n\n"
 //      "Adds a new site to the current unit. The new site is inserted in front."},
-//     
-//     {"deleteSite",snns_deleteSite, METH_NOARGS,
-//      "deleteSite() -> boolean\n\n"
-//      "Deletes the current site of the current unit and all input connections\n"
-//      "to that site. The f-type of the unit is also erased.\n"
-//      "If more sites are available, the next one is made current and 1 is\n"
-//      "returned."},
-//     
-//     {"getFirstPredUnit",snns_getFirstPredUnit,METH_NOARGS,
-//      "getFirstPredUnit() -> (unit number, connection strength)\n\n"
-//      "Determines predecessor unit number and connection strength of current\n"
-//      "unit and site.\n"
-//      "If a predecessor unit exists (number not 0), the connection becomes\n"
-//      "the current connection."},
-//     
-//     {"getFirstPredUnitAndData",snns_getFirstPredUnitAndData,METH_NOARGS,
-//      "getFirstPredUnitAndData() -> (unit number, connection strength,\n"
-//      "                              internal 1, internal 2, internal 3)\n\n"
-//      "Like getFirstPredUnit, but also returns three internal values."},
-//     
-//     {"getNextPredUnit",snns_getNextPredUnit,METH_NOARGS,
-//      "getNextPredUnit() -> (unit number, connection strength)\n\n"
-//      "Determines another predecessor unit number and connection strength\n"
-//      "of current unit and site.\n"
-//      "Otherwise like getFirstPredUnit()"},
-//     
+     
+     {"deleteSite",snns_deleteSite, METH_NOARGS,
+      "deleteSite() -> boolean\n\n"
+      "Deletes the current site of the current unit and all input connections\n"
+      "to that site. The f-type of the unit is also erased.\n"
+      "If more sites are available, the next one is made current and 1 is\n"
+      "returned."},
+     
+     {"getFirstPredUnit",snns_getFirstPredUnit,METH_NOARGS,
+      "getFirstPredUnit() -> (unit number, connection strength)\n\n"
+      "Determines predecessor unit number and connection strength of current\n"
+      "unit and site.\n"
+      "If a predecessor unit exists (number not 0), the connection becomes\n"
+      "the current connection."},
+     
+     {"getFirstPredUnitAndData",snns_getFirstPredUnitAndData,METH_NOARGS,
+      "getFirstPredUnitAndData() -> (unit number, connection strength,\n"
+      "                              internal 1, internal 2, internal 3)\n\n"
+      "Like getFirstPredUnit, but also returns three internal values."},
+     
+     {"getNextPredUnit",snns_getNextPredUnit,METH_NOARGS,
+      "getNextPredUnit() -> (unit number, connection strength)\n\n"
+      "Determines another predecessor unit number and connection strength\n"
+      "of current unit and site.\n"
+      "Otherwise like getFirstPredUnit()"},
+     
      {"getNextPredUnitAndData",snns_getNextPredUnitAndData,METH_NOARGS,
       "getNextPredUnitAndData() -> (unit number, connection strength,\n"
       "                             internal 1, internal 2, internal 3)\n\n"
