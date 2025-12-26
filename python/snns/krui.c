@@ -1964,17 +1964,17 @@ snns_getUnitValueA(PyObject *self, PyObject *args)
 	return PyFloat_FromDouble(ret);
 }
 
-//static PyObject *
-//snns_setUnitTType(PyObject *self, PyObject *args)
-//{
-//	int a,b;
-//	krui_err err;
-//	if(!PyArg_ParseTuple(args,"ii",&a,&b)) return NULL;
-//	err = krui_setUnitTType(a,b);
-//	if(err) return make_exception(err);
-//	else return Py_BuildValue("");
-//}
-//
+static PyObject *
+snns_setUnitTType(PyObject *self, PyObject *args)
+{
+	int a,b;
+	krui_err err;
+	if(!PyArg_ParseTuple(args,"ii",&a,&b)) return NULL;
+	err = krui_setUnitTType(a,b);
+	if(err) return make_exception(err);
+	else return Py_BuildValue("");
+}
+
 //static PyObject *
 //snns_setUnitValueA(PyObject *self, PyObject *args)
 //{
@@ -2138,9 +2138,9 @@ static PyMethodDef MylibMethods[] = {
       "createDefaultUnit() -> unit number\n\n"
       "Creates a unit with the default values of the kernel"},
      
-//     {"setUnitTType",snns_setUnitTType,METH_VARARGS,
-//      "setUnitTType(unit number, io_type)\n\n"
-//      "Sets the IO-Type (aka T-type) of the given unit"},
+     {"setUnitTType",snns_setUnitTType,METH_VARARGS,
+      "setUnitTType(unit number, io_type)\n\n"
+      "Sets the IO-Type (aka T-type) of the given unit"},
 
      {"freezeUnit",snns_freezeUnit,METH_O,
       "freezeUnit(unit number)\n\n"
