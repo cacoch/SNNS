@@ -1148,16 +1148,16 @@ snns_getFTypeName(PyObject *self, PyObject *args)
 //{
 //	return snns_string_arg_with_err(args,krui_setFTypeName);
 //}
-//
-//static PyObject *
-//snns_getFTypeActFuncName(PyObject *self, PyObject *args)
-//{
-//	char *funcname;
-//	funcname = krui_getFTypeActFuncName();
-//	if(funcname) return PyString_FromString(funcname);
-//	else return Py_BuildValue("");
-//}
-//
+
+static PyObject *
+snns_getFTypeActFuncName(PyObject *self, PyObject *args)
+{
+	char *funcname;
+	funcname = krui_getFTypeActFuncName();
+	if(funcname) return PyString_FromString(funcname);
+	else return Py_BuildValue("");
+}
+
 //static PyObject *
 //snns_setFTypeActFunc(PyObject *self, PyObject *args)
 //{
@@ -2486,11 +2486,11 @@ static PyMethodDef MylibMethods[] = {
 //     {"setFTypeName",snns_setFTypeName,METH_O,
 //      "setFTypeName(ftype name)\n\n"
 //      "Changes the name of the current prototype"},
-//     
-//     {"getFTypeActFuncName",snns_getFTypeActFuncName,METH_NOARGS,
-//      "getFTypeActFuncName()\n\n"
-//      "Gets the name of the activation function of the current prototype"},
-//     
+     
+     {"getFTypeActFuncName",snns_getFTypeActFuncName,METH_NOARGS,
+      "getFTypeActFuncName()\n\n"
+      "Gets the name of the activation function of the current prototype"},
+     
 //     {"setFTypeActFunc",snns_setFTypeActFunc, METH_O,
 //      "setFTypeActFunc(activation function)\n\n"
 //      "Changes the activation function of the current prototype"},
