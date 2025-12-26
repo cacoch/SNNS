@@ -1475,18 +1475,18 @@ snns_deleteAllInputLinks(PyObject *self, PyObject *args)
 //	if(PyErr_Occurred()) return NULL;
 //	return dict;
 //}	
-//
-//static PyObject *
-//snns_getSiteTableFuncName(PyObject *self, PyObject *args)
-//{	
-//	char *a,*b;
-//	a = PyString_AsString(args);
-//	if(PyErr_Occurred()) return NULL;
-//	b = krui_getSiteTableFuncName(a);
-//	if(b) return PyString_FromString(b);
-//	else return Py_BuildValue("");
-//}	
-//
+
+static PyObject *
+snns_getSiteTableFuncName(PyObject *self, PyObject *args)
+{	
+	char *a,*b;
+	a = PyString_AsString(args);
+	if(PyErr_Occurred()) return NULL;
+	b = krui_getSiteTableFuncName(a);
+	if(b) return PyString_FromString(b);
+	else return Py_BuildValue("");
+}	
+
 //static PyObject *
 //snns_setFirstSite(PyObject *self, PyObject *args)
 //{	
@@ -1553,24 +1553,24 @@ snns_deleteSite(PyObject *self, PyObject *args)
 	return PyInt_FromLong(krui_deleteSite());
 }	
 
-//static PyObject *
-//snns_getNoOfUnits(PyObject *self, PyObject *args)
-//{	
-//	return PyInt_FromLong(krui_getNoOfUnits());
-//}	
-//
-//static PyObject *
-//snns_getNoOfSpecialInputUnits(PyObject *self, PyObject *args)
-//{	
-//	return PyInt_FromLong(krui_getNoOfSpecialInputUnits());
-//}	
-//
-//static PyObject *
-//snns_getNoOfSpecialOutputUnits(PyObject *self, PyObject *args)
-//{	
-//	return PyInt_FromLong(krui_getNoOfSpecialOutputUnits());
-//}	
-//
+static PyObject *
+snns_getNoOfUnits(PyObject *self, PyObject *args)
+{	
+	return PyInt_FromLong(krui_getNoOfUnits());
+}	
+
+static PyObject *
+snns_getNoOfSpecialInputUnits(PyObject *self, PyObject *args)
+{	
+	return PyInt_FromLong(krui_getNoOfSpecialInputUnits());
+}	
+
+static PyObject *
+snns_getNoOfSpecialOutputUnits(PyObject *self, PyObject *args)
+{	
+	return PyInt_FromLong(krui_getNoOfSpecialOutputUnits());
+}	
+
 //static PyObject *
 //snns_getFirstUnit(PyObject *self, PyObject *args)
 //{	
@@ -2303,19 +2303,19 @@ static PyMethodDef MylibMethods[] = {
 //     {"getFirstUnit",snns_getFirstUnit, METH_NOARGS,
 //      "getFirstUnit() -> unit number\n\n"
 //      "Selects the first unit of the network and makes it current"},
-//     
-//     {"getNoOfUnits",snns_getNoOfUnits, METH_NOARGS,
-//      "getNoOfUnits() -> number of units\n\n"
-//      "Get the number of units in the neural net"},
-//     
-//     {"getNoOfSpecialInputUnits",snns_getNoOfSpecialInputUnits, METH_NOARGS,
-//      "getNoOfSpecialInputUnits() -> number of special input units\n\n"
-//      "Get the number of special input units in the neural net"},
-//     
-//     {"getNoOfSpecialOutputUnits",snns_getNoOfSpecialOutputUnits, METH_NOARGS,
-//      "getNoOfSpecialOutputUnits() -> number of special output units\n\n"
-//      "Get the number of special output units in the neural net"},
-//     
+     
+     {"getNoOfUnits",snns_getNoOfUnits, METH_NOARGS,
+      "getNoOfUnits() -> number of units\n\n"
+      "Get the number of units in the neural net"},
+     
+     {"getNoOfSpecialInputUnits",snns_getNoOfSpecialInputUnits, METH_NOARGS,
+      "getNoOfSpecialInputUnits() -> number of special input units\n\n"
+      "Get the number of special input units in the neural net"},
+     
+     {"getNoOfSpecialOutputUnits",snns_getNoOfSpecialOutputUnits, METH_NOARGS,
+      "getNoOfSpecialOutputUnits() -> number of special output units\n\n"
+      "Get the number of special output units in the neural net"},
+     
 //     {"createSiteTableEntry",snns_createSiteTableEntry, METH_VARARGS,
 //      "createSiteTableEntry(site name, site function)\n\n"
 //      "Defines the correspondence between site function and name of the site"},
@@ -2331,11 +2331,11 @@ static PyMethodDef MylibMethods[] = {
 //     {"getSiteTable",snns_getSiteTable, METH_NOARGS,
 //      "getSiteTable() -> {site name : site function}\n\n"
 //      "Returns a dictionary of site names and site functions"},	     
-//     
-//     {"getSiteTableFuncName",snns_getSiteTableFuncName, METH_O,
-//      "getSiteTableFuncName(site name) -> site function\n\n"
-//      "Returns the name of the site function assigned to the site or None"},
-//     
+     
+     {"getSiteTableFuncName",snns_getSiteTableFuncName, METH_O,
+      "getSiteTableFuncName(site name) -> site function\n\n"
+      "Returns the name of the site function assigned to the site or None"},
+     
 //     {"setFirstSite",snns_setFirstSite,METH_NOARGS,
 //      "setFirstSite() -> boolean\n\n"
 //      "Initializes the first site at the current unit.\n"
