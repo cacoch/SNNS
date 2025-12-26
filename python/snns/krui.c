@@ -355,12 +355,12 @@ snns_setSeedNo(PyObject *self, PyObject *arg)
 //{
 //	return snns_int_arg_with_err(arg,krui_setPatternNo);
 //}
-//
-//static PyObject *
-//snns_setCurrPatSet(PyObject *self, PyObject *arg)
-//{
-//	return snns_int_arg_with_err(arg,krui_setCurrPatSet);
-//}
+
+static PyObject *
+snns_setCurrPatSet(PyObject *self, PyObject *arg)
+{
+	return snns_int_arg_with_err(arg,krui_setCurrPatSet);
+}
 
 static PyObject *
 snns_deletePattern(PyObject *self, PyObject *arg)
@@ -413,12 +413,12 @@ snns_shuffleSubPatterns(PyObject *self, PyObject *arg)
 //{
 //	return Py_BuildValue("i",krui_getNoOfOutputUnits());
 //}
-//
-//static PyObject *
-//snns_getNoOfInputUnits(PyObject *self, PyObject *arg)
-//{
-//	return Py_BuildValue("i",krui_getNoOfInputUnits());
-//}
+
+static PyObject *
+snns_getNoOfInputUnits(PyObject *self, PyObject *arg)
+{
+	return Py_BuildValue("i",krui_getNoOfInputUnits());
+}
 
 static PyObject *
 snns_getPatternNo(PyObject *self, PyObject *arg)
@@ -426,17 +426,17 @@ snns_getPatternNo(PyObject *self, PyObject *arg)
 	return Py_BuildValue("i",krui_getPatternNo());
 }
 
-//static PyObject *
-//snns_getNoOfPatterns(PyObject *self, PyObject *arg)
-//{
-//	return Py_BuildValue("i",krui_getNoOfPatterns());
-//}
-//
-//static PyObject *
-//snns_getTotalNoOfSubPatterns(PyObject *self, PyObject *arg)
-//{
-//	return Py_BuildValue("i",krui_getTotalNoOfSubPatterns());
-//}
+static PyObject *
+snns_getNoOfPatterns(PyObject *self, PyObject *arg)
+{
+	return Py_BuildValue("i",krui_getNoOfPatterns());
+}
+
+static PyObject *
+snns_getTotalNoOfSubPatterns(PyObject *self, PyObject *arg)
+{
+	return Py_BuildValue("i",krui_getTotalNoOfSubPatterns());
+}
 
 static PyObject *
 snns_newPattern(PyObject *self, PyObject *arg)
@@ -2689,26 +2689,26 @@ static PyMethodDef MylibMethods[] = {
 //     {"getNoOfOutputUnits",snns_getNoOfOutputUnits, METH_NOARGS,
 //      "getNoOfOutputUnits() -> number of output units\n\n"
 //      "Returns the number of output units"},
-//     
-//     {"getNoOfInputUnits",snns_getNoOfInputUnits, METH_NOARGS,
-//      "getNoOfInputUnits() -> number of input units\n\n"
-//      "Returns the number of input units"},
-//     
-//     {"getNoOfPatterns",snns_getNoOfPatterns, METH_NOARGS,
-//      "getNoOfPatterns() -> number of patterns\n\n"
-//      "Returns the number of patterns in the current pattern set"},
-//     
-//     {"getTotalNoOfSubPatterns",snns_getTotalNoOfSubPatterns, METH_NOARGS,
-//      "getTotalNoOfSubPatterns() -> number of subpatterns\n\n"
-//      "Returns the total number of subpatterns contained in all patterns of the current pattern set"},
-//     
+     
+     {"getNoOfInputUnits",snns_getNoOfInputUnits, METH_NOARGS,
+      "getNoOfInputUnits() -> number of input units\n\n"
+      "Returns the number of input units"},
+     
+     {"getNoOfPatterns",snns_getNoOfPatterns, METH_NOARGS,
+      "getNoOfPatterns() -> number of patterns\n\n"
+      "Returns the nu//mber of patterns in the current pattern set"},
+                     //
+     {"getTotalNoOfSu//bPatterns",snns_getTotalNoOfSubPatterns, METH_NOARGS,
+      "getTotalNoOfSu//bPatterns() -> number of subpatterns\n\n"
+      "Returns the total number of subpatterns contained in all patterns of the current pattern set"},
+     
 //     {"allocNewPatternSet",snns_allocNewPatternSet,METH_NOARGS,
 //      "allocNewPatternSet() -> pattern set number\n\n"
 //      "Allocates a new pattern set, returns its number"},
-//     
-//     {"setCurrPatSet",snns_setCurrPatSet,METH_O,
-//      "setCurrPatSet(pattern set number)\n\n"
-//      "Chooses the number of the current pattern set"},
+     
+     {"setCurrPatSet",snns_setCurrPatSet,METH_O,
+      "setCurrPatSet(pattern set number)\n\n"
+      "Chooses the number of the current pattern set"},
      
      {"deletePatSet",snns_deletePatSet,METH_O,
       "deletePatSet(pattern set number)\n\n"
