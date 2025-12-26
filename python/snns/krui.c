@@ -1814,26 +1814,26 @@ snns_setUnitLayerNo(PyObject *self, PyObject *args)
 	return Py_BuildValue("");
 }
 
-//static bool fillPosType(PyObject *arg, struct PosType *pos)
-//{
-//	int i;
-//	if(!PySequence_Check(arg)) return FALSE;
-//	if(PySequence_Size(arg) != 3) {
-//		PyErr_SetString(PyExc_RuntimeError,
-//		 "Expecting three values for a position definition");
-//		 return FALSE;
-//	}
-//	i = PyInt_AsLong(PySequence_GetItem(arg,0));
-//	if(!short_check(i)) return FALSE;
-//	pos->x = i;
-//	i = PyInt_AsLong(PySequence_GetItem(arg,1));
-//	if(!short_check(i)) return FALSE;
-//	pos->y = i;
-//	i = PyInt_AsLong(PySequence_GetItem(arg,2));
-//	if(!short_check(i)) return FALSE;
-//	pos->z = i;
-//	return TRUE;
-//}
+static bool fillPosType(PyObject *arg, struct PosType *pos)
+{
+	int i;
+	if(!PySequence_Check(arg)) return FALSE;
+	if(PySequence_Size(arg) != 3) {
+		PyErr_SetString(PyExc_RuntimeError,
+		 "Expecting three values for a position definition");
+		 return FALSE;
+	}
+	i = PyInt_AsLong(PySequence_GetItem(arg,0));
+	if(!short_check(i)) return FALSE;
+	pos->x = i;
+	i = PyInt_AsLong(PySequence_GetItem(arg,1));
+	if(!short_check(i)) return FALSE;
+	pos->y = i;
+	i = PyInt_AsLong(PySequence_GetItem(arg,2));
+	if(!short_check(i)) return FALSE;
+	pos->z = i;
+	return TRUE;
+}
 
 static PyObject *
 buildPosType(struct PosType *pos)
@@ -1852,39 +1852,39 @@ snns_getUnitPosition(PyObject *self, PyObject *args)
 	return buildPosType(&pos);
 }
 
-//static PyObject *
-//snns_setUnitPosition(PyObject *self, PyObject *args)
-//{
-//	int unit;
-//	struct PosType pos;
-//	PyObject *seq;
-//	if(!PyArg_ParseTuple(args,"iO",&unit,&seq) ||
-//	   !fillPosType(seq,&pos)) return NULL;
-//	krui_setUnitPosition(unit, &pos);
-//	return Py_BuildValue("");
-//}
-//
-//static PyObject *
-//snns_getUnitNoAtPosition(PyObject *self, PyObject *args)
-//{
-//	struct PosType pos;
-//	int net;
-//	PyObject *seq;
-//	if(!PyArg_ParseTuple(args,"Oi",&seq, &net) ||
-//	   !short_check(net) || !fillPosType(seq,&pos)) return NULL;
-//	return PyInt_FromLong(krui_getUnitNoAtPosition(&pos,net));   
-//}
-//
-//static PyObject *
-//snns_getUnitNoNearPosition(PyObject *self, PyObject *args)
-//{
-//	struct PosType pos;
-//	int net,range,width;
-//	PyObject *seq;
-//	if(!PyArg_ParseTuple(args,"Oiii",&seq, &net,&range,&width) ||
-//	   !short_check(net) || !fillPosType(seq,&pos)) return NULL;
-//	return PyInt_FromLong(krui_getUnitNoNearPosition(&pos,net,range,width));   
-//}
+static PyObject *
+snns_setUnitPosition(PyObject *self, PyObject *args)
+{
+	int unit;
+	struct PosType pos;
+	PyObject *seq;
+	if(!PyArg_ParseTuple(args,"iO",&unit,&seq) ||
+	   !fillPosType(seq,&pos)) return NULL;
+	krui_setUnitPosition(unit, &pos);
+	return Py_BuildValue("");
+}
+
+static PyObject *
+snns_getUnitNoAtPosition(PyObject *self, PyObject *args)
+{
+	struct PosType pos;
+	int net;
+	PyObject *seq;
+	if(!PyArg_ParseTuple(args,"Oi",&seq, &net) ||
+	   !short_check(net) || !fillPosType(seq,&pos)) return NULL;
+	return PyInt_FromLong(krui_getUnitNoAtPosition(&pos,net));   
+}
+
+static PyObject *
+snns_getUnitNoNearPosition(PyObject *self, PyObject *args)
+{
+	struct PosType pos;
+	int net,range,width;
+	PyObject *seq;
+	if(!PyArg_ParseTuple(args,"Oiii",&seq, &net,&range,&width) ||
+	   !short_check(net) || !fillPosType(seq,&pos)) return NULL;
+	return PyInt_FromLong(krui_getUnitNoNearPosition(&pos,net,range,width));   
+}
 
 static PyObject *
 snns_getUnitCenters(PyObject *self, PyObject *args)
@@ -1947,11 +1947,11 @@ snns_freezeUnit(PyObject *self, PyObject *args)
 	return snns_int_arg_with_err(args,krui_freezeUnit);
 }
 
-//static PyObject *
-//snns_unfreezeUnit(PyObject *self, PyObject *args)
-//{
-//	return snns_int_arg_with_err(args,krui_unfreezeUnit);
-//}
+static PyObject *
+snns_unfreezeUnit(PyObject *self, PyObject *args)
+{
+	return snns_int_arg_with_err(args,krui_unfreezeUnit);
+}
 
 static PyObject *
 snns_getUnitValueA(PyObject *self, PyObject *args)
@@ -2146,9 +2146,9 @@ static PyMethodDef MylibMethods[] = {
       "freezeUnit(unit number)\n\n"
       "Freezes the output and activation value of the given unit"},
      
-//     {"unfreezeUnit",snns_unfreezeUnit,METH_O,
-//      "unfreezeUnit(unit number)\n\n"
-//      "Unfreezes the output and activation value of the given unit"},
+     {"unfreezeUnit",snns_unfreezeUnit,METH_O,
+      "unfreezeUnit(unit number)\n\n"
+      "Unfreezes the output and activation value of the given unit"},
      
      {"getUnitValueA",snns_getUnitValueA,METH_O,
       "getUnitValueA(unit number) -> float\n\n" 
@@ -2182,21 +2182,21 @@ static PyMethodDef MylibMethods[] = {
       "Returns the 3D transformation center of the specified unit and center\n"
       "number. (Currently the only valid center number seems to be 0)."},
      
-//     {"getUnitNoNearPosition",snns_getUnitNoNearPosition, METH_VARARGS,
-//      "getUnitNoNearPosition(integer sequence giving position, subnet number,\n"
-//      "                      range, grid width) -> unit number\n\n"
-//      "Gets the number of the unit near the given position and in the given\n"
-//      "subnet. 'Near' is defined by a range and a grid width."},
-//     
-//     {"getUnitNoAtPosition",snns_getUnitNoAtPosition, METH_VARARGS,
-//      "getUnitNoAtPosition(integer sequence giving position,\n"
-//      "                    subnet number) -> unit number\n\n"
-//      "Gets the number of the unit at the given position and in the given\n"
-//      "subnet"},
-//     
-//     {"setUnitPosition",snns_setUnitPosition, METH_VARARGS,
-//      "setUnitPosition(unit number, integer sequence giving position)\n\n"
-//      "Sets the graphical position of the given unit"},
+     {"getUnitNoNearPosition",snns_getUnitNoNearPosition, METH_VARARGS,
+      "getUnitNoNearPosition(integer sequence giving position, subnet number,\n"
+      "                      range, grid width) -> unit number\n\n"
+      "Gets the number of the unit near the given position and in the given\n"
+      "subnet. 'Near' is defined by a range and a grid width."},
+     
+     {"getUnitNoAtPosition",snns_getUnitNoAtPosition, METH_VARARGS,
+      "getUnitNoAtPosition(integer sequence giving position,\n"
+      "                    subnet number) -> unit number\n\n"
+      "Gets the number of the unit at the given position and in the given\n"
+      "subnet"},
+     
+     {"setUnitPosition",snns_setUnitPosition, METH_VARARGS,
+      "setUnitPosition(unit number, integer sequence giving position)\n\n"
+      "Sets the graphical position of the given unit"},
      
      {"getUnitPosition",snns_getUnitPosition, METH_O,
       "getUnitPosition(unit number) -> integer sequence giving position\n\n"
