@@ -372,13 +372,13 @@ snns_deletePattern(PyObject *self, PyObject *arg)
 	return Py_BuildValue("");
 }
 
-//static PyObject *
-//snns_deleteAllPatterns(PyObject *self, PyObject *arg)
-//{
-//	krui_err err;
-//	krui_deleteAllPatterns();
-//	return Py_BuildValue("");
-//}
+static PyObject *
+snns_deleteAllPatterns(PyObject *self, PyObject *arg)
+{
+	krui_err err;
+	krui_deleteAllPatterns();
+	return Py_BuildValue("");
+}
 
 static PyObject *
 snns_shufflePatterns(PyObject *self, PyObject *arg)
@@ -458,14 +458,14 @@ snns_newPattern(PyObject *self, PyObject *arg)
 //	}
 //	return PyInt_FromLong(i);
 //}
-//
-//static PyObject *
-//snns_resetNet(PyObject *self, PyObject *arg)
-//{
-//	krui_resetNet();
-//	return Py_BuildValue("");
-//}
-//
+
+static PyObject *
+snns_resetNet(PyObject *self, PyObject *arg)
+{
+	krui_resetNet();
+	return Py_BuildValue("");
+}
+
 //static PyObject *
 //snns_getNoOfTTypeUnits(PyObject *self, PyObject *arg)
 //{
@@ -882,12 +882,12 @@ snns_showPattern(PyObject *self, PyObject *arg)
 	return snns_int_arg_with_err(arg,krui_showPattern);
 }
 
-//static PyObject *
-//snns_deletePatSet(PyObject *self, PyObject *arg)
-//{
-//	return snns_int_arg_with_err(arg,krui_deletePatSet);
-//}
-//
+static PyObject *
+snns_deletePatSet(PyObject *self, PyObject *arg)
+{
+	return snns_int_arg_with_err(arg,krui_deletePatSet);
+}
+
 //static PyObject *
 //snns_useClassDistribution(PyObject *self, PyObject *arg)
 //{
@@ -2709,24 +2709,24 @@ static PyMethodDef MylibMethods[] = {
 //     {"setCurrPatSet",snns_setCurrPatSet,METH_O,
 //      "setCurrPatSet(pattern set number)\n\n"
 //      "Chooses the number of the current pattern set"},
-//     
-//     {"deletePatSet",snns_deletePatSet,METH_O,
-//      "deletePatSet(pattern set number)\n\n"
-//      "Deletes all patterns of the pattern set with the given number"},
-//     
+     
+     {"deletePatSet",snns_deletePatSet,METH_O,
+      "deletePatSet(pattern set number)\n\n"
+      "Deletes all patterns of the pattern set with the given number"},
+     
 //     {"getSymbolTable",snns_getSymbolTable,METH_NOARGS,
 //      "getSymbolTable() -> { symbol name : type }\n\n"
 //      "Returns a dictionary of symbols and symbol types (units, sites...)\n"
 //      "Textual representations for the types are in the\n"
 //      "snns.util.nametable_types dictionary."},
-//     
-//     {"resetNet",snns_resetNet,METH_NOARGS,
-//      "resetNet()\n\n"
-//       "Changes all unit activations to the initial activation values"},
-//     
-//     {"deleteAllPatterns",snns_deleteAllPatterns,METH_NOARGS,
-//      "deleteAllPatterns()\n\n"
-//      "Deletes all patterns."},
+     
+     {"resetNet",snns_resetNet,METH_NOARGS,
+      "resetNet()\n\n"
+       "Changes all unit activations to the initial activation values"},
+     
+     {"deleteAllPatterns",snns_deleteAllPatterns,METH_NOARGS,
+      "deleteAllPatterns()\n\n"
+      "Deletes all patterns."},
      
      {"shufflePatterns",snns_shufflePatterns,METH_O,
       "shufflePatterns(boolean shuffle on or off)\n\n"
