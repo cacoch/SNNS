@@ -1341,16 +1341,16 @@ snns_getLinkWeight(PyObject *self, PyObject *args)
 	return PyFloat_FromDouble(krui_getLinkWeight());
 }
 
-//static PyObject *
-//snns_setLinkWeight(PyObject *self, PyObject *args)
-//{
-//	double flt;
-//	flt = PyFloat_AsDouble(args);
-//	if(PyErr_Occurred()) return NULL;
-//	krui_setLinkWeight(flt);
-//	return Py_BuildValue("");
-//}
-//
+static PyObject *
+snns_setLinkWeight(PyObject *self, PyObject *args)
+{
+	double flt;
+	flt = PyFloat_AsDouble(args);
+	if(PyErr_Occurred()) return NULL;
+	krui_setLinkWeight(flt);
+	return Py_BuildValue("");
+}
+
 //static PyObject *
 //snns_createLink(PyObject *self, PyObject *args)
 //{
@@ -1400,25 +1400,25 @@ snns_deleteAllInputLinks(PyObject *self, PyObject *args)
 	return Py_BuildValue("");
 }
 
-//
-//static PyObject *
-//snns_deleteAllOutputLinks(PyObject *self, PyObject *args)
-//{
-//	krui_err err;
-//	err = krui_deleteAllOutputLinks();
-//	if(err) return make_exception(err);
-//	return Py_BuildValue("");
-//}
-//
-//static PyObject *
-//snns_jogWeights(PyObject *self, PyObject *args)
-//{
-//	double minus, plus;
-//	if(!PyArg_ParseTuple(args,"dd",&minus,&plus)) return NULL;
-//	krui_jogWeights(minus,plus);
-//	return Py_BuildValue("");
-//}
-//
+
+static PyObject *
+snns_deleteAllOutputLinks(PyObject *self, PyObject *args)
+{
+	krui_err err;
+	err = krui_deleteAllOutputLinks();
+	if(err) return make_exception(err);
+	return Py_BuildValue("");
+}
+
+static PyObject *
+snns_jogWeights(PyObject *self, PyObject *args)
+{
+	double minus, plus;
+	if(!PyArg_ParseTuple(args,"dd",&minus,&plus)) return NULL;
+	krui_jogWeights(minus,plus);
+	return Py_BuildValue("");
+}
+
 //static PyObject *
 //snns_jogCorrWeights(PyObject *self, PyObject *args)
 //{
@@ -1749,18 +1749,18 @@ snns_getUnitBias(PyObject *self, PyObject *args)
 //	krui_setUnitBias(i,d);
 //	return Py_BuildValue("");
 //}	
-//
-//static PyObject *
-//snns_setUnitOutput(PyObject *self, PyObject *args)
-//{
-//	krui_err err;
-//	int i;
-//	double d;
-//	if(!PyArg_ParseTuple(args,"id",&i,&d)) return NULL;
-//	err = krui_setUnitOutput(i,d);
-//	if(err) return make_exception(err);
-//	return Py_BuildValue("");
-//}	
+
+static PyObject *
+snns_setUnitOutput(PyObject *self, PyObject *args)
+{
+	krui_err err;
+	int i;
+	double d;
+	if(!PyArg_ParseTuple(args,"id",&i,&d)) return NULL;
+	err = krui_setUnitOutput(i,d);
+	if(err) return make_exception(err);
+	return Py_BuildValue("");
+}	
 
 static PyObject *
 snns_getUnitSubnetNo(PyObject *self, PyObject *args)
@@ -2225,11 +2225,11 @@ static PyMethodDef MylibMethods[] = {
 //     {"setUnitActivation",snns_setUnitActivation, METH_VARARGS,
 //      "setUnitActivation(unit number, activation value)\n\n"
 //      "Sets the activation of the given unit to the given value"},
-//     
-//     {"setUnitOutput",snns_setUnitOutput, METH_VARARGS,
-//      "setUnitOutput(unit number, output value)\n\n"
-//      "Sets the output of the given unit to the given value"},
-//     
+     
+     {"setUnitOutput",snns_setUnitOutput, METH_VARARGS,
+      "setUnitOutput(unit number, output value)\n\n"
+      "Sets the output of the given unit to the given value"},
+     
 //     {"setUnitBias",snns_setUnitBias, METH_VARARGS,
 //      "setUnitBias(unit number, bias value)\n\n"
 //      "Sets the bias of the given unit to the given value"},
@@ -2427,10 +2427,10 @@ static PyMethodDef MylibMethods[] = {
       "getLinkWeight() -> weight\n\n"
       "Gets the connection weight of the current link"},
      
-//     {"setLinkWeight",snns_setLinkWeight,METH_O,
-//      "setLinkWeight(weight)\n\n"
-//      "Sets the connection weight of the current link"},
-//     
+     {"setLinkWeight",snns_setLinkWeight,METH_O,
+      "setLinkWeight(weight)\n\n"
+      "Sets the connection weight of the current link"},
+     
 //     {"createLink",snns_createLink,METH_VARARGS,
 //      "createLink(unit number, weight)\n\n"
 //      "Creates a new link between the current unit/site and the given unit\n"
@@ -2450,15 +2450,15 @@ static PyMethodDef MylibMethods[] = {
       "deleteAllInputLinks()\n\n"
       "Deletes all input links of the current unit/site"},
      
-//     {"deleteAllOutputLinks",snns_deleteAllOutputLinks,METH_NOARGS,
-//      "deleteAllOutputLinks()\n\n"
-//      "Deletes all output links of the current unit/site"},
-//     
-//     {"jogWeights",snns_jogWeights,METH_VARARGS,
-//      "jogWeights(lower limit, upper limit)\n\n"
-//      "Adds uniform distributed random values in the given interval to the\n"
-//      "connection weights of the network."},
-//     
+     {"deleteAllOutputLinks",snns_deleteAllOutputLinks,METH_NOARGS,
+      "deleteAllOutputLinks()\n\n"
+      "Deletes all output links of the current unit/site"},
+     
+     {"jogWeights",snns_jogWeights,METH_VARARGS,
+      "jogWeights(lower limit, upper limit)\n\n"
+      "Adds uniform distributed random values in the given interval to the\n"
+      "connection weights of the network."},
+     
 //     {"jogCorrWeights",snns_jogCorrWeights,METH_VARARGS,
 //      "jogCorrWeights(lower limit, upper limit, minimum correlation)\n\n"
 //      "Adds uniform distributed random values in the given interval not to\n"
