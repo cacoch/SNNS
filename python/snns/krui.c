@@ -1272,56 +1272,56 @@ snns_getFTypeActFuncName(PyObject *self, PyObject *args)
 //	ret = krui_getNextPredUnit(&strength);
 //	return Py_BuildValue("(if)",ret,strength);
 //}
-//
-//static PyObject *
-//snns_getNextPredUnitAndData(PyObject *self, PyObject *args)
-//{
-//	FlintType strength;
-//	float a,b,c;
-//	int ret;
-//	a = b = c = 0;
-//	ret = krui_getNextPredUnitAndData(&strength,&a,&b,&c);
-//	return Py_BuildValue("(iffff)",ret,strength,a,b,c);
-//}
-//
-//static PyObject *
-//snns_getCurrentPredUnit(PyObject *self, PyObject *args)
-//{
-//	FlintType strength;
-//	int ret;
-//	ret = krui_getCurrentPredUnit(&strength);
-//	return Py_BuildValue("(if)",ret,strength);
-//}
-//
-//static PyObject *
-//snns_getFirstSuccUnit(PyObject *self, PyObject *args)
-//{
-//	FlintType strength;
-//	int ret,unit;
-//	unit = PyInt_AsLong(args);
-//	if(PyErr_Occurred()) return NULL;
-//	ret = krui_getFirstSuccUnit(unit,&strength);
-//	return Py_BuildValue("(if)",ret,strength);
-//}
-//
-//static PyObject *
-//snns_getNextSuccUnit(PyObject *self, PyObject *args)
-//{
-//	FlintType strength;
-//	int ret;
-//	ret = krui_getNextSuccUnit(&strength);
-//	return Py_BuildValue("(if)",ret,strength);
-//}
-//
-//static PyObject *
-//snns_isConnected(PyObject *self, PyObject *args)
-//{
-//	int ret,unit;
-//	unit = PyInt_AsLong(args);
-//	if(PyErr_Occurred()) return NULL;
-//	ret = krui_isConnected(unit);
-//	return PyInt_FromLong(ret);
-//}
+
+static PyObject *
+snns_getNextPredUnitAndData(PyObject *self, PyObject *args)
+{
+	FlintType strength;
+	float a,b,c;
+	int ret;
+	a = b = c = 0;
+	ret = krui_getNextPredUnitAndData(&strength,&a,&b,&c);
+	return Py_BuildValue("(iffff)",ret,strength,a,b,c);
+}
+
+static PyObject *
+snns_getCurrentPredUnit(PyObject *self, PyObject *args)
+{
+	FlintType strength;
+	int ret;
+	ret = krui_getCurrentPredUnit(&strength);
+	return Py_BuildValue("(if)",ret,strength);
+}
+
+static PyObject *
+snns_getFirstSuccUnit(PyObject *self, PyObject *args)
+{
+	FlintType strength;
+	int ret,unit;
+	unit = PyInt_AsLong(args);
+	if(PyErr_Occurred()) return NULL;
+	ret = krui_getFirstSuccUnit(unit,&strength);
+	return Py_BuildValue("(if)",ret,strength);
+}
+
+static PyObject *
+snns_getNextSuccUnit(PyObject *self, PyObject *args)
+{
+	FlintType strength;
+	int ret;
+	ret = krui_getNextSuccUnit(&strength);
+	return Py_BuildValue("(if)",ret,strength);
+}
+
+static PyObject *
+snns_isConnected(PyObject *self, PyObject *args)
+{
+	int ret,unit;
+	unit = PyInt_AsLong(args);
+	if(PyErr_Occurred()) return NULL;
+	ret = krui_isConnected(unit);
+	return PyInt_FromLong(ret);
+}
 
 static PyObject *
 snns_areConnected(PyObject *self, PyObject *args)
@@ -2396,27 +2396,27 @@ static PyMethodDef MylibMethods[] = {
 //      "of current unit and site.\n"
 //      "Otherwise like getFirstPredUnit()"},
 //     
-//     {"getNextPredUnitAndData",snns_getNextPredUnitAndData,METH_NOARGS,
-//      "getNextPredUnitAndData() -> (unit number, connection strength,\n"
-//      "                             internal 1, internal 2, internal 3)\n\n"
-//      "Like getNextPredUnit, but also returns three internal values."},
-//     
+     {"getNextPredUnitAndData",snns_getNextPredUnitAndData,METH_NOARGS,
+      "getNextPredUnitAndData() -> (unit number, connection strength,\n"
+      "                             internal 1, internal 2, internal 3)\n\n"
+      "Like getNextPredUnit, but also returns three internal values."},
+     
 //     {"getCurrentPredUnit",snns_getCurrentPredUnit,METH_NOARGS,
 //      "getCurrentPredUnit() -> (unit number, connection strength)\n\n"
 //      "Gets the current predecessor unit number and connection strength."},
-//     
-//     {"getFirstSuccUnit",snns_getFirstSuccUnit,METH_O,
-//      "getFirstSuccUnit() -> (unit number, connection strength)\n\n"
-//      "Gets unit number and connection strength of the first successor."},
-//     
-//     {"getNextSuccUnit",snns_getNextSuccUnit,METH_NOARGS,
-//      "getNextSuccUnit() -> (unit number, connection strength)\n\n"
-//      "Gets unit number and connection strength of the next successor."},
-//     
-//     {"isConnected",snns_isConnected,METH_O,
-//      "isConnected(unit number) -> boolean\n\n"
-//      "Checks if there is a connection between the current unit and the "
-//      "given unit."},
+     
+     {"getFirstSuccUnit",snns_getFirstSuccUnit,METH_O,
+      "getFirstSuccUnit() -> (unit number, connection strength)\n\n"
+      "Gets unit number and connection strength of the first successor."},
+     
+     {"getNextSuccUnit",snns_getNextSuccUnit,METH_NOARGS,
+      "getNextSuccUnit() -> (unit number, connection strength)\n\n"
+      "Gets unit number and connection strength of the next successor."},
+     
+     {"isConnected",snns_isConnected,METH_O,
+      "isConnected(unit number) -> boolean\n\n"
+      "Checks if there is a connection between the current unit and the "
+      "given unit."},
      
      {"areConnected",snns_areConnected,METH_VARARGS,
       "areConnected(unit number, unit number) -> weight/None\n\n"
