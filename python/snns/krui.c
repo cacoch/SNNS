@@ -1649,18 +1649,18 @@ snns_getUnitName(PyObject *self, PyObject *args)
 //{	
 //	return PyInt_FromLong(krui_searchNextUnitName());
 //}	
-//
-//static PyObject *
-//snns_getUnitOutFuncName(PyObject *self, PyObject *args)
-//{
-//	return snns_int_arg_char_ret(args,krui_getUnitOutFuncName);
-//}	
-//
-//static PyObject *
-//snns_getUnitActFuncName(PyObject *self, PyObject *args)
-//{
-//	return snns_int_arg_char_ret(args,krui_getUnitActFuncName);
-//}	
+
+static PyObject *
+snns_getUnitOutFuncName(PyObject *self, PyObject *args)
+{
+	return snns_int_arg_char_ret(args,krui_getUnitOutFuncName);
+}	
+
+static PyObject *
+snns_getUnitActFuncName(PyObject *self, PyObject *args)
+{
+	return snns_int_arg_char_ret(args,krui_getUnitActFuncName);
+}	
 
 static PyObject *
 snns_getUnitFTypeName(PyObject *self, PyObject *args)
@@ -1680,42 +1680,42 @@ snns_getUnitFTypeName(PyObject *self, PyObject *args)
 //	return snns_int_char_args_with_err(args,krui_setUnitActFunc);
 //}
 //
-//static PyObject *
-//snns_getUnitActivation(PyObject *self, PyObject *args)
-//{	
-//	int i;
-//	i = PyInt_AsLong(args);
-//	if(PyErr_Occurred()) return NULL;
-//	return PyFloat_FromDouble(krui_getUnitActivation(i));
-//}	
-//
-//static PyObject *
-//snns_getUnitInitialActivation(PyObject *self, PyObject *args)
-//{	
-//	int i;
-//	i = PyInt_AsLong(args);
-//	if(PyErr_Occurred()) return NULL;
-//	return PyFloat_FromDouble(krui_getUnitInitialActivation(i));
-//}	
-//
-//static PyObject *
-//snns_getUnitOutput(PyObject *self, PyObject *args)
-//{	
-//	int i;
-//	i = PyInt_AsLong(args);
-//	if(PyErr_Occurred()) return NULL;
-//	return PyFloat_FromDouble(krui_getUnitOutput(i));
-//}	
-//
-//static PyObject *
-//snns_getUnitBias(PyObject *self, PyObject *args)
-//{	
-//	int i;
-//	i = PyInt_AsLong(args);
-//	if(PyErr_Occurred()) return NULL;
-//	return PyFloat_FromDouble(krui_getUnitBias(i));
-//}	
-//
+static PyObject *
+snns_getUnitActivation(PyObject *self, PyObject *args)
+{	
+	int i;
+	i = PyInt_AsLong(args);
+	if(PyErr_Occurred()) return NULL;
+	return PyFloat_FromDouble(krui_getUnitActivation(i));
+}	
+
+static PyObject *
+snns_getUnitInitialActivation(PyObject *self, PyObject *args)
+{	
+	int i;
+	i = PyInt_AsLong(args);
+	if(PyErr_Occurred()) return NULL;
+	return PyFloat_FromDouble(krui_getUnitInitialActivation(i));
+}	
+
+static PyObject *
+snns_getUnitOutput(PyObject *self, PyObject *args)
+{	
+	int i;
+	i = PyInt_AsLong(args);
+	if(PyErr_Occurred()) return NULL;
+	return PyFloat_FromDouble(krui_getUnitOutput(i));
+}	
+
+static PyObject *
+snns_getUnitBias(PyObject *self, PyObject *args)
+{	
+	int i;
+	i = PyInt_AsLong(args);
+	if(PyErr_Occurred()) return NULL;
+	return PyFloat_FromDouble(krui_getUnitBias(i));
+}	
+
 //static PyObject *
 //snns_setUnitActivation(PyObject *self, PyObject *args)
 //{
@@ -1931,22 +1931,22 @@ snns_isUnitFrozen(PyObject *self, PyObject *args)
 	return PyInt_FromLong(ret);
 }
 
-//static PyObject *
-//snns_getUnitInputType(PyObject *self, PyObject *args)
-//{
-//	int ret,unit;
-//	unit = PyInt_AsLong(args);
-//	if(PyErr_Occurred()) return NULL;
-//	ret = krui_getUnitInputType(unit);
-//	return PyInt_FromLong(ret);
-//}
-//
-//static PyObject *
-//snns_freezeUnit(PyObject *self, PyObject *args)
-//{
-//	return snns_int_arg_with_err(args,krui_freezeUnit);
-//}
-//
+static PyObject *
+snns_getUnitInputType(PyObject *self, PyObject *args)
+{
+	int ret,unit;
+	unit = PyInt_AsLong(args);
+	if(PyErr_Occurred()) return NULL;
+	ret = krui_getUnitInputType(unit);
+	return PyInt_FromLong(ret);
+}
+
+static PyObject *
+snns_freezeUnit(PyObject *self, PyObject *args)
+{
+	return snns_int_arg_with_err(args,krui_freezeUnit);
+}
+
 //static PyObject *
 //snns_unfreezeUnit(PyObject *self, PyObject *args)
 //{
@@ -2141,11 +2141,11 @@ static PyMethodDef MylibMethods[] = {
 //     {"setUnitTType",snns_setUnitTType,METH_VARARGS,
 //      "setUnitTType(unit number, io_type)\n\n"
 //      "Sets the IO-Type (aka T-type) of the given unit"},
-//     
-//     {"freezeUnit",snns_freezeUnit,METH_O,
-//      "freezeUnit(unit number)\n\n"
-//      "Freezes the output and activation value of the given unit"},
-//     
+
+     {"freezeUnit",snns_freezeUnit,METH_O,
+      "freezeUnit(unit number)\n\n"
+      "Freezes the output and activation value of the given unit"},
+     
 //     {"unfreezeUnit",snns_unfreezeUnit,METH_O,
 //      "unfreezeUnit(unit number)\n\n"
 //      "Unfreezes the output and activation value of the given unit"},
@@ -2164,11 +2164,11 @@ static PyMethodDef MylibMethods[] = {
       "isUnitFrozen(unit number) -> boolean\n\n"
       "Checks if the given unit is frozen"},
      
-//     {"getUnitInputType",snns_getUnitInputType,METH_O,
-//      "getUnitInputType(unit number)\n\n"
-//      "Gets the input type of the unit.\n"
-//      "Textual representations can be found in the\n"
-//      "snns.util.unit_input_types dictionary."},
+    {"getUnitInputType",snns_getUnitInputType,METH_O,
+     "getUnitInputType(unit number)\n\n"
+     "Gets the input type of the unit.\n"
+     "Textual representations can be found in the\n"
+     "snns.util.unit_input_types dictionary."},
 //     
 //     {"setUnitCenters",snns_setUnitCenters, METH_VARARGS,
 //      "setUnitCenters(unit number, center number,\n"
@@ -2233,23 +2233,23 @@ static PyMethodDef MylibMethods[] = {
 //     {"setUnitBias",snns_setUnitBias, METH_VARARGS,
 //      "setUnitBias(unit number, bias value)\n\n"
 //      "Sets the bias of the given unit to the given value"},
-//     
-//     {"getUnitInitialActivation",snns_getUnitInitialActivation, METH_O,
-//      "getUnitInitialActivation(unit number) -> initial activation value\n\n"
-//      "Gets the initial activation value of the given unit"},
-//     
-//     {"getUnitOutput",snns_getUnitOutput, METH_O,
-//      "getUnitOutput(unit number) -> output value\n\n"
-//      "Gets the output value of the given unit"},
-//     
-//     {"getUnitBias",snns_getUnitBias, METH_O,
-//      "getUnitBias(unit number) -> bias value\n\n"
-//      "Gets the bias value of the given unit"},
-//     
-//     {"getUnitActivation",snns_getUnitActivation, METH_O,
-//      "getUnitActivation(unit number) -> activation value\n\n"
-//      "Gets the activation value of the given unit"},
-//     
+     
+     {"getUnitInitialActivation",snns_getUnitInitialActivation, METH_O,
+      "getUnitInitialActivation(unit number) -> initial activation value\n\n"
+      "Gets the initial activation value of the given unit"},
+     
+     {"getUnitOutput",snns_getUnitOutput, METH_O,
+      "getUnitOutput(unit number) -> output value\n\n"
+      "Gets the output value of the given unit"},
+     
+     {"getUnitBias",snns_getUnitBias, METH_O,
+      "getUnitBias(unit number) -> bias value\n\n"
+      "Gets the bias value of the given unit"},
+     
+     {"getUnitActivation",snns_getUnitActivation, METH_O,
+      "getUnitActivation(unit number) -> activation value\n\n"
+      "Gets the activation value of the given unit"},
+     
 //     {"setUnitActFunc",snns_setUnitActFunc, METH_VARARGS,
 //      "setUnitActFunc(unit number, activation function)\n\n"
 //      "Sets the activation function of the given unit to the given value"},
@@ -2257,14 +2257,14 @@ static PyMethodDef MylibMethods[] = {
 //     {"setUnitOutFunc",snns_setUnitOutFunc, METH_VARARGS,
 //      "setUnitOutFunc(unit number, output function)\n\n"
 //      "Sets the output function of the given unit to the given value"},
-//     
-//     {"getUnitOutFuncName",snns_getUnitOutFuncName, METH_O,
-//      "getUnitOutFuncName(unit number) -> output function\n\n"
-//      "Gets the name of the output function of the given unit"},
-//     
-//     {"getUnitActFuncName",snns_getUnitActFuncName, METH_O,
-//      "getUnitActFuncName(unit number) -> activation function\n\n"
-//      "Gets the name of the activation function of the given unit"},
+     
+     {"getUnitOutFuncName",snns_getUnitOutFuncName, METH_O,
+      "getUnitOutFuncName(unit number) -> output function\n\n"
+      "Gets the name of the output function of the given unit"},
+     
+     {"getUnitActFuncName",snns_getUnitActFuncName, METH_O,
+      "getUnitActFuncName(unit number) -> activation function\n\n"
+      "Gets the name of the activation function of the given unit"},
      
      {"getUnitFTypeName",snns_getUnitFTypeName, METH_O,
       "getUnitFTypeName(unit number) -> f-type\n\n"
