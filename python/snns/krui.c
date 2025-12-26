@@ -1074,12 +1074,12 @@ snns_deletePatSet(PyObject *self, PyObject *arg)
 //{
 //	return snns_floatarray_arg_with_err(arg, krui_initializeNet);
 //}
-//
-//static PyObject *
-//snns_getNoOfFunctions(PyObject *self, PyObject *arg)
-//{
-//	return PyInt_FromLong(krui_getNoOfFunctions());
-//}
+
+static PyObject *
+snns_getNoOfFunctions(PyObject *self, PyObject *arg)
+{
+	return PyInt_FromLong(krui_getNoOfFunctions());
+}
 
 static PyObject *
 snns_getFuncInfo(PyObject *self, PyObject *arg)
@@ -2529,10 +2529,10 @@ static PyMethodDef MylibMethods[] = {
 //     {"deleteFTypeEntry",snns_deleteFTypeEntry,METH_O,
 //      "deleteFTypeEntry(ftype name)\n\n"
 //      "Deletes the specified prototype"},
-//     
-//     {"getNoOfFunctions",snns_getNoOfFunctions, METH_NOARGS,
-//      "getNoOfFunctions() -> number of functions\n\n"
-//      "Determines the number of available functions"},
+     
+     {"getNoOfFunctions",snns_getNoOfFunctions, METH_NOARGS,
+      "getNoOfFunctions() -> number of functions\n\n"
+      "Determines the number of available functions"},
      
      {"getFuncInfo",snns_getFuncInfo, METH_O,
       "getFuncInfo(function number) -> (name, type)\n\n"
