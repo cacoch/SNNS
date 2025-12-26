@@ -1716,29 +1716,29 @@ snns_getUnitBias(PyObject *self, PyObject *args)
 	return PyFloat_FromDouble(krui_getUnitBias(i));
 }	
 
-//static PyObject *
-//snns_setUnitActivation(PyObject *self, PyObject *args)
-//{
-//	krui_err err;
-//	int i;
-//	double d;
-//	if(!PyArg_ParseTuple(args,"id",&i,&d)) return NULL;
-//	err = krui_setUnitActivation(i,d);
-//	if(err) return make_exception(err);
-//	return Py_BuildValue("");
-//}	
-//
-//static PyObject *
-//snns_setUnitInitialActivation(PyObject *self, PyObject *args)
-//{
-//	krui_err err;
-//	int i;
-//	double d;
-//	if(!PyArg_ParseTuple(args,"id",&i,&d)) return NULL;
-//	krui_setUnitInitialActivation(i,d);
-//	return Py_BuildValue("");
-//}	
-//
+static PyObject *
+snns_setUnitActivation(PyObject *self, PyObject *args)
+{
+	krui_err err;
+	int i;
+	double d;
+	if(!PyArg_ParseTuple(args,"id",&i,&d)) return NULL;
+	err = krui_setUnitActivation(i,d);
+	if(err) return make_exception(err);
+	return Py_BuildValue("");
+}	
+
+static PyObject *
+snns_setUnitInitialActivation(PyObject *self, PyObject *args)
+{
+	krui_err err;
+	int i;
+	double d;
+	if(!PyArg_ParseTuple(args,"id",&i,&d)) return NULL;
+	krui_setUnitInitialActivation(i,d);
+	return Py_BuildValue("");
+}	
+
 //static PyObject *
 //snns_setUnitBias(PyObject *self, PyObject *args)
 //{
@@ -1782,38 +1782,38 @@ snns_getUnitLayerNo(PyObject *self, PyObject *args)
 	return PyInt_FromLong(ret);
 }
 
-//static bool short_check(int i)
-//{
-//	short s;
-//	s = i;
-//	if(i != s) {
-//		PyErr_SetString(PyExc_RuntimeError,
-//		 "expecting a 16 bit integer as second parameter");
-//		 return FALSE;
-//	} else return TRUE;
-//}	
-//
-//
-//static PyObject *
-//snns_setUnitSubnetNo(PyObject *self, PyObject *args)
-//{
-//	int a,b;
-//	if(!PyArg_ParseTuple(args,"ii",&a,&b)) return NULL;
-//	if(!short_check(b)) return NULL;
-//	krui_setUnitSubnetNo(a,b);
-//	return Py_BuildValue("");
-//}
-//
-//static PyObject *
-//snns_setUnitLayerNo(PyObject *self, PyObject *args)
-//{
-//	int a,b;
-//	if(!PyArg_ParseTuple(args,"ii",&a,&b)) return NULL;
-//	if(!short_check(b)) return NULL;
-//	krui_setUnitLayerNo(a,b);
-//	return Py_BuildValue("");
-//}
-//
+static bool short_check(int i)
+{
+	short s;
+	s = i;
+	if(i != s) {
+		PyErr_SetString(PyExc_RuntimeError,
+		 "expecting a 16 bit integer as second parameter");
+		 return FALSE;
+	} else return TRUE;
+}	
+
+
+static PyObject *
+snns_setUnitSubnetNo(PyObject *self, PyObject *args)
+{
+	int a,b;
+	if(!PyArg_ParseTuple(args,"ii",&a,&b)) return NULL;
+	if(!short_check(b)) return NULL;
+	krui_setUnitSubnetNo(a,b);
+	return Py_BuildValue("");
+}
+
+static PyObject *
+snns_setUnitLayerNo(PyObject *self, PyObject *args)
+{
+	int a,b;
+	if(!PyArg_ParseTuple(args,"ii",&a,&b)) return NULL;
+	if(!short_check(b)) return NULL;
+	krui_setUnitLayerNo(a,b);
+	return Py_BuildValue("");
+}
+
 //static bool fillPosType(PyObject *arg, struct PosType *pos)
 //{
 //	int i;
@@ -1898,18 +1898,18 @@ snns_getUnitCenters(PyObject *self, PyObject *args)
 	else return Py_BuildValue("(ffff)",pv->x, pv->y, pv->z, pv->w);
 }
 
-//static PyObject *
-//snns_setUnitCenters(PyObject *self, PyObject *args)
-//{
-//	struct PositionVector pv;
-//	int a,b;
-//	krui_err err;
-//	if(!PyArg_ParseTuple(args,"ii(ffff)",&a,&b,&pv.x,
-//		&pv.y, &pv.z, &pv.w)) return NULL;
-//	err = krui_setUnitCenters(a,b,&pv);
-//	if(err) return make_exception(err);
-//	else return Py_BuildValue("");
-//}
+static PyObject *
+snns_setUnitCenters(PyObject *self, PyObject *args)
+{
+	struct PositionVector pv;
+	int a,b;
+	krui_err err;
+	if(!PyArg_ParseTuple(args,"ii(ffff)",&a,&b,&pv.x,
+		&pv.y, &pv.z, &pv.w)) return NULL;
+	err = krui_setUnitCenters(a,b,&pv);
+	if(err) return make_exception(err);
+	else return Py_BuildValue("");
+}
 
 static PyObject *
 snns_getUnitTType(PyObject *self, PyObject *args)
@@ -1985,14 +1985,14 @@ snns_getUnitValueA(PyObject *self, PyObject *args)
 //	return Py_BuildValue("");
 //}
 //
-//static PyObject *
-//snns_createDefaultUnit(PyObject *self, PyObject *args)
-//{
-//	int ret;
-//	ret = krui_createDefaultUnit();
-//	if(ret < 0) return make_exception(ret);
-//	else return PyInt_FromLong(ret);
-//}
+static PyObject *
+snns_createDefaultUnit(PyObject *self, PyObject *args)
+{
+	int ret;
+	ret = krui_createDefaultUnit();
+	if(ret < 0) return make_exception(ret);
+	else return PyInt_FromLong(ret);
+}
 
 static PyObject *
 snns_createUnit(PyObject *self, PyObject *args)
@@ -2134,10 +2134,10 @@ static PyMethodDef MylibMethods[] = {
       "Creates a unit with the given name, output function, activation\n"
       "function, activation and bias"},
      
-//     {"createDefaultUnit",snns_createDefaultUnit, METH_NOARGS,
-//      "createDefaultUnit() -> unit number\n\n"
-//      "Creates a unit with the default values of the kernel"},
-//     
+     {"createDefaultUnit",snns_createDefaultUnit, METH_NOARGS,
+      "createDefaultUnit() -> unit number\n\n"
+      "Creates a unit with the default values of the kernel"},
+     
 //     {"setUnitTType",snns_setUnitTType,METH_VARARGS,
 //      "setUnitTType(unit number, io_type)\n\n"
 //      "Sets the IO-Type (aka T-type) of the given unit"},
@@ -2169,12 +2169,12 @@ static PyMethodDef MylibMethods[] = {
      "Gets the input type of the unit.\n"
      "Textual representations can be found in the\n"
      "snns.util.unit_input_types dictionary."},
-//     
-//     {"setUnitCenters",snns_setUnitCenters, METH_VARARGS,
-//      "setUnitCenters(unit number, center number,\n"
-//      "               sequence of four float values giving position)\n\n"
-//      "Sets the 3D transformation center of the specified unit and center\n"
-//      "number. (Currently the only valid center number seems to be 0)."},
+     
+     {"setUnitCenters",snns_setUnitCenters, METH_VARARGS,
+      "setUnitCenters(unit number, center number,\n"
+      "               sequence of four float values giving position)\n\n"
+      "Sets the 3D transformation center of the specified unit and center\n"
+      "number. (Currently the only valid center number seems to be 0)."},
 
      {"getUnitCenters",snns_getUnitCenters, METH_VARARGS,
       "getUnitCenters(unit number, center number) -> sequence of four\n"
@@ -2202,13 +2202,13 @@ static PyMethodDef MylibMethods[] = {
       "getUnitPosition(unit number) -> integer sequence giving position\n\n"
       "Gets the graphical position of the given unit"},
      
-//     {"setUnitSubnetNo",snns_setUnitSubnetNo, METH_VARARGS,
-//      "setUnitSubnetNo(unit number, subnet number)\n\n"
-//      "Sets the subnet number of the given unit (16 bit range)"},
-//     
-//     {"setUnitLayerNo",snns_setUnitLayerNo, METH_VARARGS,
-//      "setUnitLayerNo(unit number, layer number)\n\n"
-//      "Sets the layer number of the given unit (16 bit range)"},
+     {"setUnitSubnetNo",snns_setUnitSubnetNo, METH_VARARGS,
+      "setUnitSubnetNo(unit number, subnet number)\n\n"
+      "Sets the subnet number of the given unit (16 bit range)"},
+     
+     {"setUnitLayerNo",snns_setUnitLayerNo, METH_VARARGS,
+      "setUnitLayerNo(unit number, layer number)\n\n"
+      "Sets the layer number of the given unit (16 bit range)"},
 
      {"getUnitLayerNo",snns_getUnitLayerNo,METH_O,
       "getUnitLayerNo(unit number) -> layer number\n\n"
@@ -2218,13 +2218,13 @@ static PyMethodDef MylibMethods[] = {
       "getUnitSubnetNo(unit number) -> subnet number\n\n"
       "Gets the subnet number of the unit"},
      
-//     {"setUnitInitialActivation",snns_setUnitInitialActivation, METH_VARARGS,
-//      "setUnitInitialActivation(unit number, initial activation value)\n\n"
-//      "Sets the initial activation of the given unit to the given value"},
-//     
-//     {"setUnitActivation",snns_setUnitActivation, METH_VARARGS,
-//      "setUnitActivation(unit number, activation value)\n\n"
-//      "Sets the activation of the given unit to the given value"},
+     {"setUnitInitialActivation",snns_setUnitInitialActivation, METH_VARARGS,
+      "setUnitInitialActivation(unit number, initial activation value)\n\n"
+      "Sets the initial activation of the given unit to the given value"},
+     
+     {"setUnitActivation",snns_setUnitActivation, METH_VARARGS,
+      "setUnitActivation(unit number, activation value)\n\n"
+      "Sets the activation of the given unit to the given value"},
      
      {"setUnitOutput",snns_setUnitOutput, METH_VARARGS,
       "setUnitOutput(unit number, output value)\n\n"
