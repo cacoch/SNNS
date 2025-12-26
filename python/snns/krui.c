@@ -1430,51 +1430,51 @@ snns_jogWeights(PyObject *self, PyObject *args)
 //	return Py_BuildValue("");
 //}
 //
-//static PyObject *
-//snns_createSiteTableEntry(PyObject *self, PyObject *args)
-//{
-//	krui_err err;
-//	char *a, *b;
-//	if(!PyArg_ParseTuple(args,"ss",&a,&b)) return NULL;
-//	err = krui_createSiteTableEntry(a,b);
-//	if(err) return make_exception(err);
-//	return Py_BuildValue("");
-//}	
-//
-//static PyObject *
-//snns_changeSiteTableEntry(PyObject *self, PyObject *args)
-//{
-//	krui_err err;
-//	char *a, *b, *c;
-//	if(!PyArg_ParseTuple(args,"sss",&a,&b,&c)) return NULL;
-//	err = krui_changeSiteTableEntry(a,b,c);
-//	if(err) return make_exception(err);
-//	return Py_BuildValue("");
-//}	
-//
+static PyObject *
+snns_createSiteTableEntry(PyObject *self, PyObject *args)
+{
+	krui_err err;
+	char *a, *b;
+	if(!PyArg_ParseTuple(args,"ss",&a,&b)) return NULL;
+	err = krui_createSiteTableEntry(a,b);
+	if(err) return make_exception(err);
+	return Py_BuildValue("");
+}	
+
+static PyObject *
+snns_changeSiteTableEntry(PyObject *self, PyObject *args)
+{
+	krui_err err;
+	char *a, *b, *c;
+	if(!PyArg_ParseTuple(args,"sss",&a,&b,&c)) return NULL;
+	err = krui_changeSiteTableEntry(a,b,c);
+	if(err) return make_exception(err);
+	return Py_BuildValue("");
+}	
+
 //static PyObject *
 //snns_deleteSiteTableEntry(PyObject *self, PyObject *args)
 //{
 //	return snns_string_arg_with_err(args,krui_deleteSiteTableEntry);
 //}	
 //
-//static PyObject *
-//snns_getSiteTable(PyObject *self, PyObject *args)
-//{	
-//	bool ret;
-//	char *a,*b;
-//	PyObject *dict;
-//	dict = PyDict_New();
-//	if(!dict) return NULL;
-//	ret = krui_getFirstSiteTableEntry(&a,&b);
-//	if(!ret) return Py_BuildValue("{}");
-//	if(PyDict_SetItemString(dict, a, PyString_FromString(b)) == -1) return NULL;
-//	while(krui_getNextSiteTableEntry(&a,&b)) {
-//		if(PyDict_SetItemString(dict, a, PyString_FromString(b)) == -1) return NULL;
-//	}
-//	if(PyErr_Occurred()) return NULL;
-//	return dict;
-//}	
+static PyObject *
+snns_getSiteTable(PyObject *self, PyObject *args)
+{	
+	bool ret;
+	char *a,*b;
+	PyObject *dict;
+	dict = PyDict_New();
+	if(!dict) return NULL;
+	ret = krui_getFirstSiteTableEntry(&a,&b);
+	if(!ret) return Py_BuildValue("{}");
+	if(PyDict_SetItemString(dict, a, PyString_FromString(b)) == -1) return NULL;
+	while(krui_getNextSiteTableEntry(&a,&b)) {
+		if(PyDict_SetItemString(dict, a, PyString_FromString(b)) == -1) return NULL;
+	}
+	if(PyErr_Occurred()) return NULL;
+	return dict;
+}	
 
 static PyObject *
 snns_getSiteTableFuncName(PyObject *self, PyObject *args)
@@ -1487,15 +1487,15 @@ snns_getSiteTableFuncName(PyObject *self, PyObject *args)
 	else return Py_BuildValue("");
 }	
 
-//static PyObject *
-//snns_setFirstSite(PyObject *self, PyObject *args)
-//{	
-//	int ret;
-//	ret = krui_setFirstSite();
-//	if(ret < 0) return make_exception(ret);
-//	return PyInt_FromLong(ret);
-//}	
-//
+static PyObject *
+snns_setFirstSite(PyObject *self, PyObject *args)
+{	
+	int ret;
+	ret = krui_setFirstSite();
+	if(ret < 0) return make_exception(ret);
+	return PyInt_FromLong(ret);
+}	
+
 //static PyObject *
 //snns_setNextSite(PyObject *self, PyObject *args)
 //{	
@@ -1583,11 +1583,11 @@ snns_getNextUnit(PyObject *self, PyObject *args)
 	return PyInt_FromLong(krui_getNextUnit());
 }	
 
-//static PyObject *
-//snns_setCurrentUnit(PyObject *self, PyObject *args)
-//{	
-//	return snns_int_arg_with_err(args,krui_setCurrentUnit);
-//}	
+static PyObject *
+snns_setCurrentUnit(PyObject *self, PyObject *args)
+{	
+	return snns_int_arg_with_err(args,krui_setCurrentUnit);
+}	
 
 static PyObject *
 snns_getCurrentUnit(PyObject *self, PyObject *args)
@@ -1615,40 +1615,40 @@ snns_getUnitName(PyObject *self, PyObject *args)
 	return snns_int_arg_char_ret(args,krui_getUnitName);
 }	
 
-//typedef krui_err (*snns_int_char_args_with_err_func)(int, char *);
-//
-//static PyObject *
-//snns_int_char_args_with_err(PyObject *args, snns_int_char_args_with_err_func func)
-//{
-//	krui_err err;
-//	int i;
-//	char *c;
-//	if(!PyArg_ParseTuple(args,"is",&i,&c)) return NULL;
-//	err = func(i,c);
-//	if(err) return make_exception(err);
-//	else return Py_BuildValue("");
-//}	
-//
-//static PyObject *
-//snns_setUnitName(PyObject *self, PyObject *args)
-//{
-//	return snns_int_char_args_with_err(args,krui_setUnitName);
-//}
-//
-//static PyObject *
-//snns_searchUnitName(PyObject *self, PyObject *args)
-//{	
-//	char *a;
-//	a = PyString_AsString(args);
-//	if(PyErr_Occurred()) return NULL;
-//	return PyInt_FromLong(krui_searchUnitName(a));
-//}	
-//
-//static PyObject *
-//snns_searchNextUnitName(PyObject *self, PyObject *args)
-//{	
-//	return PyInt_FromLong(krui_searchNextUnitName());
-//}	
+typedef krui_err (*snns_int_char_args_with_err_func)(int, char *);
+
+static PyObject *
+snns_int_char_args_with_err(PyObject *args, snns_int_char_args_with_err_func func)
+{
+	krui_err err;
+	int i;
+	char *c;
+	if(!PyArg_ParseTuple(args,"is",&i,&c)) return NULL;
+	err = func(i,c);
+	if(err) return make_exception(err);
+	else return Py_BuildValue("");
+}	
+
+static PyObject *
+snns_setUnitName(PyObject *self, PyObject *args)
+{
+	return snns_int_char_args_with_err(args,krui_setUnitName);
+}
+
+static PyObject *
+snns_searchUnitName(PyObject *self, PyObject *args)
+{	
+	char *a;
+	a = PyString_AsString(args);
+	if(PyErr_Occurred()) return NULL;
+	return PyInt_FromLong(krui_searchUnitName(a));
+}	
+
+static PyObject *
+snns_searchNextUnitName(PyObject *self, PyObject *args)
+{	
+	return PyInt_FromLong(krui_searchNextUnitName());
+}	
 
 static PyObject *
 snns_getUnitOutFuncName(PyObject *self, PyObject *args)
@@ -1668,18 +1668,18 @@ snns_getUnitFTypeName(PyObject *self, PyObject *args)
 	return snns_int_arg_char_ret(args,krui_getUnitFTypeName);
 }	
 
-//static PyObject *
-//snns_setUnitOutFunc(PyObject *self, PyObject *args)
-//{
-//	return snns_int_char_args_with_err(args,krui_setUnitOutFunc);
-//}
-//
-//static PyObject *
-//snns_setUnitActFunc(PyObject *self, PyObject *args)
-//{
-//	return snns_int_char_args_with_err(args,krui_setUnitActFunc);
-//}
-//
+static PyObject *
+snns_setUnitOutFunc(PyObject *self, PyObject *args)
+{
+	return snns_int_char_args_with_err(args,krui_setUnitOutFunc);
+}
+
+static PyObject *
+snns_setUnitActFunc(PyObject *self, PyObject *args)
+{
+	return snns_int_char_args_with_err(args,krui_setUnitActFunc);
+}
+
 static PyObject *
 snns_getUnitActivation(PyObject *self, PyObject *args)
 {	
@@ -1739,16 +1739,16 @@ snns_setUnitInitialActivation(PyObject *self, PyObject *args)
 	return Py_BuildValue("");
 }	
 
-//static PyObject *
-//snns_setUnitBias(PyObject *self, PyObject *args)
-//{
-//	krui_err err;
-//	int i;
-//	double d;
-//	if(!PyArg_ParseTuple(args,"id",&i,&d)) return NULL;
-//	krui_setUnitBias(i,d);
-//	return Py_BuildValue("");
-//}	
+static PyObject *
+snns_setUnitBias(PyObject *self, PyObject *args)
+{
+	krui_err err;
+	int i;
+	double d;
+	if(!PyArg_ParseTuple(args,"id",&i,&d)) return NULL;
+	krui_setUnitBias(i,d);
+	return Py_BuildValue("");
+}	
 
 static PyObject *
 snns_setUnitOutput(PyObject *self, PyObject *args)
@@ -2230,9 +2230,9 @@ static PyMethodDef MylibMethods[] = {
       "setUnitOutput(unit number, output value)\n\n"
       "Sets the output of the given unit to the given value"},
      
-//     {"setUnitBias",snns_setUnitBias, METH_VARARGS,
-//      "setUnitBias(unit number, bias value)\n\n"
-//      "Sets the bias of the given unit to the given value"},
+     {"setUnitBias",snns_setUnitBias, METH_VARARGS,
+      "setUnitBias(unit number, bias value)\n\n"
+      "Sets the bias of the given unit to the given value"},
      
      {"getUnitInitialActivation",snns_getUnitInitialActivation, METH_O,
       "getUnitInitialActivation(unit number) -> initial activation value\n\n"
@@ -2250,13 +2250,13 @@ static PyMethodDef MylibMethods[] = {
       "getUnitActivation(unit number) -> activation value\n\n"
       "Gets the activation value of the given unit"},
      
-//     {"setUnitActFunc",snns_setUnitActFunc, METH_VARARGS,
-//      "setUnitActFunc(unit number, activation function)\n\n"
-//      "Sets the activation function of the given unit to the given value"},
-//     
-//     {"setUnitOutFunc",snns_setUnitOutFunc, METH_VARARGS,
-//      "setUnitOutFunc(unit number, output function)\n\n"
-//      "Sets the output function of the given unit to the given value"},
+     {"setUnitActFunc",snns_setUnitActFunc, METH_VARARGS,
+      "setUnitActFunc(unit number, activation function)\n\n"
+      "Sets the activation function of the given unit to the given value"},
+     
+     {"setUnitOutFunc",snns_setUnitOutFunc, METH_VARARGS,
+      "setUnitOutFunc(unit number, output function)\n\n"
+      "Sets the output function of the given unit to the given value"},
      
      {"getUnitOutFuncName",snns_getUnitOutFuncName, METH_O,
       "getUnitOutFuncName(unit number) -> output function\n\n"
@@ -2270,19 +2270,19 @@ static PyMethodDef MylibMethods[] = {
       "getUnitFTypeName(unit number) -> f-type\n\n"
       "Gets the name of the f-type of the given unit"},
      
-//     {"searchNextUnitName",snns_searchNextUnitName, METH_NOARGS,
-//      "searchNextUnitName() -> unit number\n\n"
-//      "Searches for the next unit with the name of the last searchUnitName\n"
-//      "call. Returns 0 if no unit with that name is found."},
-//     
-//     {"searchUnitName",snns_searchUnitName, METH_O,
-//      "searchUnitName(unit name) -> unit number\n\n"
-//      "Searches for a unit with the given name. Returns 0 if no unit by that\n"
-//      "name is found."},
-//     
-//     {"setUnitName",snns_setUnitName, METH_VARARGS,
-//      "setUnitName(unit number, name)\n\n"
-//      "Sets the name of the given unit to the given value"},
+     {"searchNextUnitName",snns_searchNextUnitName, METH_NOARGS,
+      "searchNextUnitName() -> unit number\n\n"
+      "Searches for the next unit with the name of the last searchUnitName\n"
+      "call. Returns 0 if no unit with that name is found."},
+     
+     {"searchUnitName",snns_searchUnitName, METH_O,
+      "searchUnitName(unit name) -> unit number\n\n"
+      "Searches for a unit with the given name. Returns 0 if no unit by that\n"
+      "name is found."},
+     
+     {"setUnitName",snns_setUnitName, METH_VARARGS,
+      "setUnitName(unit number, name)\n\n"
+      "Sets the name of the given unit to the given value"},
      
      {"getUnitName",snns_getUnitName, METH_O,
       "getUnitName(unit number) -> name\n\n"
@@ -2292,9 +2292,9 @@ static PyMethodDef MylibMethods[] = {
       "getCurrentUnit() -> unit number\n\n"
       "Gets the number of the current unit or 0"},
      
-//     {"setCurrentUnit",snns_setCurrentUnit, METH_O,
-//      "setCurrentUnit(unit number)\n\n"
-//      "Makes the given unit number the current unit"},
+     {"setCurrentUnit",snns_setCurrentUnit, METH_O,
+      "setCurrentUnit(unit number)\n\n"
+      "Makes the given unit number the current unit"},
      
      {"getNextUnit",snns_getNextUnit, METH_NOARGS,
       "getNextUnit() -> unit number\n\n"
@@ -2316,31 +2316,31 @@ static PyMethodDef MylibMethods[] = {
       "getNoOfSpecialOutputUnits() -> number of special output units\n\n"
       "Get the number of special output units in the neural net"},
      
-//     {"createSiteTableEntry",snns_createSiteTableEntry, METH_VARARGS,
-//      "createSiteTableEntry(site name, site function)\n\n"
-//      "Defines the correspondence between site function and name of the site"},
-//     
-//     {"changeSiteTableEntry",snns_changeSiteTableEntry, METH_VARARGS,
-//      "changeSiteTableEntry(old site name, new site name, new site function)\n\n"
-//      "Changes the correspondence between site function and name of site"},
-//     
+     {"createSiteTableEntry",snns_createSiteTableEntry, METH_VARARGS,
+      "createSiteTableEntry(site name, site function)\n\n"
+      "Defines the correspondence between site function and name of the site"},
+     
+     {"changeSiteTableEntry",snns_changeSiteTableEntry, METH_VARARGS,
+      "changeSiteTableEntry(old site name, new site name, new site function)\n\n"
+      "Changes the correspondence between site function and name of site"},
+     
 //     {"deleteSiteTableEntry",snns_deleteSiteTableEntry, METH_O,
 //      "deleteSiteTableEntry(site name)\n\n"
 //      "Deletes a site in the site table"},
 //     
-//     {"getSiteTable",snns_getSiteTable, METH_NOARGS,
-//      "getSiteTable() -> {site name : site function}\n\n"
-//      "Returns a dictionary of site names and site functions"},	     
+     {"getSiteTable",snns_getSiteTable, METH_NOARGS,
+      "getSiteTable() -> {site name : site function}\n\n"
+      "Returns a dictionary of site names and site functions"},	     
      
      {"getSiteTableFuncName",snns_getSiteTableFuncName, METH_O,
       "getSiteTableFuncName(site name) -> site function\n\n"
       "Returns the name of the site function assigned to the site or None"},
      
-//     {"setFirstSite",snns_setFirstSite,METH_NOARGS,
-//      "setFirstSite() -> boolean\n\n"
-//      "Initializes the first site at the current unit.\n"
-//      "If there is no site, 0 is returned."},	     
-//     
+     {"setFirstSite",snns_setFirstSite,METH_NOARGS,
+      "setFirstSite() -> boolean\n\n"
+      "Initializes the first site at the current unit.\n"
+      "If there is no site, 0 is returned."},	     
+     
 //     {"setNextSite",snns_setNextSite,METH_NOARGS,
 //      "setNextSite() -> boolean\n\n"
 //      "Initializes the next site of the current unit.\n"
