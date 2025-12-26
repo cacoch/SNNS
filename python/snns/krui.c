@@ -1322,25 +1322,25 @@ snns_getFTypeActFuncName(PyObject *self, PyObject *args)
 //	ret = krui_isConnected(unit);
 //	return PyInt_FromLong(ret);
 //}
-//
-//static PyObject *
-//snns_areConnected(PyObject *self, PyObject *args)
-//{
-//	FlintType strength;
-//	int ret,unit,unit2;
-//	strength = 0;
-//	if(!PyArg_ParseTuple(args,"ii",&unit,&unit2)) return NULL;
-//	ret = krui_areConnectedWeight(unit,unit2,&strength);
-//	if(ret) return PyFloat_FromDouble(strength);
-//	else return Py_BuildValue("");
-//}
-//
-//static PyObject *
-//snns_getLinkWeight(PyObject *self, PyObject *args)
-//{
-//	return PyFloat_FromDouble(krui_getLinkWeight());
-//}
-//
+
+static PyObject *
+snns_areConnected(PyObject *self, PyObject *args)
+{
+	FlintType strength;
+	int ret,unit,unit2;
+	strength = 0;
+	if(!PyArg_ParseTuple(args,"ii",&unit,&unit2)) return NULL;
+	ret = krui_areConnectedWeight(unit,unit2,&strength);
+	if(ret) return PyFloat_FromDouble(strength);
+	else return Py_BuildValue("");
+}
+
+static PyObject *
+snns_getLinkWeight(PyObject *self, PyObject *args)
+{
+	return PyFloat_FromDouble(krui_getLinkWeight());
+}
+
 //static PyObject *
 //snns_setLinkWeight(PyObject *self, PyObject *args)
 //{
@@ -1382,24 +1382,24 @@ snns_getErrorCode(PyObject *self, PyObject *args)
 	return PyInt_FromLong(krui_getErrorCode());
 }
 
-//static PyObject *
-//snns_deleteLink(PyObject *self, PyObject *args)
-//{
-//	krui_err err;
-//	err = krui_deleteLink();
-//	if(err) return make_exception(err);
-//	return Py_BuildValue("");
-//}
-//
-//static PyObject *
-//snns_deleteAllInputLinks(PyObject *self, PyObject *args)
-//{
-//	krui_err err;
-//	err = krui_deleteAllInputLinks();
-//	if(err) return make_exception(err);
-//	return Py_BuildValue("");
-//}
-//
+static PyObject *
+snns_deleteLink(PyObject *self, PyObject *args)
+{
+	krui_err err;
+	err = krui_deleteLink();
+	if(err) return make_exception(err);
+	return Py_BuildValue("");
+}
+
+static PyObject *
+snns_deleteAllInputLinks(PyObject *self, PyObject *args)
+{
+	krui_err err;
+	err = krui_deleteAllInputLinks();
+	if(err) return make_exception(err);
+	return Py_BuildValue("");
+}
+
 //
 //static PyObject *
 //snns_deleteAllOutputLinks(PyObject *self, PyObject *args)
@@ -2417,16 +2417,16 @@ static PyMethodDef MylibMethods[] = {
 //      "isConnected(unit number) -> boolean\n\n"
 //      "Checks if there is a connection between the current unit and the "
 //      "given unit."},
-//     
-//     {"areConnected",snns_areConnected,METH_VARARGS,
-//      "areConnected(unit number, unit number) -> weight/None\n\n"
-//      "Checks if the given two units are connected, returns connection weight "
-//      "or None"},
-//     
-//     {"getLinkWeight",snns_getLinkWeight,METH_NOARGS,
-//      "getLinkWeight() -> weight\n\n"
-//      "Gets the connection weight of the current link"},
-//     
+     
+     {"areConnected",snns_areConnected,METH_VARARGS,
+      "areConnected(unit number, unit number) -> weight/None\n\n"
+      "Checks if the given two units are connected, returns connection weight "
+      "or None"},
+     
+     {"getLinkWeight",snns_getLinkWeight,METH_NOARGS,
+      "getLinkWeight() -> weight\n\n"
+      "Gets the connection weight of the current link"},
+     
 //     {"setLinkWeight",snns_setLinkWeight,METH_O,
 //      "setLinkWeight(weight)\n\n"
 //      "Sets the connection weight of the current link"},
@@ -2441,15 +2441,15 @@ static PyMethodDef MylibMethods[] = {
 //      "                                   internal a, internal b, internal c)"
 //      "\n\n"
 //      "Like createLink, but also setting the three internal parameters"},
-//     
-//     {"deleteLink",snns_deleteLink,METH_NOARGS,
-//      "deleteLink()\n\n"
-//      "Deletes the current link"},
-//     
-//     {"deleteAllInputLinks",snns_deleteAllInputLinks,METH_NOARGS,
-//      "deleteAllInputLinks()\n\n"
-//      "Deletes all input links of the current unit/site"},
-//     
+     
+     {"deleteLink",snns_deleteLink,METH_NOARGS,
+      "deleteLink()\n\n"
+      "Deletes the current link"},
+     
+     {"deleteAllInputLinks",snns_deleteAllInputLinks,METH_NOARGS,
+      "deleteAllInputLinks()\n\n"
+      "Deletes all input links of the current unit/site"},
+     
 //     {"deleteAllOutputLinks",snns_deleteAllOutputLinks,METH_NOARGS,
 //      "deleteAllOutputLinks()\n\n"
 //      "Deletes all output links of the current unit/site"},
