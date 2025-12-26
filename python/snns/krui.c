@@ -1080,38 +1080,38 @@ snns_deletePatSet(PyObject *self, PyObject *arg)
 //{
 //	return PyInt_FromLong(krui_getNoOfFunctions());
 //}
-//
-//static PyObject *
-//snns_getFuncInfo(PyObject *self, PyObject *arg)
-//{
-//	int funcno,functype;
-//	char *funcname;
-//	funcno = PyInt_AsLong(arg);
-//	if(PyErr_Occurred()) return NULL;
-//	krui_getFuncInfo(funcno, &funcname, &functype);
-//	return Py_BuildValue("(si)",funcname,functype);
-//}
-//
-//static PyObject *
-//snns_isFunction(PyObject *self, PyObject *args)
-//{
-//	char *name;
-//	int functype;
-//	if(!PyArg_ParseTuple(args, "si",&name, &functype)) return NULL;
-//	return PyInt_FromLong(krui_isFunction(name,functype));
-//}
-//
-//static PyObject *
-//snns_getFuncParamInfo(PyObject *self, PyObject *args)
-//{
-//	char *name;
-//	int functype,noin,noout;
-//	int isfunc;
-//	if(!PyArg_ParseTuple(args, "si",&name, &functype)) return NULL;
-//	isfunc = krui_getFuncParamInfo(name,functype,&noin,&noout);
-//	if(isfunc) return Py_BuildValue("(ii)",noin,noout);
-//	else return PyTuple_New(0);
-//}
+
+static PyObject *
+snns_getFuncInfo(PyObject *self, PyObject *arg)
+{
+	int funcno,functype;
+	char *funcname;
+	funcno = PyInt_AsLong(arg);
+	if(PyErr_Occurred()) return NULL;
+	krui_getFuncInfo(funcno, &funcname, &functype);
+	return Py_BuildValue("(si)",funcname,functype);
+}
+
+static PyObject *
+snns_isFunction(PyObject *self, PyObject *args)
+{
+	char *name;
+	int functype;
+	if(!PyArg_ParseTuple(args, "si",&name, &functype)) return NULL;
+	return PyInt_FromLong(krui_isFunction(name,functype));
+}
+
+static PyObject *
+snns_getFuncParamInfo(PyObject *self, PyObject *args)
+{
+	char *name;
+	int functype,noin,noout;
+	int isfunc;
+	if(!PyArg_ParseTuple(args, "si",&name, &functype)) return NULL;
+	isfunc = krui_getFuncParamInfo(name,functype,&noin,&noout);
+	if(isfunc) return Py_BuildValue("(ii)",noin,noout);
+	else return PyTuple_New(0);
+}
 //
 //static PyObject *
 //snns_setFirstFTypeEntry(PyObject *self, PyObject *args)
@@ -2533,23 +2533,24 @@ static PyMethodDef MylibMethods[] = {
 //     {"getNoOfFunctions",snns_getNoOfFunctions, METH_NOARGS,
 //      "getNoOfFunctions() -> number of functions\n\n"
 //      "Determines the number of available functions"},
-//     
-//     {"getFuncInfo",snns_getFuncInfo, METH_O,
-//      "getFuncInfo(function number) -> (name, type)\n\n"
-//      "Returns name and function type of a function given by its number.\n"
-//      "The result when given an invalid number is undefined.\n"
-//      "Textual representations for the functions types can be found in\n"
-//      "the snns.util.func_types dictionary."},
-//     
-//     {"isFunction",snns_isFunction, METH_VARARGS,
-//      "isFunction(name, type) -> boolean\n\n"
-//      "Returns True if the function specified by name and type is a valid\n"
-//      "function"},
-//
-//     {"getFuncParamInfo",snns_getFuncParamInfo, METH_VARARGS,
-//      "getFuncParamInfo(function number) -> (no of input, no of output)\n\n"
-//      "Returns the number of input and output parameters of the function\n"
-//      "given by name and type or an empty tuple if the function does not exist"},
+     
+     {"getFuncInfo",snns_getFuncInfo, METH_O,
+      "getFuncInfo(function number) -> (name, type)\n\n"
+      "Returns name and function type of a function given by its number.\n"
+      "The result when given an invalid number is undefined.\n"
+      "Textual representations for the functions types can be found in\n"
+      "the snns.util.func_types dictionary."},
+     
+     {"isFunction",snns_isFunction, METH_VARARGS,
+      "isFunction(name, type) -> boolean\n\n"
+      "Returns True if the function specified by name and type is a valid\n"
+      "function"},
+
+     {"getFuncParamInfo",snns_getFuncParamInfo, METH_VARARGS,
+      "getFuncParamInfo(function number) -> (no of input, no of output)\n\n"
+      "Returns the number of input and output parameters of the function\n"
+      "given by name and type or an empty tuple if the function does not exist"},
+
 //     {"allocateUnits",snns_allocateUnits, METH_O,
 //      "allocateUnits(number of units)\n\n"
 //      "Allocate units, call this if you know how big the network will be\n"
