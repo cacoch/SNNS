@@ -1112,27 +1112,27 @@ snns_getFuncParamInfo(PyObject *self, PyObject *args)
 	if(isfunc) return Py_BuildValue("(ii)",noin,noout);
 	else return PyTuple_New(0);
 }
-//
-//static PyObject *
-//snns_setFirstFTypeEntry(PyObject *self, PyObject *args)
-//{
-//	return PyInt_FromLong(krui_setFirstFTypeEntry());
-//}
-//
-//static PyObject *
-//snns_setNextFTypeEntry(PyObject *self, PyObject *args)
-//{
-//	return PyInt_FromLong(krui_setNextFTypeEntry());
-//}
-//
-//static PyObject *
-//snns_setFTypeEntry(PyObject *self, PyObject *args)
-//{
-//	char *ftypename;
-//	ftypename = PyString_AsString(args);
-//	if(PyErr_Occurred()) return NULL;
-//	return PyInt_FromLong(krui_setFTypeEntry(ftypename));
-//}
+
+static PyObject *
+snns_setFirstFTypeEntry(PyObject *self, PyObject *args)
+{
+	return PyInt_FromLong(krui_setFirstFTypeEntry());
+}
+
+static PyObject *
+snns_setNextFTypeEntry(PyObject *self, PyObject *args)
+{
+	return PyInt_FromLong(krui_setNextFTypeEntry());
+}
+
+static PyObject *
+snns_setFTypeEntry(PyObject *self, PyObject *args)
+{
+	char *ftypename;
+	ftypename = PyString_AsString(args);
+	if(PyErr_Occurred()) return NULL;
+	return PyInt_FromLong(krui_setFTypeEntry(ftypename));
+}
 
 static PyObject *
 snns_getFTypeName(PyObject *self, PyObject *args)
@@ -1419,17 +1419,17 @@ snns_jogWeights(PyObject *self, PyObject *args)
 	return Py_BuildValue("");
 }
 
-//static PyObject *
-//snns_jogCorrWeights(PyObject *self, PyObject *args)
-//{
-//	double minus, plus, mincorr;
-//	krui_err err;
-//	if(!PyArg_ParseTuple(args,"ddd",&minus,&plus,&mincorr)) return NULL;
-//	err = krui_jogCorrWeights(minus,plus,mincorr);
-//	if(err) return make_exception(err);
-//	return Py_BuildValue("");
-//}
-//
+static PyObject *
+snns_jogCorrWeights(PyObject *self, PyObject *args)
+{
+	double minus, plus, mincorr;
+	krui_err err;
+	if(!PyArg_ParseTuple(args,"ddd",&minus,&plus,&mincorr)) return NULL;
+	err = krui_jogCorrWeights(minus,plus,mincorr);
+	if(err) return make_exception(err);
+	return Py_BuildValue("");
+}
+
 static PyObject *
 snns_createSiteTableEntry(PyObject *self, PyObject *args)
 {
@@ -1535,12 +1535,12 @@ snns_getSiteName(PyObject *self, PyObject *args)
 	else return Py_BuildValue("");
 }
 
-//static PyObject *
-//snns_setSiteName(PyObject *self, PyObject *args)
-//{
-//	return snns_string_arg_with_err(args,krui_setSiteName);
-//}	
-//
+static PyObject *
+snns_setSiteName(PyObject *self, PyObject *args)
+{
+	return snns_string_arg_with_err(args,krui_setSiteName);
+}	
+
 static PyObject *
 snns_addSite(PyObject *self, PyObject *args)
 {
@@ -2358,10 +2358,10 @@ static PyMethodDef MylibMethods[] = {
       "getSiteFuncName() -> site function\n\n"
       "Returns the name of the site function of the current site"},
      
-//     {"setSiteName",snns_setSiteName, METH_O,
-//      "setSiteName(site name)\n\n"
-//      "Changes the name (and thereby the site function) of the current site.\n"
-//      "The f-type of the unit is erased."},
+     {"setSiteName",snns_setSiteName, METH_O,
+      "setSiteName(site name)\n\n"
+      "Changes the name (and thereby the site function) of the current site.\n"
+      "The f-type of the unit is erased."},
      
      {"getSiteName",snns_getSiteName, METH_NOARGS,
       "getSiteName() -> site name\n\n"
@@ -2459,25 +2459,25 @@ static PyMethodDef MylibMethods[] = {
       "Adds uniform distributed random values in the given interval to the\n"
       "connection weights of the network."},
      
-//     {"jogCorrWeights",snns_jogCorrWeights,METH_VARARGS,
-//      "jogCorrWeights(lower limit, upper limit, minimum correlation)\n\n"
-//      "Adds uniform distributed random values in the given interval not to\n"
-//      "all but only to connection weights of highly correlated, non-special\n"
-//      "hidden units."},
-//     
-//     {"setFirstFTypeEntry",snns_setFirstFTypeEntry,METH_NOARGS,
-//      "setFirstFTypeEntry() -> boolean\n\n"
-//      "Initializes the first prototype and makes it current.\n"
-//      "Returns false if no entries are available."},
-//     
-//     {"setNextFTypeEntry",snns_setNextFTypeEntry,METH_NOARGS,
-//      "setNextFTypeEntry() -> boolean\n\n"
-//      "Initializes the next prototype and makes it current.\n"
-//      "Returns false if no entries are available."},
-//     
-//     {"setFTypeEntry",snns_setFTypeEntry, METH_O,
-//      "setFTypeEntry() -> boolean\n\n"
-//      "Selects a prototype by name. Returns false if not available."},
+     {"jogCorrWeights",snns_jogCorrWeights,METH_VARARGS,
+      "jogCorrWeights(lower limit, upper limit, minimum correlation)\n\n"
+      "Adds uniform distributed random values in the given interval not to\n"
+      "all but only to connection weights of highly correlated, non-special\n"
+      "hidden units."},
+     
+     {"setFirstFTypeEntry",snns_setFirstFTypeEntry,METH_NOARGS,
+      "setFirstFTypeEntry() -> boolean\n\n"
+      "Initializes the first prototype and makes it current.\n"
+      "Returns false if no entries are available."},
+     
+     {"setNextFTypeEntry",snns_setNextFTypeEntry,METH_NOARGS,
+      "setNextFTypeEntry() -> boolean\n\n"
+      "Initializes the next prototype and makes it current.\n"
+      "Returns false if no entries are available."},
+     
+     {"setFTypeEntry",snns_setFTypeEntry, METH_O,
+      "setFTypeEntry() -> boolean\n\n"
+      "Selects a prototype by name. Returns false if not available."},
      
      {"getFTypeName",snns_getFTypeName,METH_NOARGS,
       "getFTypeName() -> ftype/None\n\n"
