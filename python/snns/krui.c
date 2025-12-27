@@ -317,21 +317,21 @@ snns_getMemoryManagerInfo(PyObject *self, PyObject *arg)
 		stbytes,ftbytes);
 }
 
-//static PyObject *
-//snns_getSymbolTable(PyObject *self, PyObject *arg)
-//{
-//	PyObject *ret;
-//	char *name;
-//	int val;
-//	ret = PyDict_New();
-//	if(!ret) return NULL;
-//	if(krui_getFirstSymbolTableEntry(&name,&val))
-//	do {
-//		PyDict_SetItemString(ret,name,PyInt_FromLong(val));
-//	} while(krui_getNextSymbolTableEntry(&name,&val));
-//	if(PyErr_Occurred()) return NULL;
-//	return ret;
-//}
+static PyObject *
+snns_getSymbolTable(PyObject *self, PyObject *arg)
+{
+	PyObject *ret;
+	char *name;
+	int val;
+	ret = PyDict_New();
+	if(!ret) return NULL;
+	if(krui_getFirstSymbolTableEntry(&name,&val))
+	do {
+		PyDict_SetItemString(ret,name,PyInt_FromLong(val));
+	} while(krui_getNextSymbolTableEntry(&name,&val));
+	if(PyErr_Occurred()) return NULL;
+	return ret;
+}
 
 static PyObject *
 snns_deleteNet(PyObject *self, PyObject *arg)
@@ -448,16 +448,16 @@ snns_newPattern(PyObject *self, PyObject *arg)
 	return Py_BuildValue("");
 }
 
-//static PyObject *
-//snns_allocNewPatternSet(PyObject *self, PyObject *arg)
-//{
-//	krui_err err;
-//	int i;
-//	if((err = krui_allocNewPatternSet(&i))) {
-//		return make_exception(err);
-//	}
-//	return PyInt_FromLong(i);
-//}
+static PyObject *
+snns_allocNewPatternSet(PyObject *self, PyObject *arg)
+{
+	krui_err err;
+	int i;
+	if((err = krui_allocNewPatternSet(&i))) {
+		return make_exception(err);
+	}
+	return PyInt_FromLong(i);
+}
 
 static PyObject *
 snns_resetNet(PyObject *self, PyObject *arg)
@@ -466,16 +466,16 @@ snns_resetNet(PyObject *self, PyObject *arg)
 	return Py_BuildValue("");
 }
 
-//static PyObject *
-//snns_getNoOfTTypeUnits(PyObject *self, PyObject *arg)
-//{
-//	int no;
-//	int parm;
-//	parm = PyInt_AsLong(arg);
-//	if(PyErr_Occurred()) return NULL;
-//	no = krui_getNoOfTTypeUnits(parm);
-//	return PyInt_FromLong(no);
-//}
+static PyObject *
+snns_getNoOfTTypeUnits(PyObject *self, PyObject *arg)
+{
+	int no;
+	int parm;
+	parm = PyInt_AsLong(arg);
+	if(PyErr_Occurred()) return NULL;
+	no = krui_getNoOfTTypeUnits(parm);
+	return PyInt_FromLong(no);
+}
 
 static PyObject *
 snns_getLearnFunc(PyObject *self, PyObject *arg)
@@ -568,45 +568,45 @@ snns_saveNewPatterns(PyObject *self, PyObject *args)
 	return Py_BuildValue("");
 }
 
-//static PyObject *
-//snns_saveResultParam(PyObject *self, PyObject *args)
-//{
-//	int create,startpattern,endpattern,includeinput,includeoutput;
-//	char *filename;
-//	PyObject *updateparams, *current;
-//	float fparams[10];
-//	int nparams=0;
-//	int index;
-//	krui_err err;
-//	if(PyArg_ParseTuple(args,"siiiiiO",&filename,&create, &startpattern,
-//		&endpattern, &includeinput, &includeoutput, &updateparams)) {
-//		if(PySequence_Check(updateparams)) {
-//			nparams = PySequence_Size(updateparams);
-//			if(nparams > 10) {
-//				PyErr_SetString(PyExc_RuntimeError, "too many update parameters for wrapper");
-//				return NULL;
-//			} else {
-//				for(index =0; index < nparams; ++index) {
-//					if((current = PySequence_GetItem(updateparams,index))) {
-//						fparams[index]=PyFloat_AsDouble(current);
-//					} else {
-//						PyErr_SetString(PyExc_RuntimeError,"could not get item from tuple");
-//						return NULL;
-//					}
-//				}
-//				if((err=krui_saveResultParam(filename,create,startpattern,endpattern,includeinput,
-//					includeoutput,fparams,nparams))) {
-//					return make_exception(err);
-//				}
-//			}
-//		} else {
-//			PyErr_SetString(PyExc_RuntimeError, "expected tuple for update parameters");
-//		}
-//	}
-//	if(PyErr_Occurred()) return NULL;
-//	return Py_BuildValue("");
-//}
-//
+static PyObject *
+snns_saveResultParam(PyObject *self, PyObject *args)
+{
+	int create,startpattern,endpattern,includeinput,includeoutput;
+	char *filename;
+	PyObject *updateparams, *current;
+	float fparams[10];
+	int nparams=0;
+	int index;
+	krui_err err;
+	if(PyArg_ParseTuple(args,"siiiiiO",&filename,&create, &startpattern,
+		&endpattern, &includeinput, &includeoutput, &updateparams)) {
+		if(PySequence_Check(updateparams)) {
+			nparams = PySequence_Size(updateparams);
+			if(nparams > 10) {
+				PyErr_SetString(PyExc_RuntimeError, "too many update parameters for wrapper");
+				return NULL;
+			} else {
+				for(index =0; index < nparams; ++index) {
+					if((current = PySequence_GetItem(updateparams,index))) {
+						fparams[index]=PyFloat_AsDouble(current);
+					} else {
+						PyErr_SetString(PyExc_RuntimeError,"could not get item from tuple");
+						return NULL;
+					}
+				}
+				if((err=krui_saveResultParam(filename,create,startpattern,endpattern,includeinput,
+					includeoutput,fparams,nparams))) {
+					return make_exception(err);
+				}
+			}
+		} else {
+			PyErr_SetString(PyExc_RuntimeError, "expected tuple for update parameters");
+		}
+	}
+	if(PyErr_Occurred()) return NULL;
+	return Py_BuildValue("");
+}
+
 //static PyObject *
 //snns_GetPatInfo(PyObject *self, PyObject *args)
 //{
@@ -2631,10 +2631,10 @@ static PyMethodDef MylibMethods[] = {
       "getPrunFunc() -> pruning function\n\n"
       "Returns the name of the current pruning function"},
      
-//     {"getNoOfTTypeUnits",snns_getNoOfTTypeUnits,METH_O,
-//      "getNoOfTTypeUnits(io_type) -> number of units\n\n"
-//      "Returns the no. of units of the specified io_type"},
-//     
+     {"getNoOfTTypeUnits",snns_getNoOfTTypeUnits,METH_O,
+      "getNoOfTTypeUnits(io_type) -> number of units\n\n"
+      "Returns the no. of units of the specified io_type"},
+     
 //     {"learnAllPatternsFF",snns_learnAllPatternsFF,METH_VARARGS,
 //      "learnAllPatternsFF([sequence of/multiple] learning parameters)\n"
 //      "                    -> (sequence of output parameters)\n\n"
@@ -2703,9 +2703,9 @@ static PyMethodDef MylibMethods[] = {
       "getTotalNoOfSu//bPatterns() -> number of subpatterns\n\n"
       "Returns the total number of subpatterns contained in all patterns of the current pattern set"},
      
-//     {"allocNewPatternSet",snns_allocNewPatternSet,METH_NOARGS,
-//      "allocNewPatternSet() -> pattern set number\n\n"
-//      "Allocates a new pattern set, returns its number"},
+     {"allocNewPatternSet",snns_allocNewPatternSet,METH_NOARGS,
+      "allocNewPatternSet() -> pattern set number\n\n"
+      "Allocates a new pattern set, returns its number"},
      
      {"setCurrPatSet",snns_setCurrPatSet,METH_O,
       "setCurrPatSet(pattern set number)\n\n"
@@ -2715,11 +2715,11 @@ static PyMethodDef MylibMethods[] = {
       "deletePatSet(pattern set number)\n\n"
       "Deletes all patterns of the pattern set with the given number"},
      
-//     {"getSymbolTable",snns_getSymbolTable,METH_NOARGS,
-//      "getSymbolTable() -> { symbol name : type }\n\n"
-//      "Returns a dictionary of symbols and symbol types (units, sites...)\n"
-//      "Textual representations for the types are in the\n"
-//      "snns.util.nametable_types dictionary."},
+     {"getSymbolTable",snns_getSymbolTable,METH_NOARGS,
+      "getSymbolTable() -> { symbol name : type }\n\n"
+      "Returns a dictionary of symbols and symbol types (units, sites...)\n"
+      "Textual representations for the types are in the\n"
+      "snns.util.nametable_types dictionary."},
      
      {"resetNet",snns_resetNet,METH_NOARGS,
       "resetNet()\n\n"
@@ -2770,11 +2770,11 @@ static PyMethodDef MylibMethods[] = {
       "saveNewPatterns(filename, pattern set number)\n\n"
       "Saves a pattern set."}, 
      
-//     {"saveResultParam",snns_saveResultParam,METH_VARARGS,
-//      "saveResultParam(filename, boolean create file, min pattern number,\n"
-//      "                max pattern number, boolean include input,\n"
-//      "                boolean include output, (sequence of update parameters))\n\n"
-//      "Saves the network result which depends on the loaded patterns.\n"},
+     {"saveResultParam",snns_saveResultParam,METH_VARARGS,
+      "saveResultParam(filename, boolean create file, min pattern number,\n"
+      "                max pattern number, boolean include input,\n"
+      "                boolean include output, (sequence of update parameters))\n\n"
+      "Saves the network result which depends on the loaded patterns.\n"},
      
      {"showPattern",snns_showPattern,METH_O,
       "showPattern(mode)\n\n"
