@@ -888,18 +888,18 @@ snns_deletePatSet(PyObject *self, PyObject *arg)
 	return snns_int_arg_with_err(arg,krui_deletePatSet);
 }
 
-//static PyObject *
-//snns_useClassDistribution(PyObject *self, PyObject *arg)
-//{
-//	return snns_int_arg_with_err(arg,krui_useClassDistribution);
-//}
-//
-//static PyObject *
-//snns_setClassInfo(PyObject *self, PyObject *arg)
-//{
-//	return snns_string_arg_with_err(arg,krui_setClassInfo);
-//}
-//
+static PyObject *
+snns_useClassDistribution(PyObject *self, PyObject *arg)
+{
+	return snns_int_arg_with_err(arg,krui_useClassDistribution);
+}
+
+static PyObject *
+snns_setClassInfo(PyObject *self, PyObject *arg)
+{
+	return snns_string_arg_with_err(arg,krui_setClassInfo);
+}
+
 //typedef krui_err (*learn_patterns_func)(float *,int,float **,int *);
 //typedef krui_err (*learn_single_pattern_func)(int, float *,int,float **,int *);
 //
@@ -2793,17 +2793,17 @@ static PyMethodDef MylibMethods[] = {
 //      "Gets the shape of the n-th subpattern using the current "
 //      "set, pattern and training scheme (defined with DefTrainSubPat)"},
 //     
-//     {"setClassInfo",snns_setClassInfo,METH_O,
-//      "setClassInfo(class description)\n\n"
-//      "Assigns the class description to the current pattern.\n"
-//      "This will work only when all the patterns in the pattern set carry\n"
-//      "class information or when the current pattern is the only one in the\n"
-//      "current pattern set."},
-//     
-//     {"useClassDistribution",snns_useClassDistribution,METH_O,
-//      "useClassDistribution(boolean use it or not)\n\n"
-//      "Toggles the use of class information during training."},
-//     
+     {"setClassInfo",snns_setClassInfo,METH_O,
+      "setClassInfo(class description)\n\n"
+      "Assigns the class description to the current pattern.\n"
+      "This will work only when all the patterns in the pattern set carry\n"
+      "class information or when the current pattern is the only one in the\n"
+      "current pattern set."},
+     
+     {"useClassDistribution",snns_useClassDistribution,METH_O,
+      "useClassDistribution(boolean use it or not)\n\n"
+      "Toggles the use of class information during training."},
+     
 //     {"setClassDistribution",snns_setClassDistribution,METH_VARARGS,
 //      "setClassDistribution([sequence of/multiple] integers)\n\n"
 //      "Defines the composition of the pattern set. The integers\n"
