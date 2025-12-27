@@ -1024,51 +1024,51 @@ snns_updateSingleUnit(PyObject *self, PyObject *arg)
 	return snns_int_arg_with_err(arg, krui_updateSingleUnit);
 }
 
-//typedef krui_err (*snns_floatarray_arg_with_err_f)(float *, int);
-//
-//static PyObject *
-//snns_floatarray_arg_with_err(PyObject *arg, snns_floatarray_arg_with_err_f func)
-//{
-//	krui_err err;
-//	float *array=NULL;
-//	int numparm;
-//	unsigned i;
-//	PyObject *tmp;
-//	if(PySequence_Size(arg) > 0) {
-//		tmp = PySequence_GetItem(arg,0);	
-//		if(PySequence_Check(tmp)) {
-//			if(PySequence_Size(arg) > 1) {
-//				PyErr_SetString(PyExc_RuntimeError,
-//				 "sorry, no nested types here!");
-//				 return NULL;
-//			}
-//			arg = tmp;
-//		}
-//	}
-//	if(!PySequence_Check(arg)) {
-//		PyErr_SetString(PyExc_RuntimeError, "expecting a sequence of update parameters");
-//	} else {
-//		numparm = PySequence_Size(arg);
-//		array = PyMem_New(float, numparm);
-//		if(array) {
-//			for(i=0; i < numparm; ++i) {
-//				array[i]=PyFloat_AsDouble(PySequence_GetItem(arg,i));
-//			}	
-//			err = func(array,numparm);
-//			if(err) make_exception(err);
-//			PyMem_Del(array);
-//		}
-//	}
-//	if(PyErr_Occurred()) return NULL;
-//	else return Py_BuildValue("");
-//}
-//
-//static PyObject *
-//snns_updateNet(PyObject *self, PyObject *arg)
-//{
-//	return snns_floatarray_arg_with_err(arg, krui_updateNet);
-//}
-//
+typedef krui_err (*snns_floatarray_arg_with_err_f)(float *, int);
+
+static PyObject *
+snns_floatarray_arg_with_err(PyObject *arg, snns_floatarray_arg_with_err_f func)
+{
+	krui_err err;
+	float *array=NULL;
+	int numparm;
+	unsigned i;
+	PyObject *tmp;
+	if(PySequence_Size(arg) > 0) {
+		tmp = PySequence_GetItem(arg,0);	
+		if(PySequence_Check(tmp)) {
+			if(PySequence_Size(arg) > 1) {
+				PyErr_SetString(PyExc_RuntimeError,
+				 "sorry, no nested types here!");
+				 return NULL;
+			}
+			arg = tmp;
+		}
+	}
+	if(!PySequence_Check(arg)) {
+		PyErr_SetString(PyExc_RuntimeError, "expecting a sequence of update parameters");
+	} else {
+		numparm = PySequence_Size(arg);
+		array = PyMem_New(float, numparm);
+		if(array) {
+			for(i=0; i < numparm; ++i) {
+				array[i]=PyFloat_AsDouble(PySequence_GetItem(arg,i));
+			}	
+			err = func(array,numparm);
+			if(err) make_exception(err);
+			PyMem_Del(array);
+		}
+	}
+	if(PyErr_Occurred()) return NULL;
+	else return Py_BuildValue("");
+}
+
+static PyObject *
+snns_updateNet(PyObject *self, PyObject *arg)
+{
+	return snns_floatarray_arg_with_err(arg, krui_updateNet);
+}
+
 //static PyObject *
 //snns_initializeNet(PyObject *self, PyObject *arg)
 //{
@@ -1218,30 +1218,30 @@ snns_deleteFTypeEntry(PyObject *self, PyObject *args)
 	return Py_BuildValue("");
 }
 
-//static PyObject *
-//snns_createFTypeEntry(PyObject *self, PyObject *args)
-//{
-//	char *ftypename, *actfuncname, *outfuncname;
-//	PyObject *sitenames=NULL;
-//	char **nameslist=NULL;
-//	int i;
-//	int numsites=0;
-//	krui_err err;
-//	if(!PyArg_ParseTuple(args,"sss|O",&ftypename,&actfuncname,&outfuncname,&sitenames)) return NULL;
-//	if(sitenames) {
-//		numsites = PySequence_Size(sitenames);
-//		nameslist = PyMem_New(char *, numsites);
-//		if(!nameslist) return NULL;
-//		for(i=0; i < numsites; ++i) {
-//			nameslist[i]=PyString_AsString(PySequence_GetItem(sitenames,i));
-//		}
-//	}
-//	err = krui_createFTypeEntry(ftypename,actfuncname,outfuncname,
-//		numsites,nameslist);
-//	if(nameslist) PyMem_Del(nameslist);	
-//	if(err) return make_exception(err);	
-//	return Py_BuildValue("");
-//}
+static PyObject *
+snns_createFTypeEntry(PyObject *self, PyObject *args)
+{
+	char *ftypename, *actfuncname, *outfuncname;
+	PyObject *sitenames=NULL;
+	char **nameslist=NULL;
+	int i;
+	int numsites=0;
+	krui_err err;
+	if(!PyArg_ParseTuple(args,"sss|O",&ftypename,&actfuncname,&outfuncname,&sitenames)) return NULL;
+	if(sitenames) {
+		numsites = PySequence_Size(sitenames);
+		nameslist = PyMem_New(char *, numsites);
+		if(!nameslist) return NULL;
+		for(i=0; i < numsites; ++i) {
+			nameslist[i]=PyString_AsString(PySequence_GetItem(sitenames,i));
+		}
+	}
+	err = krui_createFTypeEntry(ftypename,actfuncname,outfuncname,
+		numsites,nameslist);
+	if(nameslist) PyMem_Del(nameslist);	
+	if(err) return make_exception(err);	
+	return Py_BuildValue("");
+}
 
 static PyObject *
 snns_getFirstPredUnit(PyObject *self, PyObject *args)
@@ -1452,12 +1452,12 @@ snns_changeSiteTableEntry(PyObject *self, PyObject *args)
 	return Py_BuildValue("");
 }	
 
-//static PyObject *
-//snns_deleteSiteTableEntry(PyObject *self, PyObject *args)
-//{
-//	return snns_string_arg_with_err(args,krui_deleteSiteTableEntry);
-//}	
-//
+static PyObject *
+snns_deleteSiteTableEntry(PyObject *self, PyObject *args)
+{
+	return snns_string_arg_with_err(args,krui_deleteSiteTableEntry);
+}	
+
 static PyObject *
 snns_getSiteTable(PyObject *self, PyObject *args)
 {	
@@ -2006,11 +2006,11 @@ snns_createUnit(PyObject *self, PyObject *args)
 	else return PyInt_FromLong(ret);
 }
 
-//static PyObject *
-//snns_setUnitFType(PyObject *self, PyObject *args)
-//{
-//	return snns_int_char_args_with_err(args,krui_setUnitFType);
-//}
+static PyObject *
+snns_setUnitFType(PyObject *self, PyObject *args)
+{
+	return snns_int_char_args_with_err(args,krui_setUnitFType);
+}
 
 static PyObject *
 snns_copyUnit(PyObject *self, PyObject *args)
@@ -2123,10 +2123,10 @@ static PyMethodDef MylibMethods[] = {
      "are copied. Available modes:\n"
      "INPUTS_AND_OUTPUTS, ONLY_INPUTS, ONLY_OUTPUTS, ONLY_UNIT"},
 
-//     {"setUnitFType",snns_setUnitFType, METH_VARARGS,
-//      "setUnitFtype(unit number, ftype name)\n\n"
-//      "Changes the structure of the given unit to the intersection of the\n"
-//      "current type of the unit with the prototype (ftype)"},
+     {"setUnitFType",snns_setUnitFType, METH_VARARGS,
+      "setUnitFtype(unit number, ftype name)\n\n"
+      "Changes the structure of the given unit to the intersection of the\n"
+      "current type of the unit with the prototype (ftype)"},
 
      {"createUnit",snns_createUnit, METH_VARARGS,
       "createUnit(name, output function, activation function,\n"
@@ -2324,10 +2324,10 @@ static PyMethodDef MylibMethods[] = {
       "changeSiteTableEntry(old site name, new site name, new site function)\n\n"
       "Changes the correspondence between site function and name of site"},
      
-//     {"deleteSiteTableEntry",snns_deleteSiteTableEntry, METH_O,
-//      "deleteSiteTableEntry(site name)\n\n"
-//      "Deletes a site in the site table"},
-//     
+     {"deleteSiteTableEntry",snns_deleteSiteTableEntry, METH_O,
+      "deleteSiteTableEntry(site name)\n\n"
+      "Deletes a site in the site table"},
+     
      {"getSiteTable",snns_getSiteTable, METH_NOARGS,
       "getSiteTable() -> {site name : site function}\n\n"
       "Returns a dictionary of site names and site functions"},	     
@@ -2521,10 +2521,10 @@ static PyMethodDef MylibMethods[] = {
       "setFTypeSiteName(site name)\n\n"
       "Changes the name of the current prototype site"},
      
-//     {"createFTypeEntry",snns_createFTypeEntry,METH_VARARGS,
-//      "createFTypeEntry(ftype name, activation function, output function,\n"
-//      "                 [optional sequence of site names])\n\n"
-//      "Defines a prototype for units."},
+     {"createFTypeEntry",snns_createFTypeEntry,METH_VARARGS,
+      "createFTypeEntry(ftype name, activation function, output function,\n"
+      "                 [optional sequence of site names])\n\n"
+      "Defines a prototype for units."},
 
      {"deleteFTypeEntry",snns_deleteFTypeEntry,METH_O,
       "deleteFTypeEntry(ftype name)\n\n"
@@ -2561,11 +2561,11 @@ static PyMethodDef MylibMethods[] = {
       "Evalutes the net input, the activation and the output value of the\n"
       "specified unit (also for frozen units)"},
      
-//     {"updateNet",snns_updateNet, METH_VARARGS,
-//      "updateNet([sequence of/multiple] update parameters)\n\n"
-//      "Updates the network according to the update function with the\n"
-//      "given parameters."}, 
-//     
+     {"updateNet",snns_updateNet, METH_VARARGS,
+      "updateNet([sequence of/multiple] update parameters)\n\n"
+      "Updates the network according to the update function with the\n"
+      "given parameters."}, 
+     
 //     {"DefTrainSubPat",snns_DefTrainSubPat, METH_VARARGS,
 //      "DefTrainSubPat([optional insize, outsize, instep, outstep])\n"
 //      "                 -> number of subpatterns\n\n"
