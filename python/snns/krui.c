@@ -64,22 +64,22 @@ snns_int_arg_with_err(PyObject *arg, int_arg_with_err_func func)
 	return Py_BuildValue("");
 }
 
-//typedef krui_err (*string_arg_with_err_func)(char *);
-//
-//static PyObject *
-//snns_string_arg_with_err(PyObject *arg, string_arg_with_err_func func)
-//{
-//	char *text=NULL;
-//	krui_err err;
-//	text = PyString_AsString(arg);
-//	if(text) {
-//		if((err=func(text))) {
-//			return make_exception(err);
-//		}
-//	} else return NULL;
-//	return Py_BuildValue("");
-//}
-//
+typedef krui_err (*string_arg_with_err_func)(char *);
+
+static PyObject *
+snns_string_arg_with_err(PyObject *arg, string_arg_with_err_func func)
+{
+	char *text=NULL;
+	krui_err err;
+	text = PyString_AsString(arg);
+	if(text) {
+		if((err=func(text))) {
+			return make_exception(err);
+		}
+	} else return NULL;
+	return Py_BuildValue("");
+}
+
 //static PyObject *
 //wrap_pattern_set_info(pattern_set_info *ps, char *attr)
 //{
@@ -1351,30 +1351,30 @@ snns_setLinkWeight(PyObject *self, PyObject *args)
 	return Py_BuildValue("");
 }
 
-//static PyObject *
-//snns_createLink(PyObject *self, PyObject *args)
-//{
-//	double weight;
-//	int unit;
-//	krui_err err;
-//	if(!PyArg_ParseTuple(args,"id",&unit,&weight)) return NULL;
-//	err = krui_createLink(unit,weight);
-//	if(err) return make_exception(err);
-//	return Py_BuildValue("");
-//}
-//
-//static PyObject *
-//snns_createLinkWithAdditionalParameters(PyObject *self, PyObject *args)
-//{
-//	double weight,v1,v2,v3;
-//	int unit;
-//	krui_err err;
-//	if(!PyArg_ParseTuple(args,"idddd",&unit,&weight,&v1,&v2,&v3)) return NULL;
-//	krui_createLinkWithAdditionalParameters(unit,weight,v1,v2,v3);
-//	err = krui_getErrorCode();
-//	if(err) return make_exception(err);
-//	return Py_BuildValue("");
-//}
+static PyObject *
+snns_createLink(PyObject *self, PyObject *args)
+{
+	double weight;
+	int unit;
+	krui_err err;
+	if(!PyArg_ParseTuple(args,"id",&unit,&weight)) return NULL;
+	err = krui_createLink(unit,weight);
+	if(err) return make_exception(err);
+	return Py_BuildValue("");
+}
+
+static PyObject *
+snns_createLinkWithAdditionalParameters(PyObject *self, PyObject *args)
+{
+	double weight,v1,v2,v3;
+	int unit;
+	krui_err err;
+	if(!PyArg_ParseTuple(args,"idddd",&unit,&weight,&v1,&v2,&v3)) return NULL;
+	krui_createLinkWithAdditionalParameters(unit,weight,v1,v2,v3);
+	err = krui_getErrorCode();
+	if(err) return make_exception(err);
+	return Py_BuildValue("");
+}
 
 static PyObject *
 snns_getErrorCode(PyObject *self, PyObject *args)
@@ -1496,20 +1496,20 @@ snns_setFirstSite(PyObject *self, PyObject *args)
 	return PyInt_FromLong(ret);
 }	
 
-//static PyObject *
-//snns_setNextSite(PyObject *self, PyObject *args)
-//{	
-//	int ret;
-//	ret = krui_setNextSite();
-//	if(ret < 0) return make_exception(ret);
-//	return PyInt_FromLong(ret);
-//}	
-//
-//static PyObject *
-//snns_setSite(PyObject *self, PyObject *args)
-//{
-//	return snns_string_arg_with_err(args,krui_setSite);
-//}	
+static PyObject *
+snns_setNextSite(PyObject *self, PyObject *args)
+{	
+	int ret;
+	ret = krui_setNextSite();
+	if(ret < 0) return make_exception(ret);
+	return PyInt_FromLong(ret);
+}	
+
+static PyObject *
+snns_setSite(PyObject *self, PyObject *args)
+{
+	return snns_string_arg_with_err(args,krui_setSite);
+}	
 
 static PyObject *
 snns_getSiteValue(PyObject *self, PyObject *args)
@@ -1541,11 +1541,11 @@ snns_getSiteName(PyObject *self, PyObject *args)
 //	return snns_string_arg_with_err(args,krui_setSiteName);
 //}	
 //
-//static PyObject *
-//snns_addSite(PyObject *self, PyObject *args)
-//{
-//	return snns_string_arg_with_err(args,krui_addSite);
-//}	
+static PyObject *
+snns_addSite(PyObject *self, PyObject *args)
+{
+	return snns_string_arg_with_err(args,krui_addSite);
+}	
 
 static PyObject *
 snns_deleteSite(PyObject *self, PyObject *args)
@@ -2341,14 +2341,14 @@ static PyMethodDef MylibMethods[] = {
       "Initializes the first site at the current unit.\n"
       "If there is no site, 0 is returned."},	     
      
-//     {"setNextSite",snns_setNextSite,METH_NOARGS,
-//      "setNextSite() -> boolean\n\n"
-//      "Initializes the next site of the current unit.\n"
-//      "If there is no next site, 0 is returned."},	     
-//     
-//     {"setSite",snns_setSite, METH_O,
-//      "setSite(site name)\n\n"
-//      "Initializes the given site of the current unit"},
+     {"setNextSite",snns_setNextSite,METH_NOARGS,
+      "setNextSite() -> boolean\n\n"
+      "Initializes the next site of the current unit.\n"
+      "If there is no next site, 0 is returned."},	     
+     
+     {"setSite",snns_setSite, METH_O,
+      "setSite(site name)\n\n"
+      "Initializes the given site of the current unit"},
      
      {"getSiteValue",snns_getSiteValue, METH_NOARGS,
       "getSiteValue() -> site function\n\n"
@@ -2367,9 +2367,9 @@ static PyMethodDef MylibMethods[] = {
       "getSiteName() -> site name\n\n"
       "Returns the name of the the current site"},
      
-//     {"addSite",snns_addSite, METH_O,
-//      "addSite(site name)\n\n"
-//      "Adds a new site to the current unit. The new site is inserted in front."},
+     {"addSite",snns_addSite, METH_O,
+      "addSite(site name)\n\n"
+      "Adds a new site to the current unit. The new site is inserted in front."},
      
      {"deleteSite",snns_deleteSite, METH_NOARGS,
       "deleteSite() -> boolean\n\n"
@@ -2401,9 +2401,9 @@ static PyMethodDef MylibMethods[] = {
       "                             internal 1, internal 2, internal 3)\n\n"
       "Like getNextPredUnit, but also returns three internal values."},
      
-//     {"getCurrentPredUnit",snns_getCurrentPredUnit,METH_NOARGS,
-//      "getCurrentPredUnit() -> (unit number, connection strength)\n\n"
-//      "Gets the current predecessor unit number and connection strength."},
+     {"getCurrentPredUnit",snns_getCurrentPredUnit,METH_NOARGS,
+      "getCurrentPredUnit() -> (unit number, connection strength)\n\n"
+      "Gets the current predecessor unit number and connection strength."},
      
      {"getFirstSuccUnit",snns_getFirstSuccUnit,METH_O,
       "getFirstSuccUnit() -> (unit number, connection strength)\n\n"
@@ -2431,16 +2431,16 @@ static PyMethodDef MylibMethods[] = {
       "setLinkWeight(weight)\n\n"
       "Sets the connection weight of the current link"},
      
-//     {"createLink",snns_createLink,METH_VARARGS,
-//      "createLink(unit number, weight)\n\n"
-//      "Creates a new link between the current unit/site and the given unit\n"
-//      "with a given weight."},
-//     
-//     {"createLinkWithAdditionalParameters",snns_createLinkWithAdditionalParameters,METH_VARARGS,
-//      "createLinkWithAdditionalParameters(unit number, weight,\n"
-//      "                                   internal a, internal b, internal c)"
-//      "\n\n"
-//      "Like createLink, but also setting the three internal parameters"},
+     {"createLink",snns_createLink,METH_VARARGS,
+      "createLink(unit number, weight)\n\n"
+      "Creates a new link between the current unit/site and the given unit\n"
+      "with a given weight."},
+     
+     {"createLinkWithAdditionalParameters",snns_createLinkWithAdditionalParameters,METH_VARARGS,
+      "createLinkWithAdditionalParameters(unit number, weight,\n"
+      "                                   internal a, internal b, internal c)"
+      "\n\n"
+      "Like createLink, but also setting the three internal parameters"},
      
      {"deleteLink",snns_deleteLink,METH_NOARGS,
       "deleteLink()\n\n"
