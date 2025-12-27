@@ -401,12 +401,12 @@ snns_shuffleSubPatterns(PyObject *self, PyObject *arg)
 //	}
 //	return Py_BuildValue("");
 //}
-//
-//static PyObject *
-//snns_allocateUnits(PyObject *self, PyObject *arg)
-//{
-//	return snns_int_arg_with_err(arg,krui_allocateUnits);
-//}
+
+static PyObject *
+snns_allocateUnits(PyObject *self, PyObject *arg)
+{
+	return snns_int_arg_with_err(arg,krui_allocateUnits);
+}
 
 static PyObject *
 snns_getNoOfOutputUnits(PyObject *self, PyObject *arg)
@@ -495,24 +495,24 @@ snns_getPrunFunc(PyObject *self, PyObject *arg)
 	return PyString_FromString(krui_getPrunFunc());
 }
 
-//
-//static PyObject *
-//snns_setLearnFunc(PyObject *self, PyObject *name)
-//{
-//	return snns_string_arg_with_err(name,krui_setLearnFunc);
-//}
-//
-//static PyObject *
-//snns_getInitialisationFunc(PyObject *self, PyObject *arg)
-//{
-//	return PyString_FromString(krui_getInitialisationFunc());
-//}
-//
-//static PyObject *
-//snns_setInitialisationFunc(PyObject *self, PyObject *name)
-//{
-//	return snns_string_arg_with_err(name,krui_setInitialisationFunc);
-//}
+
+static PyObject *
+snns_setLearnFunc(PyObject *self, PyObject *name)
+{
+	return snns_string_arg_with_err(name,krui_setLearnFunc);
+}
+
+static PyObject *
+snns_getInitialisationFunc(PyObject *self, PyObject *arg)
+{
+	return PyString_FromString(krui_getInitialisationFunc());
+}
+
+static PyObject *
+snns_setInitialisationFunc(PyObject *self, PyObject *name)
+{
+	return snns_string_arg_with_err(name,krui_setInitialisationFunc);
+}
 
 static PyObject *
 snns_getUpdateFunc(PyObject *self, PyObject *arg)
@@ -520,23 +520,23 @@ snns_getUpdateFunc(PyObject *self, PyObject *arg)
 	return PyString_FromString(krui_getUpdateFunc());
 }
 
-//static PyObject *
-//snns_setUpdateFunc(PyObject *self, PyObject *name)
-//{
-//	return snns_string_arg_with_err(name,krui_setUpdateFunc);
-//}
-//
-//static PyObject *
-//snns_setFFLearnFunc(PyObject *self, PyObject *name)
-//{
-//	return snns_string_arg_with_err(name,krui_setFFLearnFunc);
-//}
-//
-//static PyObject *
-//snns_setPrunFunc(PyObject *self, PyObject *name)
-//{
-//	return snns_string_arg_with_err(name,krui_setPrunFunc);
-//}
+static PyObject *
+snns_setUpdateFunc(PyObject *self, PyObject *name)
+{
+	return snns_string_arg_with_err(name,krui_setUpdateFunc);
+}
+
+static PyObject *
+snns_setFFLearnFunc(PyObject *self, PyObject *name)
+{
+	return snns_string_arg_with_err(name,krui_setFFLearnFunc);
+}
+
+static PyObject *
+snns_setPrunFunc(PyObject *self, PyObject *name)
+{
+	return snns_string_arg_with_err(name,krui_setPrunFunc);
+}
 
 static PyObject *
 snns_loadNewPatterns(PyObject *self, PyObject *arg)
@@ -1018,12 +1018,12 @@ snns_deletePatSet(PyObject *self, PyObject *arg)
 //	return snns_learn_general_patterns(arg,krui_learnAllPatternsFF);
 //}
 //
-//static PyObject *
-//snns_updateSingleUnit(PyObject *self, PyObject *arg)
-//{
-//	return snns_int_arg_with_err(arg, krui_updateSingleUnit);
-//}
-//
+static PyObject *
+snns_updateSingleUnit(PyObject *self, PyObject *arg)
+{
+	return snns_int_arg_with_err(arg, krui_updateSingleUnit);
+}
+
 //typedef krui_err (*snns_floatarray_arg_with_err_f)(float *, int);
 //
 //static PyObject *
@@ -2551,16 +2551,16 @@ static PyMethodDef MylibMethods[] = {
       "Returns the number of input and output parameters of the function\n"
       "given by name and type or an empty tuple if the function does not exist"},
 
-//     {"allocateUnits",snns_allocateUnits, METH_O,
-//      "allocateUnits(number of units)\n\n"
-//      "Allocate units, call this if you know how big the network will be\n"
-//      "before you create it"},
-//     
-//     {"updateSingleUnit",snns_updateSingleUnit, METH_O,
-//      "updateSingleUnit(unit number)\n\n"
-//      "Evalutes the net input, the activation and the output value of the\n"
-//      "specified unit (also for frozen units)"},
-//     
+     {"allocateUnits",snns_allocateUnits, METH_O,
+      "allocateUnits(number of units)\n\n"
+      "Allocate units, call this if you know how big the network will be\n"
+      "before you create it"},
+     
+     {"updateSingleUnit",snns_updateSingleUnit, METH_O,
+      "updateSingleUnit(unit number)\n\n"
+      "Evalutes the net input, the activation and the output value of the\n"
+      "specified unit (also for frozen units)"},
+     
 //     {"updateNet",snns_updateNet, METH_VARARGS,
 //      "updateNet([sequence of/multiple] update parameters)\n\n"
 //      "Updates the network according to the update function with the\n"
@@ -2591,30 +2591,30 @@ static PyMethodDef MylibMethods[] = {
       "getUpdateFunc() -> update function\n\n"
       "Returns the name of the current update function"},
      
-//     {"setUpdateFunc",snns_setUpdateFunc, METH_O,
-//      "setUpdateFunc(update function)\n\n"
-//      "Changes the update function"},
-//     
-//     {"setLearnFunc",snns_setLearnFunc, METH_O,
-//      "setLearnFunc(learning function)\n\n"
-//      "Changes the learning function"},
-//     
-//     {"setFFLearnFunc",snns_setFFLearnFunc, METH_O,
-//      "setFFLearnFunc(subordinate learning function)\n\n"
-//      "Changes the subordinate learning function"},
-//     
-//     {"setPrunFunc",snns_setPrunFunc, METH_O,
-//      "setPrunFunc(pruning function)\n\n"
-//      "Changes the pruning function"},
-//     
-//     {"getInitialisationFunc",snns_getInitialisationFunc, METH_NOARGS,
-//      "getInitialisationFunc() -> initialisation function\n\n"
-//      "Returns the name of the current initialisation function"},
-//     
-//     {"setInitialisationFunc",snns_setInitialisationFunc, METH_O,
-//      "setInitialisationFunc(initialisation function)\n\n"
-//      "Changes the initialisation function"},
-//     
+     {"setUpdateFunc",snns_setUpdateFunc, METH_O,
+      "setUpdateFunc(update function)\n\n"
+      "Changes the update function"},
+     
+     {"setLearnFunc",snns_setLearnFunc, METH_O,
+      "setLearnFunc(learning function)\n\n"
+      "Changes the learning function"},
+     
+     {"setFFLearnFunc",snns_setFFLearnFunc, METH_O,
+      "setFFLearnFunc(subordinate learning function)\n\n"
+      "Changes the subordinate learning function"},
+     
+     {"setPrunFunc",snns_setPrunFunc, METH_O,
+      "setPrunFunc(pruning function)\n\n"
+      "Changes the pruning function"},
+     
+     {"getInitialisationFunc",snns_getInitialisationFunc, METH_NOARGS,
+      "getInitialisationFunc() -> initialisation function\n\n"
+      "Returns the name of the current initialisation function"},
+     
+     {"setInitialisationFunc",snns_setInitialisationFunc, METH_O,
+      "setInitialisationFunc(initialisation function)\n\n"
+      "Changes the initialisation function"},
+     
 //     {"initializeNet",snns_initializeNet, METH_VARARGS,
 //      "initializeNet([sequence of/multiple] initialization parameters)\n\n"
 //      "Initializes the network with the current initialization function"},
