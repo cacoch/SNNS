@@ -1143,11 +1143,11 @@ snns_getFTypeName(PyObject *self, PyObject *args)
 	else return Py_BuildValue("");
 }
 
-//static PyObject *
-//snns_setFTypeName(PyObject *self, PyObject *args)
-//{
-//	return snns_string_arg_with_err(args,krui_setFTypeName);
-//}
+static PyObject *
+snns_setFTypeName(PyObject *self, PyObject *args)
+{
+	return snns_string_arg_with_err(args,krui_setFTypeName);
+}
 
 static PyObject *
 snns_getFTypeActFuncName(PyObject *self, PyObject *args)
@@ -1158,66 +1158,66 @@ snns_getFTypeActFuncName(PyObject *self, PyObject *args)
 	else return Py_BuildValue("");
 }
 
-//static PyObject *
-//snns_setFTypeActFunc(PyObject *self, PyObject *args)
-//{
-//	return snns_string_arg_with_err(args,krui_setFTypeActFunc);
-//}
-//
-//static PyObject *
-//snns_getFTypeOutFuncName(PyObject *self, PyObject *args)
-//{
-//	char *funcname;
-//	funcname = krui_getFTypeOutFuncName();
-//	if(funcname) return PyString_FromString(funcname);
-//	else return Py_BuildValue("");
-//}
-//
-//static PyObject *
-//snns_setFTypeOutFunc(PyObject *self, PyObject *args)
-//{
-//	return snns_string_arg_with_err(args,krui_setFTypeOutFunc);
-//}
-//
-//static PyObject *
-//snns_setFirstFTypeSite(PyObject *self, PyObject *args)
-//{
-//	return PyInt_FromLong(krui_setFirstFTypeSite());
-//}
-//
-//static PyObject *
-//snns_setNextFTypeSite(PyObject *self, PyObject *args)
-//{
-//	return PyInt_FromLong(krui_setNextFTypeSite());
-//}
-//
-//static PyObject *
-//snns_getFTypeSiteName(PyObject *self, PyObject *args)
-//{
-//	char *funcname;
-//	funcname = krui_getFTypeSiteName();
-//	if(funcname) return PyString_FromString(funcname);
-//	else return Py_BuildValue("");
-//}
-//
-//static PyObject *
-//snns_setFTypeSiteName(PyObject *self, PyObject *args)
-//{
-//	return snns_string_arg_with_err(args,krui_setFTypeSiteName);
-//}
-//
-//static PyObject *
-//snns_deleteFTypeEntry(PyObject *self, PyObject *args)
-//{
-//	char *ftypename;
-//	krui_err err;
-//	ftypename = PyString_AsString(args);
-//	if(PyErr_Occurred()) return NULL;
-//	err = krui_deleteFTypeEntry(ftypename);
-//	if(err) return make_exception(err);
-//	return Py_BuildValue("");
-//}
-//
+static PyObject *
+snns_setFTypeActFunc(PyObject *self, PyObject *args)
+{
+	return snns_string_arg_with_err(args,krui_setFTypeActFunc);
+}
+
+static PyObject *
+snns_getFTypeOutFuncName(PyObject *self, PyObject *args)
+{
+	char *funcname;
+	funcname = krui_getFTypeOutFuncName();
+	if(funcname) return PyString_FromString(funcname);
+	else return Py_BuildValue("");
+}
+
+static PyObject *
+snns_setFTypeOutFunc(PyObject *self, PyObject *args)
+{
+	return snns_string_arg_with_err(args,krui_setFTypeOutFunc);
+}
+
+static PyObject *
+snns_setFirstFTypeSite(PyObject *self, PyObject *args)
+{
+	return PyInt_FromLong(krui_setFirstFTypeSite());
+}
+
+static PyObject *
+snns_setNextFTypeSite(PyObject *self, PyObject *args)
+{
+	return PyInt_FromLong(krui_setNextFTypeSite());
+}
+
+static PyObject *
+snns_getFTypeSiteName(PyObject *self, PyObject *args)
+{
+	char *funcname;
+	funcname = krui_getFTypeSiteName();
+	if(funcname) return PyString_FromString(funcname);
+	else return Py_BuildValue("");
+}
+
+static PyObject *
+snns_setFTypeSiteName(PyObject *self, PyObject *args)
+{
+	return snns_string_arg_with_err(args,krui_setFTypeSiteName);
+}
+
+static PyObject *
+snns_deleteFTypeEntry(PyObject *self, PyObject *args)
+{
+	char *ftypename;
+	krui_err err;
+	ftypename = PyString_AsString(args);
+	if(PyErr_Occurred()) return NULL;
+	err = krui_deleteFTypeEntry(ftypename);
+	if(err) return make_exception(err);
+	return Py_BuildValue("");
+}
+
 //static PyObject *
 //snns_createFTypeEntry(PyObject *self, PyObject *args)
 //{
@@ -2483,52 +2483,52 @@ static PyMethodDef MylibMethods[] = {
       "getFTypeName() -> ftype/None\n\n"
       "Returns the name of the current prototype or None."},
      
-//     {"setFTypeName",snns_setFTypeName,METH_O,
-//      "setFTypeName(ftype name)\n\n"
-//      "Changes the name of the current prototype"},
+     {"setFTypeName",snns_setFTypeName,METH_O,
+      "setFTypeName(ftype name)\n\n"
+      "Changes the name of the current prototype"},
      
      {"getFTypeActFuncName",snns_getFTypeActFuncName,METH_NOARGS,
       "getFTypeActFuncName()\n\n"
       "Gets the name of the activation function of the current prototype"},
      
-//     {"setFTypeActFunc",snns_setFTypeActFunc, METH_O,
-//      "setFTypeActFunc(activation function)\n\n"
-//      "Changes the activation function of the current prototype"},
-//     
-//     {"getFTypeOutFuncName",snns_getFTypeOutFuncName, METH_NOARGS,
-//      "getFTypeOutFuncName()\n\n"
-//      "Gets the name of the output function of the current prototype"},
-//     
-//     {"setFTypeOutFunc",snns_setFTypeOutFunc, METH_O,
-//      "setFTypeOutFunc(output function)\n\n"
-//      "Changes the output function of the current prototype"},
-//     
-//     {"setFirstFTypeSite",snns_setFirstFTypeSite,METH_NOARGS,
-//      "setFirstFTypeSite() -> boolean\n\n"
-//      "Select the first site of the prototype.\n"
-//      "Returns false if there are none"},
-//     
-//     {"setNextFTypeSite",snns_setNextFTypeSite,METH_NOARGS,
-//      "setNextFTypeSite() -> boolean\n\n"
-//      "Select the next site of the prototype.\n"
-//      "Returns false if there are none."},
-//     
-//     {"getFTypeSiteName",snns_getFTypeSiteName,METH_NOARGS,
-//      "getFTypeSiteName() -> site name\n\n"
-//      "Returns the name of the current prototype site"},
-//     
-//     {"setFTypeSiteName",snns_setFTypeSiteName,METH_O,
-//      "setFTypeSiteName(site name)\n\n"
-//      "Changes the name of the current prototype site"},
-//     
+     {"setFTypeActFunc",snns_setFTypeActFunc, METH_O,
+      "setFTypeActFunc(activation function)\n\n"
+      "Changes the activation function of the current prototype"},
+     
+     {"getFTypeOutFuncName",snns_getFTypeOutFuncName, METH_NOARGS,
+      "getFTypeOutFuncName()\n\n"
+      "Gets the name of the output function of the current prototype"},
+     
+     {"setFTypeOutFunc",snns_setFTypeOutFunc, METH_O,
+      "setFTypeOutFunc(output function)\n\n"
+      "Changes the output function of the current prototype"},
+     
+     {"setFirstFTypeSite",snns_setFirstFTypeSite,METH_NOARGS,
+      "setFirstFTypeSite() -> boolean\n\n"
+      "Select the first site of the prototype.\n"
+      "Returns false if there are none"},
+     
+     {"setNextFTypeSite",snns_setNextFTypeSite,METH_NOARGS,
+      "setNextFTypeSite() -> boolean\n\n"
+      "Select the next site of the prototype.\n"
+      "Returns false if there are none."},
+     
+     {"getFTypeSiteName",snns_getFTypeSiteName,METH_NOARGS,
+      "getFTypeSiteName() -> site name\n\n"
+      "Returns the name of the current prototype site"},
+     
+     {"setFTypeSiteName",snns_setFTypeSiteName,METH_O,
+      "setFTypeSiteName(site name)\n\n"
+      "Changes the name of the current prototype site"},
+     
 //     {"createFTypeEntry",snns_createFTypeEntry,METH_VARARGS,
 //      "createFTypeEntry(ftype name, activation function, output function,\n"
 //      "                 [optional sequence of site names])\n\n"
 //      "Defines a prototype for units."},
-//     
-//     {"deleteFTypeEntry",snns_deleteFTypeEntry,METH_O,
-//      "deleteFTypeEntry(ftype name)\n\n"
-//      "Deletes the specified prototype"},
+
+     {"deleteFTypeEntry",snns_deleteFTypeEntry,METH_O,
+      "deleteFTypeEntry(ftype name)\n\n"
+      "Deletes the specified prototype"},
      
      {"getNoOfFunctions",snns_getNoOfFunctions, METH_NOARGS,
       "getNoOfFunctions() -> number of functions\n\n"
