@@ -350,11 +350,11 @@ snns_setSeedNo(PyObject *self, PyObject *arg)
 	return Py_BuildValue("");
 }
 
-//static PyObject *
-//snns_setPatternNo(PyObject *self, PyObject *arg)
-//{
-//	return snns_int_arg_with_err(arg,krui_setPatternNo);
-//}
+static PyObject *
+snns_setPatternNo(PyObject *self, PyObject *arg)
+{
+	return snns_int_arg_with_err(arg,krui_setPatternNo);
+}
 
 static PyObject *
 snns_setCurrPatSet(PyObject *self, PyObject *arg)
@@ -392,15 +392,15 @@ snns_shuffleSubPatterns(PyObject *self, PyObject *arg)
 	return snns_int_arg_with_err(arg,krui_shuffleSubPatterns);
 }
 
-//static PyObject *
-//snns_modifyPattern(PyObject *self, PyObject *arg)
-//{
-//	krui_err err;
-//	if((err = krui_modifyPattern())) {
-//		return make_exception(err);
-//	}
-//	return Py_BuildValue("");
-//}
+static PyObject *
+snns_modifyPattern(PyObject *self, PyObject *arg)
+{
+	krui_err err;
+	if((err = krui_modifyPattern())) {
+		return make_exception(err);
+	}
+	return Py_BuildValue("");
+}
 
 static PyObject *
 snns_allocateUnits(PyObject *self, PyObject *arg)
@@ -627,24 +627,24 @@ snns_saveResultParam(PyObject *self, PyObject *args)
 //	return Py_BuildValue("(OO)",patseto, patdeso);
 //				
 //}
-//
-///*
-//	Build a tuple of integers from an integer array
-//*/
-//
-//static PyObject *
-//build_int_tuple(int *array, size_t size)
-//{
-//	PyObject *ret;
-//	int i;
-//	ret = PyTuple_New(size);
-//	if(!ret) return NULL;
-//	for(i=0; i < size; ++i) {
-//		PyTuple_SetItem(ret,i,PyInt_FromLong(array[i]));
-//	}
-//	if(PyErr_Occurred()) return NULL;
-//	return ret;
-//}
+
+/*
+	Build a tuple of integers from an integer array
+*/
+
+static PyObject *
+build_int_tuple(int *array, size_t size)
+{
+	PyObject *ret;
+	int i;
+	ret = PyTuple_New(size);
+	if(!ret) return NULL;
+	for(i=0; i < size; ++i) {
+		PyTuple_SetItem(ret,i,PyInt_FromLong(array[i]));
+	}
+	if(PyErr_Occurred()) return NULL;
+	return ret;
+}
 
 /*
 	Fill an integer array from a tuple
@@ -662,71 +662,71 @@ bool fill_int_array(PyObject *seq, int *array)
 	return TRUE;
 }
 
-//static PyObject *
-//snns_GetShapeOfSubPattern(PyObject *self, PyObject *args)
-//{
-//	int num;
-//	int insize[MAX_NO_OF_VAR_I_DIM],
-//		inpos[MAX_NO_OF_VAR_I_DIM],
-//		outsize[MAX_NO_OF_VAR_O_DIM],
-//		outpos[MAX_NO_OF_VAR_O_DIM];
-//	krui_err err;
-//	pattern_set_info setinf;
-//	pattern_descriptor patdes;
-//	PyObject *insizet, *inpost, *outsizet, *outpost;
-//
-//	num = PyInt_AsLong(args);
-//	if(PyErr_Occurred()) return NULL;
-//	
-//	err = krui_GetPatInfo(&setinf, &patdes);
-//	if(err) return make_exception(err);
-//	err = krui_GetShapeOfSubPattern(insize,outsize,inpos,outpos,num);
-//	if(err) return make_exception(err);
-//	insizet = build_int_tuple(insize,patdes.input_dim);
-//	inpost = build_int_tuple(inpos,patdes.input_dim);
-//	outsizet = build_int_tuple(outsize,patdes.output_dim);
-//	outpost = build_int_tuple(outpos,patdes.output_dim);
-//	if(PyErr_Occurred()) return NULL;
-//	return Py_BuildValue("(OOOO)",insizet,outsizet,inpost,outpost);
-//}
-//
-//static PyObject *
-//snns_setClassDistribution(PyObject *self, PyObject *args)
-//{
-//	int num;
-//	PyObject *ret=NULL, *tmp=NULL;
-//	int *entries=NULL;
-//	pattern_set_info setinf;
-//	pattern_descriptor patdes;
-//	krui_err err;
-//	if(PySequence_Size(args) > 0) {
-//		tmp = PySequence_GetItem(args,0);	
-//		if(PySequence_Check(tmp)) {
-//			if(PySequence_Size(args) > 1) {
-//				PyErr_SetString(PyExc_RuntimeError,
-//				 "sorry, no nested types here!");
-//				 return NULL;
-//			}
-//			args = tmp;
-//		}
-//	}	
-//	err = krui_GetPatInfo(&setinf, &patdes);
-//	if(err) return make_exception(err);
-//	entries = PyMem_New(int,setinf.classes);
-//	if(!entries) {
-//		return PyErr_NoMemory();
-//	}
-//	if(fill_int_array(args,entries)) {
-//		err = krui_setClassDistribution(entries);
-//		if(err) {
-//			ret = make_exception(err);
-//		} else {
-//			ret = Py_BuildValue("");
-//		}	
-//	}
-//	PyMem_Del(entries);
-//	return ret;
-//}
+static PyObject *
+snns_GetShapeOfSubPattern(PyObject *self, PyObject *args)
+{
+	int num;
+	int insize[MAX_NO_OF_VAR_I_DIM],
+		inpos[MAX_NO_OF_VAR_I_DIM],
+		outsize[MAX_NO_OF_VAR_O_DIM],
+		outpos[MAX_NO_OF_VAR_O_DIM];
+	krui_err err;
+	pattern_set_info setinf;
+	pattern_descriptor patdes;
+	PyObject *insizet, *inpost, *outsizet, *outpost;
+
+	num = PyInt_AsLong(args);
+	if(PyErr_Occurred()) return NULL;
+	
+	err = krui_GetPatInfo(&setinf, &patdes);
+	if(err) return make_exception(err);
+	err = krui_GetShapeOfSubPattern(insize,outsize,inpos,outpos,num);
+	if(err) return make_exception(err);
+	insizet = build_int_tuple(insize,patdes.input_dim);
+	inpost = build_int_tuple(inpos,patdes.input_dim);
+	outsizet = build_int_tuple(outsize,patdes.output_dim);
+	outpost = build_int_tuple(outpos,patdes.output_dim);
+	if(PyErr_Occurred()) return NULL;
+	return Py_BuildValue("(OOOO)",insizet,outsizet,inpost,outpost);
+}
+
+static PyObject *
+snns_setClassDistribution(PyObject *self, PyObject *args)
+{
+	int num;
+	PyObject *ret=NULL, *tmp=NULL;
+	int *entries=NULL;
+	pattern_set_info setinf;
+	pattern_descriptor patdes;
+	krui_err err;
+	if(PySequence_Size(args) > 0) {
+		tmp = PySequence_GetItem(args,0);	
+		if(PySequence_Check(tmp)) {
+			if(PySequence_Size(args) > 1) {
+				PyErr_SetString(PyExc_RuntimeError,
+				 "sorry, no nested types here!");
+				 return NULL;
+			}
+			args = tmp;
+		}
+	}	
+	err = krui_GetPatInfo(&setinf, &patdes);
+	if(err) return make_exception(err);
+	entries = PyMem_New(int,setinf.classes);
+	if(!entries) {
+		return PyErr_NoMemory();
+	}
+	if(fill_int_array(args,entries)) {
+		err = krui_setClassDistribution(entries);
+		if(err) {
+			ret = make_exception(err);
+		} else {
+			ret = Py_BuildValue("");
+		}	
+	}
+	PyMem_Del(entries);
+	return ret;
+}
 
 /*
 	builds the necessary arrays for Def*SubPat from
@@ -819,62 +819,62 @@ snns_DefShowSubPat(PyObject *self, PyObject *args)
 	return Py_BuildValue("");
 }
 
-//static PyObject *
-//snns_AlignSubPat(PyObject *self, PyObject *args)
-//{
-//	int inpos[MAX_NO_OF_VAR_I_DIM],
-//		outpos[MAX_NO_OF_VAR_O_DIM];
-//	krui_err err;
-//	int no;
-//	PyObject *inpost, *outpost;
-//	if(!PyArg_ParseTuple(args,"OO",&inpost,&outpost)) {
-//		return NULL;
-//	}
-//	if(PySequence_Size(inpost) > MAX_NO_OF_VAR_I_DIM ||
-//	   PySequence_Size(outpost) > MAX_NO_OF_VAR_O_DIM) {
-//		PyErr_SetString(PyExc_RuntimeError,"too many dimensions");
-//		return NULL;
-//	}   
-//	if(fill_int_array(inpost,inpos) && fill_int_array(outpost,outpos)) {	
-//		err = krui_AlignSubPat(inpos,outpos,&no);
-//		if(err) return make_exception(err);
-//		return PyInt_FromLong(no);
-//	}
-//	return NULL;
-//}
-//
-//static PyObject *
-//snns_setRemapFunc(PyObject *self, PyObject *args)
-//{
-//	PyObject *params;
-//	char * name;
-//	float *fparams;
-//	int i, num;
-//	krui_err err;
-//	if(!PyArg_ParseTuple(args,"sO",&name,&params)) {
-//		return NULL;
-//	}
-//	if(!PySequence_Check(params)) {
-//		PyErr_SetString(PyExc_RuntimeError,"expecting a sequence as second parameter");
-//		return NULL;
-//	}	
-//	num = PySequence_Size(params);
-//	if(PyErr_Occurred()) return NULL;
-//	if(!(fparams = PyMem_New(float,num))) {
-//		
-//		return PyErr_NoMemory();
-//	}
-//	for(i = 0; i < num; ++i) {
-//		fparams[i] = PyFloat_AsDouble(PySequence_GetItem(params,i));
-//	}
-//	err = krui_setRemapFunc(name, fparams);
-//	PyMem_Del(fparams);
-//	if(err) {
-//		return make_exception(err);
-//	}
-//	if(PyErr_Occurred()) return NULL;
-//	return Py_BuildValue("");
-//}
+static PyObject *
+snns_AlignSubPat(PyObject *self, PyObject *args)
+{
+	int inpos[MAX_NO_OF_VAR_I_DIM],
+		outpos[MAX_NO_OF_VAR_O_DIM];
+	krui_err err;
+	int no;
+	PyObject *inpost, *outpost;
+	if(!PyArg_ParseTuple(args,"OO",&inpost,&outpost)) {
+		return NULL;
+	}
+	if(PySequence_Size(inpost) > MAX_NO_OF_VAR_I_DIM ||
+	   PySequence_Size(outpost) > MAX_NO_OF_VAR_O_DIM) {
+		PyErr_SetString(PyExc_RuntimeError,"too many dimensions");
+		return NULL;
+	}   
+	if(fill_int_array(inpost,inpos) && fill_int_array(outpost,outpos)) {	
+		err = krui_AlignSubPat(inpos,outpos,&no);
+		if(err) return make_exception(err);
+		return PyInt_FromLong(no);
+	}
+	return NULL;
+}
+
+static PyObject *
+snns_setRemapFunc(PyObject *self, PyObject *args)
+{
+	PyObject *params;
+	char * name;
+	float *fparams;
+	int i, num;
+	krui_err err;
+	if(!PyArg_ParseTuple(args,"sO",&name,&params)) {
+		return NULL;
+	}
+	if(!PySequence_Check(params)) {
+		PyErr_SetString(PyExc_RuntimeError,"expecting a sequence as second parameter");
+		return NULL;
+	}	
+	num = PySequence_Size(params);
+	if(PyErr_Occurred()) return NULL;
+	if(!(fparams = PyMem_New(float,num))) {
+		
+		return PyErr_NoMemory();
+	}
+	for(i = 0; i < num; ++i) {
+		fparams[i] = PyFloat_AsDouble(PySequence_GetItem(params,i));
+	}
+	err = krui_setRemapFunc(name, fparams);
+	PyMem_Del(fparams);
+	if(err) {
+		return make_exception(err);
+	}
+	if(PyErr_Occurred()) return NULL;
+	return Py_BuildValue("");
+}
 
 static PyObject *
 snns_showPattern(PyObject *self, PyObject *arg)
@@ -944,11 +944,11 @@ snns_learn_general_single_pattern(PyObject *args, learn_single_pattern_func func
 	return ret;	
 }
 
-//static PyObject *
-//snns_learnSinglePattern(PyObject *self, PyObject *args)
-//{
-//	return snns_learn_general_single_pattern(args, krui_learnSinglePattern);
-//}
+static PyObject *
+snns_learnSinglePattern(PyObject *self, PyObject *args)
+{
+	return snns_learn_general_single_pattern(args, krui_learnSinglePattern);
+}
 
 static PyObject *
 snns_learnSinglePatternFF(PyObject *self, PyObject *args)
@@ -1984,7 +1984,7 @@ snns_setUnitTType(PyObject *self, PyObject *args)
 //	krui_setUnitValueA(a,d);
 //	return Py_BuildValue("");
 //}
-//
+
 static PyObject *
 snns_createDefaultUnit(PyObject *self, PyObject *args)
 {
@@ -2653,12 +2653,12 @@ static PyMethodDef MylibMethods[] = {
       "Same as learnAllPatternsFF, but teaches only the pattern with the\n"
       "given number"},
      
-//     {"learnSinglePattern",snns_learnSinglePattern,METH_VARARGS,
-//      "learnSinglePattern(pattern number, (sequence of learning parameters))\n"
-//      "                   -> (sequence of output parameters)\n\n"
-//      "Same as learnAllPatterns, but teaches only the pattern with the\n"
-//      "given number"},
-//     
+     {"learnSinglePattern",snns_learnSinglePattern,METH_VARARGS,
+      "learnSinglePattern(pattern number, (sequence of learning parameters))\n"
+      "                   -> (sequence of output parameters)\n\n"
+      "Same as learnAllPatterns, but teaches only the pattern with the\n"
+      "given number"},
+     
 //     {"GetPatInfo",snns_GetPatInfo,METH_NOARGS,
 //      "GetPatInfo() -> (pattern_set_info, pattern_descriptor)\n\n"
 //      "Returns a pattern_set_info and a pattern_descriptor"},
@@ -2741,9 +2741,9 @@ static PyMethodDef MylibMethods[] = {
       "deletePattern()\n\n"
       "Deletes the current pattern"},
      
-//     {"modifyPattern",snns_modifyPattern,METH_NOARGS,
-//      "modifyPattern()\n\n"
-//      "Modifies the current pattern (sets to current unit activations)"},
+     {"modifyPattern",snns_modifyPattern,METH_NOARGS,
+      "modifyPattern()\n\n"
+      "Modifies the current pattern (sets to current unit activations)"},
      
      {"newPattern",snns_newPattern,METH_NOARGS,
       "newPattern()\n\n"
@@ -2753,18 +2753,18 @@ static PyMethodDef MylibMethods[] = {
       "getPatternNo() -> pattern number\n\n"
       "Gets the number of the current pattern"},
      
-//     {"setPatternNo",snns_setPatternNo,METH_O,
-//      "setPatternNo(pattern number)\n\n"
-//      "Sets the current pattern"},
+     {"setPatternNo",snns_setPatternNo,METH_O,
+      "setPatternNo(pattern number)\n\n"
+      "Sets the current pattern"},
      
     {"saveNet",snns_saveNet,METH_VARARGS,
      "saveNet(filename, network name)\n\n"
      "Save the network"},
     
-//     {"setRemapFunc",snns_setRemapFunc,METH_VARARGS,
-//      "setRemapFunc(remap function name, (sequence of parameters))\n\n"
-//      "defines the pattern remapping function (by function name) and sets\n"
-//      "its parameters"},
+     {"setRemapFunc",snns_setRemapFunc,METH_VARARGS,
+      "setRemapFunc(remap function name, (sequence of parameters))\n\n"
+      "defines the pattern remapping function (by function name) and sets\n"
+      "its parameters"},
      
      {"saveNewPatterns",snns_saveNewPatterns,METH_VARARGS,
       "saveNewPatterns(filename, pattern set number)\n\n"
@@ -2787,12 +2787,12 @@ static PyMethodDef MylibMethods[] = {
       "setSeedNo(number)\n\n"
       "Initalize the pseudo random generator. 0 reinitializes."},
      
-//     {"GetShapeOfSubPattern",snns_GetShapeOfSubPattern,METH_O,
-//      "GetShapeOfSubPattern(number of subpattern)\n"
-//      "                     -> (insize, outsize, inpos, outpos)\n\n"
-//      "Gets the shape of the n-th subpattern using the current "
-//      "set, pattern and training scheme (defined with DefTrainSubPat)"},
-//     
+     {"GetShapeOfSubPattern",snns_GetShapeOfSubPattern,METH_O,
+      "GetShapeOfSubPattern(number of subpattern)\n"
+      "                     -> (insize, outsize, inpos, outpos)\n\n"
+      "Gets the shape of the n-th subpattern using the current "
+      "set, pattern and training scheme (defined with DefTrainSubPat)"},
+     
      {"setClassInfo",snns_setClassInfo,METH_O,
       "setClassInfo(class description)\n\n"
       "Assigns the class description to the current pattern.\n"
@@ -2804,22 +2804,22 @@ static PyMethodDef MylibMethods[] = {
       "useClassDistribution(boolean use it or not)\n\n"
       "Toggles the use of class information during training."},
      
-//     {"setClassDistribution",snns_setClassDistribution,METH_VARARGS,
-//      "setClassDistribution([sequence of/multiple] integers)\n\n"
-//      "Defines the composition of the pattern set. The integers\n"
-//      "supplied as parameters will determine how often each class will\n"
-//      "be represented in every training epoch.\n"
-//      "This will override the distribution implicitely defined by the\n"
-//      "number of patterns of each class.\n"
-//      "NOTE: The values are assigned to classes in alphanumeric order\n"
-//      "of the class names!"},
-//     
-//     {"AlignSubPat",snns_AlignSubPat,METH_VARARGS,
-//      "AlignSubPat(sequence for input position,\n"
-//      "            sequence for output position) -> subpattern number\n\n"
-//      "Aligns the given sub pattern (by input and output position sequences)\n"
-//      "to a valid position which fits the sub pattern training scheme.\n"
-//      "Returns the subpattern number."},
+     {"setClassDistribution",snns_setClassDistribution,METH_VARARGS,
+      "setClassDistribution([sequence of/multiple] integers)\n\n"
+      "Defines the composition of the pattern set. The integers\n"
+      "supplied as parameters will determine how often each class will\n"
+      "be represented in every training epoch.\n"
+      "This will override the distribution implicitely defined by the\n"
+      "number of patterns of each class.\n"
+      "NOTE: The values are assigned to classes in alphanumeric order\n"
+      "of the class names!"},
+     
+     {"AlignSubPat",snns_AlignSubPat,METH_VARARGS,
+      "AlignSubPat(sequence for input position,\n"
+      "            sequence for output position) -> subpattern number\n\n"
+      "Aligns the given sub pattern (by input and output position sequences)\n"
+      "to a valid position which fits the sub pattern training scheme.\n"
+      "Returns the subpattern number."},
      
      {"getErrorCode",snns_getErrorCode,METH_NOARGS,
       "getErrorCode() -> error code\n\n"
