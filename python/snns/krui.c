@@ -727,98 +727,98 @@ bool fill_int_array(PyObject *seq, int *array)
 //	PyMem_Del(entries);
 //	return ret;
 //}
-//
-///*
-//	builds the necessary arrays for Def*SubPat from
-//	sequence arguments
-//*/
-//
-//static bool prep_subpat_arrays(PyObject *args,
-//				int *insize, int *outsize,
-//				int *inparm, int *outparm)
-//{
-//	PyObject *insizet=NULL, *inparmt=NULL,
-//		 *outsizet=NULL, *outparmt=NULL;
-//	int i;
-//
-//	if(!PyArg_ParseTuple(args,"|OOOO",&insizet, &outsizet, &inparmt, &outparmt)) {
-//		return FALSE;
-//	}
-//	if(!insizet) insizet=PyTuple_New(0);
-//	if(!inparmt) inparmt=PyTuple_New(0);
-//	if(!outsizet) outsizet=PyTuple_New(0);
-//	if(!outparmt) outparmt=PyTuple_New(0);
-//	
-//	if(PySequence_Size(insizet) > MAX_NO_OF_VAR_I_DIM ||
-//	   PySequence_Size(inparmt) > MAX_NO_OF_VAR_I_DIM ||
-//	   PySequence_Size(outsizet) > MAX_NO_OF_VAR_O_DIM ||
-//	   PySequence_Size(outparmt) > MAX_NO_OF_VAR_O_DIM) {
-//		PyErr_SetString(PyExc_RuntimeError, "too many dimensions");
-//		return FALSE;
-//	}
-//	if(PySequence_Size(insizet) != PySequence_Size(inparmt) ||
-//	   PySequence_Size(outsizet) != PySequence_Size(outparmt)) {
-//	   	PyErr_SetString(PyExc_RuntimeError, "dimension mismatch");
-//		return FALSE;
-//	}
-//	for(i=0; i < PySequence_Size(insizet); ++i) {
-//		insize[i] = PyInt_AsLong(PySequence_GetItem(insizet,i));
-//		inparm[i] = PyInt_AsLong(PySequence_GetItem(inparmt,i));
-//	}
-//	for(i=0; i < PySequence_Size(outsizet); ++i) {
-//		outsize[i] = PyInt_AsLong(PySequence_GetItem(outsizet,i));
-//		outparm[i] = PyInt_AsLong(PySequence_GetItem(outparmt,i));
-//	}
-//	if(PyErr_Occurred()) return FALSE;
-//	return TRUE;
-//}
-//
-//static PyObject *
-//snns_DefTrainSubPat(PyObject *self, PyObject *args)
-//{
-//	int insize[MAX_NO_OF_VAR_I_DIM],
-//		instep[MAX_NO_OF_VAR_I_DIM],
-//		outsize[MAX_NO_OF_VAR_O_DIM],
-//		outstep[MAX_NO_OF_VAR_O_DIM];
-//	krui_err err;
-//	int i,max_n_pos;
-//
-//	memset(insize,0,sizeof(insize));
-//	memset(instep,0,sizeof(instep));
-//	memset(outsize,0,sizeof(outsize));
-//	memset(outstep,0,sizeof(outstep));
-//
-//	if(!prep_subpat_arrays(args,insize,outsize,instep,outstep)) return NULL;
-//	
-//	if((err = krui_DefTrainSubPat(insize,outsize,instep,outstep,&max_n_pos))) {
-//		return make_exception(err);
-//	}
-//	return PyInt_FromLong(max_n_pos);
-//}
-//
-//static PyObject *
-//snns_DefShowSubPat(PyObject *self, PyObject *args)
-//{
-//	int insize[MAX_NO_OF_VAR_I_DIM],
-//		inpos[MAX_NO_OF_VAR_I_DIM],
-//		outsize[MAX_NO_OF_VAR_O_DIM],
-//		outpos[MAX_NO_OF_VAR_O_DIM];
-//	krui_err err;
-//	int i;
-//	memset(insize,0,sizeof(insize));
-//	memset(inpos,0,sizeof(inpos));
-//	memset(outsize,0,sizeof(outsize));
-//	memset(outpos,0,sizeof(outpos));
-//
-//	
-//	if(!prep_subpat_arrays(args,insize,outsize,inpos,outpos)) return NULL;
-//	
-//	if((err = krui_DefShowSubPat(insize,outsize,inpos,outpos))) {
-//		return make_exception(err);
-//	}
-//	return Py_BuildValue("");
-//}
-//
+
+/*
+	builds the necessary arrays for Def*SubPat from
+	sequence arguments
+*/
+
+static bool prep_subpat_arrays(PyObject *args,
+				int *insize, int *outsize,
+				int *inparm, int *outparm)
+{
+	PyObject *insizet=NULL, *inparmt=NULL,
+		 *outsizet=NULL, *outparmt=NULL;
+	int i;
+
+	if(!PyArg_ParseTuple(args,"|OOOO",&insizet, &outsizet, &inparmt, &outparmt)) {
+		return FALSE;
+	}
+	if(!insizet) insizet=PyTuple_New(0);
+	if(!inparmt) inparmt=PyTuple_New(0);
+	if(!outsizet) outsizet=PyTuple_New(0);
+	if(!outparmt) outparmt=PyTuple_New(0);
+	
+	if(PySequence_Size(insizet) > MAX_NO_OF_VAR_I_DIM ||
+	   PySequence_Size(inparmt) > MAX_NO_OF_VAR_I_DIM ||
+	   PySequence_Size(outsizet) > MAX_NO_OF_VAR_O_DIM ||
+	   PySequence_Size(outparmt) > MAX_NO_OF_VAR_O_DIM) {
+		PyErr_SetString(PyExc_RuntimeError, "too many dimensions");
+		return FALSE;
+	}
+	if(PySequence_Size(insizet) != PySequence_Size(inparmt) ||
+	   PySequence_Size(outsizet) != PySequence_Size(outparmt)) {
+	   	PyErr_SetString(PyExc_RuntimeError, "dimension mismatch");
+		return FALSE;
+	}
+	for(i=0; i < PySequence_Size(insizet); ++i) {
+		insize[i] = PyInt_AsLong(PySequence_GetItem(insizet,i));
+		inparm[i] = PyInt_AsLong(PySequence_GetItem(inparmt,i));
+	}
+	for(i=0; i < PySequence_Size(outsizet); ++i) {
+		outsize[i] = PyInt_AsLong(PySequence_GetItem(outsizet,i));
+		outparm[i] = PyInt_AsLong(PySequence_GetItem(outparmt,i));
+	}
+	if(PyErr_Occurred()) return FALSE;
+	return TRUE;
+}
+
+static PyObject *
+snns_DefTrainSubPat(PyObject *self, PyObject *args)
+{
+	int insize[MAX_NO_OF_VAR_I_DIM],
+		instep[MAX_NO_OF_VAR_I_DIM],
+		outsize[MAX_NO_OF_VAR_O_DIM],
+		outstep[MAX_NO_OF_VAR_O_DIM];
+	krui_err err;
+	int i,max_n_pos;
+
+	memset(insize,0,sizeof(insize));
+	memset(instep,0,sizeof(instep));
+	memset(outsize,0,sizeof(outsize));
+	memset(outstep,0,sizeof(outstep));
+
+	if(!prep_subpat_arrays(args,insize,outsize,instep,outstep)) return NULL;
+	
+	if((err = krui_DefTrainSubPat(insize,outsize,instep,outstep,&max_n_pos))) {
+		return make_exception(err);
+	}
+	return PyInt_FromLong(max_n_pos);
+}
+
+static PyObject *
+snns_DefShowSubPat(PyObject *self, PyObject *args)
+{
+	int insize[MAX_NO_OF_VAR_I_DIM],
+		inpos[MAX_NO_OF_VAR_I_DIM],
+		outsize[MAX_NO_OF_VAR_O_DIM],
+		outpos[MAX_NO_OF_VAR_O_DIM];
+	krui_err err;
+	int i;
+	memset(insize,0,sizeof(insize));
+	memset(inpos,0,sizeof(inpos));
+	memset(outsize,0,sizeof(outsize));
+	memset(outpos,0,sizeof(outpos));
+
+	
+	if(!prep_subpat_arrays(args,insize,outsize,inpos,outpos)) return NULL;
+	
+	if((err = krui_DefShowSubPat(insize,outsize,inpos,outpos))) {
+		return make_exception(err);
+	}
+	return Py_BuildValue("");
+}
+
 //static PyObject *
 //snns_AlignSubPat(PyObject *self, PyObject *args)
 //{
@@ -900,124 +900,124 @@ snns_setClassInfo(PyObject *self, PyObject *arg)
 	return snns_string_arg_with_err(arg,krui_setClassInfo);
 }
 
-//typedef krui_err (*learn_patterns_func)(float *,int,float **,int *);
-//typedef krui_err (*learn_single_pattern_func)(int, float *,int,float **,int *);
-//
-//static PyObject *
-//snns_learn_general_single_pattern(PyObject *args, learn_single_pattern_func func)
-//{
-//	float *params, *outparms;
-//	int patnum,i,outnum;
-//	PyObject *ret, *seq;
-//	krui_err err;
-//	
-//	if(!PyArg_ParseTuple(args,"iO",&patnum,&seq)) return NULL;
-//	
-//	if(!PySequence_Check(seq)) {
-//		PyErr_SetString(PyExc_RuntimeError, "expecting a sequence of learning parameters");
-//		return NULL;
-//	}
-//	params = PyMem_New(float,PySequence_Size(seq));
-//	
-//	if(!params) return PyErr_NoMemory();
-//	for(i=0; i < PySequence_Size(seq); ++i) {
-//		params[i]=PyFloat_AsDouble(PySequence_GetItem(seq,i));
-//	}
-//	if(PyErr_Occurred()) {
-//		PyMem_Del(params);
-//		ret = NULL;
-//	} else {
-//		err = func(patnum, params,PySequence_Size(seq),
-//			&outparms,&outnum);
-//		if(err) ret=make_exception(err);
-//		else {
-//			ret = PyTuple_New(outnum);
-//			if(ret) {
-//				for(i=0; i < outnum; ++i) {
-//					PyTuple_SetItem(ret,i,
-//					PyFloat_FromDouble(outparms[i]));
-//				}
-//			}
-//		}
-//	}	
-//	PyMem_Del(params);
-//	return ret;	
-//}
-//
+typedef krui_err (*learn_patterns_func)(float *,int,float **,int *);
+typedef krui_err (*learn_single_pattern_func)(int, float *,int,float **,int *);
+
+static PyObject *
+snns_learn_general_single_pattern(PyObject *args, learn_single_pattern_func func)
+{
+	float *params, *outparms;
+	int patnum,i,outnum;
+	PyObject *ret, *seq;
+	krui_err err;
+	
+	if(!PyArg_ParseTuple(args,"iO",&patnum,&seq)) return NULL;
+	
+	if(!PySequence_Check(seq)) {
+		PyErr_SetString(PyExc_RuntimeError, "expecting a sequence of learning parameters");
+		return NULL;
+	}
+	params = PyMem_New(float,PySequence_Size(seq));
+	
+	if(!params) return PyErr_NoMemory();
+	for(i=0; i < PySequence_Size(seq); ++i) {
+		params[i]=PyFloat_AsDouble(PySequence_GetItem(seq,i));
+	}
+	if(PyErr_Occurred()) {
+		PyMem_Del(params);
+		ret = NULL;
+	} else {
+		err = func(patnum, params,PySequence_Size(seq),
+			&outparms,&outnum);
+		if(err) ret=make_exception(err);
+		else {
+			ret = PyTuple_New(outnum);
+			if(ret) {
+				for(i=0; i < outnum; ++i) {
+					PyTuple_SetItem(ret,i,
+					PyFloat_FromDouble(outparms[i]));
+				}
+			}
+		}
+	}	
+	PyMem_Del(params);
+	return ret;	
+}
+
 //static PyObject *
 //snns_learnSinglePattern(PyObject *self, PyObject *args)
 //{
 //	return snns_learn_general_single_pattern(args, krui_learnSinglePattern);
 //}
-//
-//static PyObject *
-//snns_learnSinglePatternFF(PyObject *self, PyObject *args)
-//{
-//	return snns_learn_general_single_pattern(args, krui_learnSinglePatternFF);
-//}
-//
-//static PyObject *
-//snns_learn_general_patterns(PyObject *args, learn_patterns_func func)
-//{
-//	float *params, *outparms;
-//	int i,outnum;
-//	PyObject *ret, *tmp;
-//	krui_err err;
-//
-//	if(PySequence_Size(args) > 0) {
-//		tmp = PySequence_GetItem(args,0);	
-//		if(PySequence_Check(tmp)) {
-//			if(PySequence_Size(args) > 1) {
-//				PyErr_SetString(PyExc_RuntimeError,
-//				 "sorry, no nested types here!");
-//				 return NULL;
-//			}
-//			args = tmp;
-//		}
-//	}	
-//	if(!PySequence_Check(args)) {
-//		PyErr_SetString(PyExc_RuntimeError, "expecting a sequence of learning parameters");
-//		return NULL;
-//	}
-//	params = PyMem_New(float,PySequence_Size(args));
-//	
-//	if(!params) return PyErr_NoMemory();
-//	for(i=0; i < PySequence_Size(args); ++i) {
-//		params[i]=PyFloat_AsDouble(PySequence_GetItem(args,i));
-//	}
-//	if(PyErr_Occurred()) {
-//		PyMem_Del(params);
-//		ret = NULL;
-//	} else {
-//		err = func(params,PySequence_Size(args),
-//			&outparms,&outnum);
-//		if(err) ret=make_exception(err);
-//		else {
-//			ret = PyTuple_New(outnum);
-//			if(ret) {
-//				for(i=0; i < outnum; ++i) {
-//					PyTuple_SetItem(ret,i,
-//					PyFloat_FromDouble(outparms[i]));
-//				}
-//			}
-//		}
-//	}	
-//	PyMem_Del(params);
-//	return ret;	
-//}
-//
-//static PyObject *
-//snns_learnAllPatterns(PyObject *self, PyObject *arg)
-//{
-//	return snns_learn_general_patterns(arg,krui_learnAllPatterns);
-//}
-//
-//static PyObject *
-//snns_learnAllPatternsFF(PyObject *self, PyObject *arg)
-//{
-//	return snns_learn_general_patterns(arg,krui_learnAllPatternsFF);
-//}
-//
+
+static PyObject *
+snns_learnSinglePatternFF(PyObject *self, PyObject *args)
+{
+	return snns_learn_general_single_pattern(args, krui_learnSinglePatternFF);
+}
+
+static PyObject *
+snns_learn_general_patterns(PyObject *args, learn_patterns_func func)
+{
+	float *params, *outparms;
+	int i,outnum;
+	PyObject *ret, *tmp;
+	krui_err err;
+
+	if(PySequence_Size(args) > 0) {
+		tmp = PySequence_GetItem(args,0);	
+		if(PySequence_Check(tmp)) {
+			if(PySequence_Size(args) > 1) {
+				PyErr_SetString(PyExc_RuntimeError,
+				 "sorry, no nested types here!");
+				 return NULL;
+			}
+			args = tmp;
+		}
+	}	
+	if(!PySequence_Check(args)) {
+		PyErr_SetString(PyExc_RuntimeError, "expecting a sequence of learning parameters");
+		return NULL;
+	}
+	params = PyMem_New(float,PySequence_Size(args));
+	
+	if(!params) return PyErr_NoMemory();
+	for(i=0; i < PySequence_Size(args); ++i) {
+		params[i]=PyFloat_AsDouble(PySequence_GetItem(args,i));
+	}
+	if(PyErr_Occurred()) {
+		PyMem_Del(params);
+		ret = NULL;
+	} else {
+		err = func(params,PySequence_Size(args),
+			&outparms,&outnum);
+		if(err) ret=make_exception(err);
+		else {
+			ret = PyTuple_New(outnum);
+			if(ret) {
+				for(i=0; i < outnum; ++i) {
+					PyTuple_SetItem(ret,i,
+					PyFloat_FromDouble(outparms[i]));
+				}
+			}
+		}
+	}	
+	PyMem_Del(params);
+	return ret;	
+}
+
+static PyObject *
+snns_learnAllPatterns(PyObject *self, PyObject *arg)
+{
+	return snns_learn_general_patterns(arg,krui_learnAllPatterns);
+}
+
+static PyObject *
+snns_learnAllPatternsFF(PyObject *self, PyObject *arg)
+{
+	return snns_learn_general_patterns(arg,krui_learnAllPatternsFF);
+}
+
 static PyObject *
 snns_updateSingleUnit(PyObject *self, PyObject *arg)
 {
@@ -1069,11 +1069,11 @@ snns_updateNet(PyObject *self, PyObject *arg)
 	return snns_floatarray_arg_with_err(arg, krui_updateNet);
 }
 
-//static PyObject *
-//snns_initializeNet(PyObject *self, PyObject *arg)
-//{
-//	return snns_floatarray_arg_with_err(arg, krui_initializeNet);
-//}
+static PyObject *
+snns_initializeNet(PyObject *self, PyObject *arg)
+{
+	return snns_floatarray_arg_with_err(arg, krui_initializeNet);
+}
 
 static PyObject *
 snns_getNoOfFunctions(PyObject *self, PyObject *arg)
@@ -2566,18 +2566,18 @@ static PyMethodDef MylibMethods[] = {
       "Updates the network according to the update function with the\n"
       "given parameters."}, 
      
-//     {"DefTrainSubPat",snns_DefTrainSubPat, METH_VARARGS,
-//      "DefTrainSubPat([optional insize, outsize, instep, outstep])\n"
-//      "                 -> number of subpatterns\n\n"
-//      "Defines the training scheme\n"
-//      "insize, outsize, instep, outstep are tuples for the subpattern\n"
-//      "sizes/step sizes for each dimension"},
-//     
-//     {"DefShowSubPat",snns_DefShowSubPat, METH_VARARGS,
-//      "DefShowSubPat([optional insize, outsize, inpos, outpos])\n\n"
-//      "Defines the subpattern to be shown with the next showPattern call.\n"
-//      "insize, outsize, inpos, outpos are tuples for the subpattern\n"
-//      "sizes/positions for each dimension"},
+     {"DefTrainSubPat",snns_DefTrainSubPat, METH_VARARGS,
+      "DefTrainSubPat([optional insize, outsize, instep, outstep])\n"
+      "                 -> number of subpatterns\n\n"
+      "Defines the training scheme\n"
+      "insize, outsize, instep, outstep are tuples for the subpattern\n"
+      "sizes/step sizes for each dimension"},
+     
+     {"DefShowSubPat",snns_DefShowSubPat, METH_VARARGS,
+      "DefShowSubPat([optional insize, outsize, inpos, outpos])\n\n"
+      "Defines the subpattern to be shown with the next showPattern call.\n"
+      "insize, outsize, inpos, outpos are tuples for the subpattern\n"
+      "sizes/positions for each dimension"},
      
      {"deleteNet",snns_deleteNet, METH_NOARGS,
       "deleteNet()\n\n"
@@ -2615,9 +2615,9 @@ static PyMethodDef MylibMethods[] = {
       "setInitialisationFunc(initialisation function)\n\n"
       "Changes the initialisation function"},
      
-//     {"initializeNet",snns_initializeNet, METH_VARARGS,
-//      "initializeNet([sequence of/multiple] initialization parameters)\n\n"
-//      "Initializes the network with the current initialization function"},
+     {"initializeNet",snns_initializeNet, METH_VARARGS,
+      "initializeNet([sequence of/multiple] initialization parameters)\n\n"
+      "Initializes the network with the current initialization function"},
      
      {"getLearnFunc",snns_getLearnFunc, METH_NOARGS,
       "getLearnFunc() -> learning function\n\n"
@@ -2635,24 +2635,24 @@ static PyMethodDef MylibMethods[] = {
       "getNoOfTTypeUnits(io_type) -> number of units\n\n"
       "Returns the no. of units of the specified io_type"},
      
-//     {"learnAllPatternsFF",snns_learnAllPatternsFF,METH_VARARGS,
-//      "learnAllPatternsFF([sequence of/multiple] learning parameters)\n"
-//      "                    -> (sequence of output parameters)\n\n"
-//      "Learns all patterns using the current learning function and the\n"
-//      "given learning parameters"},
-//     
-//     {"learnAllPatterns",snns_learnAllPatterns,METH_VARARGS,
-//      "learnAllPatterns([sequence of/multiple] learning parameters)\n"
-//      "                 -> (sequence of output parameters)\n\n"
-//      "Learns all patterns using the current learning function and the\n"
-//      "given learning parameters"},
-//     
-//     {"learnSinglePatternFF",snns_learnSinglePatternFF,METH_VARARGS,
-//      "learnSinglePatternFF(pattern number, (sequence of learning parameters))\n"
-//      "                     -> (sequence of output parameters)\n\n"
-//      "Same as learnAllPatternsFF, but teaches only the pattern with the\n"
-//      "given number"},
-//     
+     {"learnAllPatternsFF",snns_learnAllPatternsFF,METH_VARARGS,
+      "learnAllPatternsFF([sequence of/multiple] learning parameters)\n"
+      "                    -> (sequence of output parameters)\n\n"
+      "Learns all patterns using the current learning function and the\n"
+      "given learning parameters"},
+
+     {"learnAllPatterns",snns_learnAllPatterns,METH_VARARGS,
+      "learnAllPatterns([sequence of/multiple] learning parameters)\n"
+      "                 -> (sequence of output parameters)\n\n"
+      "Learns all patterns using the current learning function and the\n"
+      "given learning parameters"},
+     
+     {"learnSinglePatternFF",snns_learnSinglePatternFF,METH_VARARGS,
+      "learnSinglePatternFF(pattern number, (sequence of learning parameters))\n"
+      "                     -> (sequence of output parameters)\n\n"
+      "Same as learnAllPatternsFF, but teaches only the pattern with the\n"
+      "given number"},
+     
 //     {"learnSinglePattern",snns_learnSinglePattern,METH_VARARGS,
 //      "learnSinglePattern(pattern number, (sequence of learning parameters))\n"
 //      "                   -> (sequence of output parameters)\n\n"
