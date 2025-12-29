@@ -2950,15 +2950,15 @@ static struct PyModuleDef moduledef = {
 PyMODINIT_FUNC
 PyInit_krui(void)
 {
-//	char *moduledoc = 
-//	"This module provides all functions and constants of the SNNS kernel.\n"
-//	"Please note that it is not part of SNNS but distributed seperately.\n"
-//	"\n"
-//	"It stays very close to the C API, so you can also refer to the\n"
-//	"original SNNS documentation for additional hints.\n"
-//	"\n"
-//	"If you feel you have to do so because this documentation is unclear,\n"
-//	"please contact the author of this extension.";
+	char *moduledoc = 
+	"This module provides all functions and constants of the SNNS kernel.\n"
+	"Please note that it is not part of SNNS but distributed seperately.\n"
+	"\n"
+	"It stays very close to the C API, so you can also refer to the\n"
+	"original SNNS documentation for additional hints.\n"
+	"\n"
+	"If you feel you have to do so because this documentation is unclear,\n"
+	"please contact the author of this extension.";
 	PyObject *m,*dict, *utilmod;
 //	charintpair thingtypes[]= {
 //		/* Unit Types */
@@ -3064,7 +3064,7 @@ PyInit_krui(void)
 //		PyModule_AddObject(m,cip->name,PyInt_FromLong(cip->value));	
 //	}
 //
-//	PyModule_AddObject(m,"__doc__", PyString_FromString(moduledoc));
+	PyModule_AddObject(m,"__doc__", PyString_FromString(moduledoc));
 //
 //	snns_pattern_set_info_type.tp_new = PyType_GenericNew;
 //	if (PyType_Ready(&snns_pattern_set_info_type) < 0) return;
