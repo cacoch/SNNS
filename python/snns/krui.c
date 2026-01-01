@@ -2828,13 +2828,13 @@ static PyMethodDef MylibMethods[] = {
 
      {NULL, NULL, 0, NULL}        /* Sentinel */
 };
-//
-//typedef struct {
-//	char *name;
-//	int value;
-//} charintpair;
-//
-//static PyObject *funcdict, *utildict;
+
+typedef struct {
+	char *name;
+	int value;
+} charintpair;
+
+static PyObject *funcdict, *utildict;
 //
 //static PyObject *getCustomFunction(char *funcname, int functype)
 //{
@@ -2960,63 +2960,63 @@ PyInit_krui(void)
 	"If you feel you have to do so because this documentation is unclear,\n"
 	"please contact the author of this extension.";
 	PyObject *m,*dict, *utilmod;
-//	charintpair thingtypes[]= {
-//		/* Unit Types */
-//		{"UNKNOWN",UNKNOWN},
-//		{"INPUT",INPUT},
-//		{"OUTPUT",OUTPUT},
-//		{"HIDDEN",HIDDEN},
-//		{"DUAL",DUAL},
-//		{"SPECIAL",SPECIAL},
-//		{"SPECIAL_I",SPECIAL_I},
-//		{"SPECIAL_O",SPECIAL_O},
-//		{"SPECIAL_H",SPECIAL_H},
-//		{"SPECIAL_D",SPECIAL_D},
-//		{"SPECIAL_X",SPECIAL_X},
-//		{"N_SPECIAL_X",N_SPECIAL_X},
-//		/* Pattern update modes */
-//		{"OUTPUT_NOTHING",OUTPUT_NOTHING},
-//		{"OUTPUT_ACT",OUTPUT_ACT},
-//		{"OUTPUT_OUT",OUTPUT_OUT},
-//		/* Function Types */
-//		{"OUT_FUNC",OUT_FUNC},
-//		{"ACT_FUNC",ACT_FUNC},
-//		{"SITE_FUNC",SITE_FUNC},
-//		{"LEARN_FUNC",LEARN_FUNC},
-//		{"UPDATE_FUNC",UPDATE_FUNC},
-//		{"INIT_FUNC",INIT_FUNC},
-//		{"ACT_DERIV_FUNC",ACT_DERIV_FUNC},
-//		{"JOG_WEIGHT_FUNC",JOG_WEIGHT_FUNC},
-//		{"ACT_2_DERIV_FUNC",ACT_2_DERIV_FUNC},
-//		{"PRUNING_FUNC",PRUNING_FUNC},
-//		{"TEST_FUNC",TEST_FUNC},
-//		{"REMAP_FUNC",REMAP_FUNC},
-//		{"FUNC_TYPE_MASK",FUNC_TYPE_MASK},
-//		{"DEFAULT_FUNC",DEFAULT_FUNC},
-//		{"BENCH_FUNC",BENCH_FUNC},
-//		{"FF_LEARN_FUNC",FF_LEARN_FUNC},
-//		/* Unit input types */
-//		{"NO_INPUTS",NO_INPUTS},
-//		{"SITES",SITES},
-//		{"DIRECT_LINKS",DIRECT_LINKS},
-//		/* Copy Modes */
-//		{"INPUTS_AND_OUTPUTS",INPUTS_AND_OUTPUTS},
-//		{"ONLY_INPUTS",ONLY_INPUTS},
-//		{"ONLY_OUTPUTS",ONLY_OUTPUTS},
-//		{"ONLY_UNIT",ONLY_UNIT},
-//		/* Name table entries */
-//		{"UNUSED_SYM",UNUSED_SYM},
-//		{"UNIT_SYM",UNIT_SYM},
-//		{"SITE_SYM",SITE_SYM},
-//		{"FTYPE_UNIT_SYM",FTYPE_UNIT_SYM}, 
-//		/* get function info modes - only those implemented in
-//		   snns.util */
-//		{"SEARCH_FUNC",SEARCH_FUNC},
-//		{"GET_FUNC_INFO",GET_FUNC_INFO},
-//		{"GET_FUNC_NAME",GET_FUNC_NAME},
-//		{NULL,0} /* Finished */
-//		};
-//	charintpair *cip;
+	charintpair thingtypes[]= {
+		/* Unit Types */
+		{"UNKNOWN",UNKNOWN},
+		{"INPUT",INPUT},
+		{"OUTPUT",OUTPUT},
+		{"HIDDEN",HIDDEN},
+		{"DUAL",DUAL},
+		{"SPECIAL",SPECIAL},
+		{"SPECIAL_I",SPECIAL_I},
+		{"SPECIAL_O",SPECIAL_O},
+		{"SPECIAL_H",SPECIAL_H},
+		{"SPECIAL_D",SPECIAL_D},
+		{"SPECIAL_X",SPECIAL_X},
+		{"N_SPECIAL_X",N_SPECIAL_X},
+		/* Pattern update modes */
+		{"OUTPUT_NOTHING",OUTPUT_NOTHING},
+		{"OUTPUT_ACT",OUTPUT_ACT},
+		{"OUTPUT_OUT",OUTPUT_OUT},
+		/* Function Types */
+		{"OUT_FUNC",OUT_FUNC},
+		{"ACT_FUNC",ACT_FUNC},
+		{"SITE_FUNC",SITE_FUNC},
+		{"LEARN_FUNC",LEARN_FUNC},
+		{"UPDATE_FUNC",UPDATE_FUNC},
+		{"INIT_FUNC",INIT_FUNC},
+		{"ACT_DERIV_FUNC",ACT_DERIV_FUNC},
+		{"JOG_WEIGHT_FUNC",JOG_WEIGHT_FUNC},
+		{"ACT_2_DERIV_FUNC",ACT_2_DERIV_FUNC},
+		{"PRUNING_FUNC",PRUNING_FUNC},
+		{"TEST_FUNC",TEST_FUNC},
+		{"REMAP_FUNC",REMAP_FUNC},
+		{"FUNC_TYPE_MASK",FUNC_TYPE_MASK},
+		{"DEFAULT_FUNC",DEFAULT_FUNC},
+		{"BENCH_FUNC",BENCH_FUNC},
+		{"FF_LEARN_FUNC",FF_LEARN_FUNC},
+		/* Unit input types */
+		{"NO_INPUTS",NO_INPUTS},
+		{"SITES",SITES},
+		{"DIRECT_LINKS",DIRECT_LINKS},
+		/* Copy Modes */
+		{"INPUTS_AND_OUTPUTS",INPUTS_AND_OUTPUTS},
+		{"ONLY_INPUTS",ONLY_INPUTS},
+		{"ONLY_OUTPUTS",ONLY_OUTPUTS},
+		{"ONLY_UNIT",ONLY_UNIT},
+		/* Name table entries */
+		{"UNUSED_SYM",UNUSED_SYM},
+		{"UNIT_SYM",UNIT_SYM},
+		{"SITE_SYM",SITE_SYM},
+		{"FTYPE_UNIT_SYM",FTYPE_UNIT_SYM}, 
+		/* get function info modes - only those implemented in
+		   snns.util */
+		{"SEARCH_FUNC",SEARCH_FUNC},
+		{"GET_FUNC_INFO",GET_FUNC_INFO},
+		{"GET_FUNC_NAME",GET_FUNC_NAME},
+		{NULL,0} /* Finished */
+		};
+	charintpair *cip;
 //	char **txt;
 //
 //	char *patsetinfodoc[] = {
@@ -3053,19 +3053,27 @@ PyInit_krui(void)
 //	kr_getPythonFuncInfoHook = getFuncInfo;
 //	kr_getNoOfPythonFunctionsHook = getNoOfFuncs;
 //
-//	utilmod = PyImport_Import(PyString_FromString("snns.util"));
-//	if(!utilmod) return;
-//	utildict = PyModule_GetDict(utilmod);
-//	funcdict = PyDict_GetItemString(utildict, "custom_functions");
-//	if(!funcdict) return;
+	utilmod = PyImport_Import(PyString_FromString("util"));
+	if(!utilmod) {
+		fprintf(stderr, "Problem with loading 'util' module.\n");
+		PyErr_Print();
+		return NULL;
+	}
+	utildict = PyModule_GetDict(utilmod);
+	funcdict = PyDict_GetItemString(utildict, "custom_functions");
+	if(!funcdict){ 
+		fprintf(stderr, "Problem with funcdict.\n");
+		PyErr_Print();
+		return NULL;
+	}
 //	m = Py_InitModule3("krui", MylibMethods,"SNNS kernel interface");
 	m = PyModule_Create(&moduledef);
-//	for(cip=thingtypes; cip->name; ++cip) {
-//		PyModule_AddObject(m,cip->name,PyInt_FromLong(cip->value));	
-//	}
-//
+	for(cip=thingtypes; cip->name; ++cip) {
+		PyModule_AddObject(m,cip->name,PyInt_FromLong(cip->value));	
+	}
+
 	PyModule_AddObject(m,"__doc__", PyString_FromString(moduledoc));
-//
+
 //	snns_pattern_set_info_type.tp_new = PyType_GenericNew;
 //	if (PyType_Ready(&snns_pattern_set_info_type) < 0) return;
 //	Py_INCREF(&snns_pattern_set_info_type);
