@@ -3001,27 +3001,27 @@ PyInit_krui(void)
 		{NULL,0} /* Finished */
 		};
 	charintpair *cip;
-//	char **txt;
-//
-//	char *patsetinfodoc[] = {
-//		"number_of_pattern","number of pattern (pairs) in this set",
-//		"virtual_no_of_pattern","number of pattern (pairs) in this set if class_distrib_active == TRUE",
-//		"output_present","true if output pattern present",
-//		"fixed_fixsizes", "true if the fixsizes of all pattern are equal",
-//		"in_fixsize","if fixed_fixsizes is true, fixsize of the input pattern, else -1",
-//		"out_fixsize","if fixed_fixsizes is true, fixsize of the input pattern, else -1",
-//		"in_max_dim_sizes", "maximum values of the input dimensions",
-//		"out_max_dim_sizes", "maximum values of the output dimensions",
-//		"in_min_dim_sizes", "minimum values of the input dimensions",
-//		"out_min_dim_sizes", "minimum values of the output dimensions",
-//		
-//		"class_names", "names of available classes",
-//		"class_redistribution", "amounts for the class redistribution",
-//		"remap_params", "parameters for the remap function",
-//		"class_distrib_active", "true if the class redistribution is active",
-//		"remap_function", "the name of the remap function",
-//		NULL
-//	};
+	char **txt;
+
+	char *patsetinfodoc[] = {
+		"number_of_pattern","number of pattern (pairs) in this set",
+		"virtual_no_of_pattern","number of pattern (pairs) in this set if class_distrib_active == TRUE",
+		"output_present","true if output pattern present",
+		"fixed_fixsizes", "true if the fixsizes of all pattern are equal",
+		"in_fixsize","if fixed_fixsizes is true, fixsize of the input pattern, else -1",
+		"out_fixsize","if fixed_fixsizes is true, fixsize of the input pattern, else -1",
+		"in_max_dim_sizes", "maximum values of the input dimensions",
+		"out_max_dim_sizes", "maximum values of the output dimensions",
+		"in_min_dim_sizes", "minimum values of the input dimensions",
+		"out_min_dim_sizes", "minimum values of the output dimensions",
+		
+		"class_names", "names of available classes",
+		"class_redistribution", "amounts for the class redistribution",
+		"remap_params", "parameters for the remap function",
+		"class_distrib_active", "true if the class redistribution is active",
+		"remap_function", "the name of the remap function",
+		NULL
+	};
 //	char *patdesdoc[] = {
 //		"input_dim_sizes", "actual sizes of the input dimensions",
 //		"input_fixsize", "size of the fixed part in the pattern or 0 if no input pattern is present",
@@ -3059,14 +3059,14 @@ PyInit_krui(void)
 	PyModule_AddObject(m,"__doc__", PyString_FromString(moduledoc));
 
 	snns_pattern_set_info_type.tp_new = PyType_GenericNew;
-//	if (PyType_Ready(&snns_pattern_set_info_type) < 0) return;
-//	Py_INCREF(&snns_pattern_set_info_type);
-//	
-//	for(txt=patsetinfodoc; *txt; txt+=2) {
-//		PyDict_SetItemString(snns_pattern_set_info_type.tp_dict,
-//		 txt[0], PyString_FromString(txt[1]));
-//	}
-//	
+	if (PyType_Ready(&snns_pattern_set_info_type) < 0) return;
+	Py_INCREF(&snns_pattern_set_info_type);
+	
+	for(txt=patsetinfodoc; *txt; txt+=2) {
+		PyDict_SetItemString(snns_pattern_set_info_type.tp_dict,
+		 txt[0], PyString_FromString(txt[1]));
+	}
+	
 //	PyModule_AddObject(m,"pattern_set_info",(PyObject *)&snns_pattern_set_info_type);
 //
 //	snns_pattern_descriptor_type.tp_new = PyType_GenericNew;
