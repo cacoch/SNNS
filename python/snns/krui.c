@@ -151,47 +151,47 @@ wrap_pattern_set_info(pattern_set_info *ps, char *attr)
 	if(failures) return NULL; else	return ret;	
 }
 
-//static PyObject *
-//wrap_pattern_descriptor(pattern_descriptor *pd, char *attr)
-//{
-//	PyObject *ret=NULL;
-//	int i, failures=0;
-//	if(!strcmp(attr,"input_dim_sizes")) {
-//		if((ret = PyTuple_New(pd->input_dim)))
-//		for(i=0; i < pd->input_dim; ++i) {
-//			failures += PyTuple_SetItem(ret, i,
-//					PyInt_FromLong(pd->input_dim_sizes[i]));
-//		}
-//	} else if(!strcmp(attr,"input_fixsize")) {
-//		ret = PyInt_FromLong(pd->input_fixsize);
-//	} else if(!strcmp(attr,"output_dim_sizes")) {
-//		if((ret = PyTuple_New(pd->output_dim)))
-//		for(i=0; i < pd->output_dim; ++i) {
-//			failures += PyTuple_SetItem(ret, i,
-//					PyInt_FromLong(pd->output_dim_sizes[i]));
-//		}
-//	} else if(!strcmp(attr,"output_fixsize")) {
-//		ret = PyInt_FromLong(pd->output_fixsize);
-//	} else if(!strcmp(attr,"my_class")) {
-//		ret = PyInt_FromLong(pd->my_class);
-//	} else {
-//		PyErr_Format(PyExc_AttributeError, "don't have a %s attribute",attr);
-//	}
-//	
-//	if(failures) return NULL; else return ret;
-//}
-//
+static PyObject *
+wrap_pattern_descriptor(pattern_descriptor *pd, char *attr)
+{
+	PyObject *ret=NULL;
+	int i, failures=0;
+	if(!strcmp(attr,"input_dim_sizes")) {
+		if((ret = PyTuple_New(pd->input_dim)))
+		for(i=0; i < pd->input_dim; ++i) {
+			failures += PyTuple_SetItem(ret, i,
+					PyInt_FromLong(pd->input_dim_sizes[i]));
+		}
+	} else if(!strcmp(attr,"input_fixsize")) {
+		ret = PyInt_FromLong(pd->input_fixsize);
+	} else if(!strcmp(attr,"output_dim_sizes")) {
+		if((ret = PyTuple_New(pd->output_dim)))
+		for(i=0; i < pd->output_dim; ++i) {
+			failures += PyTuple_SetItem(ret, i,
+					PyInt_FromLong(pd->output_dim_sizes[i]));
+		}
+	} else if(!strcmp(attr,"output_fixsize")) {
+		ret = PyInt_FromLong(pd->output_fixsize);
+	} else if(!strcmp(attr,"my_class")) {
+		ret = PyInt_FromLong(pd->my_class);
+	} else {
+		PyErr_Format(PyExc_AttributeError, "don't have a %s attribute",attr);
+	}
+	
+	if(failures) return NULL; else return ret;
+}
+
 
 typedef struct { 
     PyObject_HEAD
     pattern_set_info psi;	    
 } snns_pattern_set_info_object;
 
-//typedef struct { 
-//    PyObject_HEAD
-//    pattern_descriptor pd;	    
-//} snns_pattern_descriptor_object;
-//
+typedef struct { 
+    PyObject_HEAD
+    pattern_descriptor pd;	    
+} snns_pattern_descriptor_object;
+
 
 static PyObject *
 pattern_set_info_getattr(PyObject *o, PyObject *attrname)
@@ -199,12 +199,12 @@ pattern_set_info_getattr(PyObject *o, PyObject *attrname)
 	return wrap_pattern_set_info(&((snns_pattern_set_info_object *)o)->psi,PyString_AsString(attrname));	
 }
 
-//static PyObject *
-//pattern_descriptor_getattr(PyObject *o, PyObject *attrname)
-//{
-//	return wrap_pattern_descriptor(&((snns_pattern_descriptor_object *)o)->pd,PyString_AsString(attrname));	
-//}
-//
+static PyObject *
+pattern_descriptor_getattr(PyObject *o, PyObject *attrname)
+{
+	return wrap_pattern_descriptor(&((snns_pattern_descriptor_object *)o)->pd,PyString_AsString(attrname));	
+}
+
 static PyTypeObject snns_pattern_set_info_type = {
     PyObject_HEAD_INIT(NULL)
     .tp_name ="krui.pattern_set_info",  
@@ -214,30 +214,14 @@ static PyTypeObject snns_pattern_set_info_type = {
     .tp_doc = "equivalent of the pattern_set_info struct",
 };
 
-//static PyTypeObject snns_pattern_descriptor_type = {
-//    PyObject_HEAD_INIT(NULL)
-//    0,                         /*ob_size*/
-//    "krui.pattern_descriptor",   /*tp_name*/
-//    sizeof(snns_pattern_descriptor_object), /*tp_basicsize*/
-//    0,                         /*tp_itemsize*/
-//    0,                         /*tp_dealloc*/
-//    0,                         /*tp_print*/
-//    0,                         /*tp_getattr*/
-//    0,                         /*tp_setattr*/
-//    0,                         /*tp_compare*/
-//    0,                         /*tp_repr*/
-//    0,                         /*tp_as_number*/
-//    0,                         /*tp_as_sequence*/
-//    0,                         /*tp_as_mapping*/
-//    0,                         /*tp_hash */
-//    0,                         /*tp_call*/
-//    0,                         /*tp_str*/
-//    pattern_descriptor_getattr,                         /*tp_getattro*/
-//    0,                         /*tp_setattro*/
-//    0,                         /*tp_as_buffer*/
-//    Py_TPFLAGS_DEFAULT,        /*tp_flags*/
-//    "equivalent of the pattern_descriptor struct",           /* tp_doc */
-//};
+static PyTypeObject snns_pattern_descriptor_type = {
+    PyObject_HEAD_INIT(NULL)
+     .tp_name =  "krui.pattern_descriptor",   
+     .tp_basicsize = sizeof(snns_pattern_descriptor_object), 
+     .tp_getattro = pattern_descriptor_getattr,                         
+     .tp_flags = Py_TPFLAGS_DEFAULT,        
+     .tp_doc  = "equivalent of the pattern_descriptor struct",           
+};
 
 static PyObject *
 snns_error(PyObject *self, PyObject *arg)
@@ -3022,15 +3006,15 @@ PyInit_krui(void)
 		"remap_function", "the name of the remap function",
 		NULL
 	};
-//	char *patdesdoc[] = {
-//		"input_dim_sizes", "actual sizes of the input dimensions",
-//		"input_fixsize", "size of the fixed part in the pattern or 0 if no input pattern is present",
-//		"output_dim_sizes", "actual sizes of the output dimensions",
-//		"output_fixsize", "size of the fixed part in the pattern or 0 if no output pattern is present",
-//		"my_class", "class index of this pattern or -1 if no classes available",
-//		NULL
-//	};
-//
+	char *patdesdoc[] = {
+		"input_dim_sizes", "actual sizes of the input dimensions",
+		"input_fixsize", "size of the fixed part in the pattern or 0 if no input pattern is present",
+		"output_dim_sizes", "actual sizes of the output dimensions",
+		"output_fixsize", "size of the fixed part in the pattern or 0 if no output pattern is present",
+		"my_class", "class index of this pattern or -1 if no classes available",
+		NULL
+	};
+
 //	kr_PythonOutFunctionHook = OutFunctionCaller;	
 //	kr_PythonActFunctionHook = ActFunctionCaller;
 //	kr_findPythonFunctionHook = getCustomFunction;
@@ -3067,16 +3051,17 @@ PyInit_krui(void)
 		 txt[0], PyString_FromString(txt[1]));
 	}
 	
-//	PyModule_AddObject(m,"pattern_set_info",(PyObject *)&snns_pattern_set_info_type);
-//
-//	snns_pattern_descriptor_type.tp_new = PyType_GenericNew;
-//	if (PyType_Ready(&snns_pattern_descriptor_type) < 0) return;
-//	Py_INCREF(&snns_pattern_descriptor_type);
-//
-//	for(txt=patdesdoc; *txt; txt+=2) {
-//		PyDict_SetItemString(snns_pattern_descriptor_type.tp_dict,
-//		 txt[0], PyString_FromString(txt[1]));
-//	}
-//	PyModule_AddObject(m,"pattern_descriptor",(PyObject *)&snns_pattern_descriptor_type);
+	PyModule_AddObject(m,"pattern_set_info",(PyObject *)&snns_pattern_set_info_type);
+
+	snns_pattern_descriptor_type.tp_new = PyType_GenericNew;
+	if (PyType_Ready(&snns_pattern_descriptor_type) < 0) return;
+	Py_INCREF(&snns_pattern_descriptor_type);
+
+	for(txt=patdesdoc; *txt; txt+=2) {
+		PyDict_SetItemString(snns_pattern_descriptor_type.tp_dict,
+		 txt[0], PyString_FromString(txt[1]));
+	}
+	PyModule_AddObject(m,"pattern_descriptor",(PyObject *)&snns_pattern_descriptor_type);
+
 	return m;
 }
