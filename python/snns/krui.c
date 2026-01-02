@@ -80,77 +80,77 @@ snns_string_arg_with_err(PyObject *arg, string_arg_with_err_func func)
 	return Py_BuildValue("");
 }
 
-//static PyObject *
-//wrap_pattern_set_info(pattern_set_info *ps, char *attr)
-//{
-//	PyObject *ret = NULL;
-//	int i, failures=0;
-//
-//	if(!strcmp(attr,"number_of_pattern")) {
-//		ret = PyInt_FromLong(ps->number_of_pattern);
-//	} else if(!strcmp(attr,"virtual_no_of_pattern")) {
-//		ret = PyInt_FromLong(ps->virtual_no_of_pattern);
-//	} else if(!strcmp(attr,"output_present")) {
-//		ret = PyInt_FromLong(ps->output_present);
-//	} else if(!strcmp(attr,"fixed_fixsizes")) {
-//		ret = PyInt_FromLong(ps->fixed_fixsizes);
-//	} else if(!strcmp(attr,"in_fixsize")) {
-//		ret = PyInt_FromLong(ps->in_fixsize);
-//	} else if(!strcmp(attr,"out_fixsize")) {
-//		ret = PyInt_FromLong(ps->out_fixsize);
-//	} else if(!strcmp(attr,"in_max_dim_sizes")) {
-//		if((ret = PyTuple_New(ps->in_number_of_dims)))
-//		for(i=0; i < ps->in_number_of_dims; ++i) {
-//			failures += PyTuple_SetItem(ret, i,
-//					PyInt_FromLong(ps->in_max_dim_sizes[i]));
-//		}
-//	} else if(!strcmp(attr,"out_max_dim_sizes")) {
-//		if((ret = PyTuple_New(ps->out_number_of_dims)))
-//		for(i=0; i < ps->out_number_of_dims; ++i) {
-//			failures += PyTuple_SetItem(ret, i,
-//					PyInt_FromLong(ps->out_max_dim_sizes[i]));
-//		}
-//	} else if(!strcmp(attr,"in_min_dim_sizes")) {
-//		if((ret = PyTuple_New(ps->in_number_of_dims)))
-//		for(i=0; i < ps->in_number_of_dims; ++i) {
-//			failures += PyTuple_SetItem(ret, i,
-//					PyInt_FromLong(ps->in_min_dim_sizes[i]));
-//		}
-//	} else if(!strcmp(attr,"out_min_dim_sizes")) {
-//		if((ret = PyTuple_New(ps->out_number_of_dims)))
-//		for(i=0; i < ps->out_number_of_dims; ++i) {
-//			failures += PyTuple_SetItem(ret, i,
-//					PyInt_FromLong(ps->out_min_dim_sizes[i]));
-//		}
-//	} else if(!strcmp(attr,"class_names")) {
-//		if((ret = PyTuple_New(ps->classes)))
-//		for(i=0; i < ps->classes; ++i) {
-//			failures += PyTuple_SetItem(ret, i,
-//				PyString_FromString(ps->class_names[i]));
-//		}		
-//	} else if(!strcmp(attr,"class_redistribution")) {
-//		if((ret = PyTuple_New(ps->classes)))
-//		for(i=0; i < ps->classes; ++i) {
-//			failures += PyTuple_SetItem(ret, i,
-//				PyInt_FromLong(ps->class_redistribution[i]));
-//		}		
-//	} else if(!strcmp(attr,"remap_params")) {
-//		if((ret = PyTuple_New(ps->no_of_remap_params)))
-//		for(i=0; i < ps->no_of_remap_params; ++i) {
-//			failures += PyTuple_SetItem(ret, i,
-//				PyFloat_FromDouble(ps->remap_params[i]));
-//		}		
-//	} else if(!strcmp(attr,"class_distrib_active")) {
-//		return PyInt_FromLong(ps->class_distrib_active);
-//	} else if(!strcmp(attr,"remap_function")) {
-//		return PyString_FromString(ps->remap_function ? ps->remap_function : "");
-//	} else {
-//		PyErr_Format(PyExc_AttributeError,"don't have a %s attribute",attr);	
-//	}	
-//	
-//	if(failures) return NULL; else	return ret;	
-//}
-//
+static PyObject *
+wrap_pattern_set_info(pattern_set_info *ps, char *attr)
+{
+	PyObject *ret = NULL;
+	int i, failures=0;
+
+	if(!strcmp(attr,"number_of_pattern")) {
+		ret = PyInt_FromLong(ps->number_of_pattern);
+	} else if(!strcmp(attr,"virtual_no_of_pattern")) {
+		ret = PyInt_FromLong(ps->virtual_no_of_pattern);
+	} else if(!strcmp(attr,"output_present")) {
+		ret = PyInt_FromLong(ps->output_present);
+	} else if(!strcmp(attr,"fixed_fixsizes")) {
+		ret = PyInt_FromLong(ps->fixed_fixsizes);
+	} else if(!strcmp(attr,"in_fixsize")) {
+		ret = PyInt_FromLong(ps->in_fixsize);
+	} else if(!strcmp(attr,"out_fixsize")) {
+		ret = PyInt_FromLong(ps->out_fixsize);
+	} else if(!strcmp(attr,"in_max_dim_sizes")) {
+		if((ret = PyTuple_New(ps->in_number_of_dims)))
+		for(i=0; i < ps->in_number_of_dims; ++i) {
+			failures += PyTuple_SetItem(ret, i,
+					PyInt_FromLong(ps->in_max_dim_sizes[i]));
+		}
+	} else if(!strcmp(attr,"out_max_dim_sizes")) {
+		if((ret = PyTuple_New(ps->out_number_of_dims)))
+		for(i=0; i < ps->out_number_of_dims; ++i) {
+			failures += PyTuple_SetItem(ret, i,
+					PyInt_FromLong(ps->out_max_dim_sizes[i]));
+		}
+	} else if(!strcmp(attr,"in_min_dim_sizes")) {
+		if((ret = PyTuple_New(ps->in_number_of_dims)))
+		for(i=0; i < ps->in_number_of_dims; ++i) {
+			failures += PyTuple_SetItem(ret, i,
+					PyInt_FromLong(ps->in_min_dim_sizes[i]));
+		}
+	} else if(!strcmp(attr,"out_min_dim_sizes")) {
+		if((ret = PyTuple_New(ps->out_number_of_dims)))
+		for(i=0; i < ps->out_number_of_dims; ++i) {
+			failures += PyTuple_SetItem(ret, i,
+					PyInt_FromLong(ps->out_min_dim_sizes[i]));
+		}
+	} else if(!strcmp(attr,"class_names")) {
+		if((ret = PyTuple_New(ps->classes)))
+		for(i=0; i < ps->classes; ++i) {
+			failures += PyTuple_SetItem(ret, i,
+				PyString_FromString(ps->class_names[i]));
+		}		
+	} else if(!strcmp(attr,"class_redistribution")) {
+		if((ret = PyTuple_New(ps->classes)))
+		for(i=0; i < ps->classes; ++i) {
+			failures += PyTuple_SetItem(ret, i,
+				PyInt_FromLong(ps->class_redistribution[i]));
+		}		
+	} else if(!strcmp(attr,"remap_params")) {
+		if((ret = PyTuple_New(ps->no_of_remap_params)))
+		for(i=0; i < ps->no_of_remap_params; ++i) {
+			failures += PyTuple_SetItem(ret, i,
+				PyFloat_FromDouble(ps->remap_params[i]));
+		}		
+	} else if(!strcmp(attr,"class_distrib_active")) {
+		return PyInt_FromLong(ps->class_distrib_active);
+	} else if(!strcmp(attr,"remap_function")) {
+		return PyString_FromString(ps->remap_function ? ps->remap_function : "");
+	} else {
+		PyErr_Format(PyExc_AttributeError,"don't have a %s attribute",attr);	
+	}	
+	
+	if(failures) return NULL; else	return ret;	
+}
+
 //static PyObject *
 //wrap_pattern_descriptor(pattern_descriptor *pd, char *attr)
 //{
@@ -181,55 +181,39 @@ snns_string_arg_with_err(PyObject *arg, string_arg_with_err_func func)
 //	if(failures) return NULL; else return ret;
 //}
 //
-//
-//typedef struct { 
-//    PyObject_HEAD
-//    pattern_set_info psi;	    
-//} snns_pattern_set_info_object;
-//
+
+typedef struct { 
+    PyObject_HEAD
+    pattern_set_info psi;	    
+} snns_pattern_set_info_object;
+
 //typedef struct { 
 //    PyObject_HEAD
 //    pattern_descriptor pd;	    
 //} snns_pattern_descriptor_object;
 //
-//
-//static PyObject *
-//pattern_set_info_getattr(PyObject *o, PyObject *attrname)
-//{
-//	return wrap_pattern_set_info(&((snns_pattern_set_info_object *)o)->psi,PyString_AsString(attrname));	
-//}
-//
+
+static PyObject *
+pattern_set_info_getattr(PyObject *o, PyObject *attrname)
+{
+	return wrap_pattern_set_info(&((snns_pattern_set_info_object *)o)->psi,PyString_AsString(attrname));	
+}
+
 //static PyObject *
 //pattern_descriptor_getattr(PyObject *o, PyObject *attrname)
 //{
 //	return wrap_pattern_descriptor(&((snns_pattern_descriptor_object *)o)->pd,PyString_AsString(attrname));	
 //}
 //
-//static PyTypeObject snns_pattern_set_info_type = {
-//    PyObject_HEAD_INIT(NULL)
-//    0,                         /*ob_size*/
-//    "krui.pattern_set_info",   /*tp_name*/
-//    sizeof(snns_pattern_set_info_object), /*tp_basicsize*/
-//    0,                         /*tp_itemsize*/
-//    0,                         /*tp_dealloc*/
-//    0,                         /*tp_print*/
-//    0,                         /*tp_getattr*/
-//    0,                         /*tp_setattr*/
-//    0,                         /*tp_compare*/
-//    0,                         /*tp_repr*/
-//    0,                         /*tp_as_number*/
-//    0,                         /*tp_as_sequence*/
-//    0,                         /*tp_as_mapping*/
-//    0,                         /*tp_hash */
-//    0,                         /*tp_call*/
-//    0,                         /*tp_str*/
-//    pattern_set_info_getattr,                         /*tp_getattro*/
-//    0,                         /*tp_setattro*/
-//    0,                         /*tp_as_buffer*/
-//    Py_TPFLAGS_DEFAULT,        /*tp_flags*/
-//    "equivalent of the pattern_set_info struct",           /* tp_doc */
-//};
-//
+static PyTypeObject snns_pattern_set_info_type = {
+    PyObject_HEAD_INIT(NULL)
+    .tp_name ="krui.pattern_set_info",  
+    .tp_basicsize = sizeof(snns_pattern_set_info_object), 
+    .tp_getattro = pattern_set_info_getattr,                         
+    .tp_flags = Py_TPFLAGS_DEFAULT,        
+    .tp_doc = "equivalent of the pattern_set_info struct",
+};
+
 //static PyTypeObject snns_pattern_descriptor_type = {
 //    PyObject_HEAD_INIT(NULL)
 //    0,                         /*ob_size*/
@@ -3074,7 +3058,7 @@ PyInit_krui(void)
 
 	PyModule_AddObject(m,"__doc__", PyString_FromString(moduledoc));
 
-//	snns_pattern_set_info_type.tp_new = PyType_GenericNew;
+	snns_pattern_set_info_type.tp_new = PyType_GenericNew;
 //	if (PyType_Ready(&snns_pattern_set_info_type) < 0) return;
 //	Py_INCREF(&snns_pattern_set_info_type);
 //	
