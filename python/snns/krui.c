@@ -32,14 +32,14 @@
 
 //
 //struct Unit;
-//
-//extern FlintType (*kr_PythonOutFunctionHook)(PyObject *func, FlintType activation);
-//extern FlintType (*kr_PythonActFunctionHook)(PyObject *func, struct Unit *unit_ptr);
-//
-//extern PyObject *(*kr_findPythonFunctionHook)(char *name, int type);
-//
-//extern int (*kr_getNoOfPythonFunctionsHook)();
-//extern krui_err (*kr_getPythonFuncInfoHook)(int mode, struct FuncInfoDescriptor *descr);
+
+extern FlintType (*kr_PythonOutFunctionHook)(PyObject *func, FlintType activation);
+extern FlintType (*kr_PythonActFunctionHook)(PyObject *func, struct Unit *unit_ptr);
+
+extern PyObject *(*kr_findPythonFunctionHook)(char *name, int type);
+
+extern int (*kr_getNoOfPythonFunctionsHook)();
+extern krui_err (*kr_getPythonFuncInfoHook)(int mode, struct FuncInfoDescriptor *descr);
 
 static PyObject *make_exception(krui_err err)
 {
@@ -267,6 +267,7 @@ snns_loadNet(PyObject *self, PyObject *name)
 	if(PyErr_Occurred()) return NULL;
 	return Py_BuildValue("s",netname);
 }
+
 
 static PyObject *
 snns_getNetInfo(PyObject *self, PyObject *arg)
@@ -2803,105 +2804,106 @@ typedef struct {
 } charintpair;
 
 static PyObject *funcdict, *utildict;
-//
-//static PyObject *getCustomFunction(char *funcname, int functype)
-//{
-//	PyObject *func;
-//	func = PyDict_GetItem(funcdict, PyString_FromString(funcname));
-//	if(!func || ! (func = PyDict_GetItem(func, PyInt_FromLong(functype)))) {
-//		fputs("Called function not registered, this should "
-//	                "not happen!\n",stderr);
-//		return 0;		
-//	} else {
-//		func = PyTuple_GetItem(func,2);
-//		if(!PyCallable_Check(func)) {
-//			fputs("Oops! Got non-callable as function from dict\n",
-//				stderr);
-//		}		
-//		return func;
-//	}	
-//}
-//
-//static FlintType OutFunctionCaller(PyObject *func, FlintType activation)
-//{
-//	PyObject *res;
-//	double d;
-//	res = PyObject_CallFunction(func,"d",activation);
-//	d = PyFloat_AsDouble(res);	
-//	Py_DECREF(res);
-//	return d;
-//}	
-//
-//static FlintType ActFunctionCaller(PyObject *func, struct Unit *unit_ptr)
-//{
-//	PyObject *res;
-//	double d;
-//	int unitnum;
-//	struct Unit *uptr2;
-//	for(unitnum = 1, uptr2 = unit_array + 1;
-//	    unitnum <= MaxUnitNo;
-//	    ++unitnum, ++uptr2) {
-//	    if(uptr2 == unit_ptr)  break;
-//	}   
-//	res = PyObject_CallFunction(func,"i",unitnum);
-//	d = PyFloat_AsDouble(res);	
-//	Py_DECREF(res);
-//	return d;
-//}	
-//
-//static int getNoOfFuncs()
-//{
-//	int num=0;
-//	int i=0, j;
-//	PyObject *key, *value, *key2, *value2;
-//	while(PyDict_Next(funcdict, &i, &key, &value)) {
-//		j=0;
-//		while(PyDict_Next(value, &j, &key2, &value2)) {
-//			++num;
-//		}	
-//	}	
-//	return num;
-//}
-//
-//static krui_err getFuncInfo(int mode, struct FuncInfoDescriptor *desc)
-//{
-//	PyObject *func, *res, *tmpnone;
-//	char *tmpstr;
-//	krui_err ret;
-//	ret = KRERR_PARAMETERS;
-//	tmpnone = Py_BuildValue("");
-//	func = PyDict_GetItemString(utildict,"internalGetFuncInfo");
-//	if(!func) {
-//		fputs("can't locate Python function 'internalGetFuncInfo'\n",stderr);
-//	} else {
-//		res = PyObject_CallFunction(func,"iisiiiO",mode,desc->number,
-//					    (mode == SEARCH_FUNC ||
-//					     mode == GET_FUNC_NAME) ? 
-//					    	desc->func_name : "",
-//		                            desc->func_type,
-//					    desc->no_of_input_parameters,
-//					    desc->no_of_output_parameters,
-//					    (mode == GET_FUNC_NAME) ? 
-//					    	desc->function : 
-//						(FunctionPtr)tmpnone);
-//		if(res && PyArg_ParseTuple(res,"iisiiO",&desc->number,
-//					&desc->func_type,
-//					&tmpstr,
-//					&desc->no_of_input_parameters,
-//					&desc->no_of_output_parameters,
-//					(mode == GET_FUNC_NAME) ?
-//					   tmpnone : 
-//					   (PyObject *)&desc->function)
-//			&& desc->number != 0) {
-//			strncpy(desc->func_name,tmpstr,FUNCTION_NAME_MAX_LEN-1);
-//			desc->func_name[FUNCTION_NAME_MAX_LEN-1] = 0;
-//			ret = KRERR_NO_ERROR;	
-//		}
-//		Py_DECREF(tmpnone);				
-//	}
-//	if(res) Py_DECREF(res);
-//	return ret;
-//}
+
+static PyObject *getCustomFunction(char *funcname, int functype)
+{
+	PyObject *func;
+	func = PyDict_GetItem(funcdict, PyString_FromString(funcname));
+	if(!func || ! (func = PyDict_GetItem(func, PyInt_FromLong(functype)))) {
+		fputs("Called function not registered, this should "
+	                "not happen!\n",stderr);
+		return 0;		
+	} else {
+		func = PyTuple_GetItem(func,2);
+		if(!PyCallable_Check(func)) {
+			fputs("Oops! Got non-callable as function from dict\n",
+				stderr);
+		}		
+		return func;
+	}	
+}
+
+static FlintType OutFunctionCaller(PyObject *func, FlintType activation)
+{
+	PyObject *res;
+	double d;
+	res = PyObject_CallFunction(func,"d",activation);
+	d = PyFloat_AsDouble(res);	
+	Py_DECREF(res);
+	return d;
+}	
+
+static FlintType ActFunctionCaller(PyObject *func, struct Unit *unit_ptr)
+{
+	PyObject *res;
+	double d;
+	int unitnum;
+	struct Unit *uptr2;
+	for(unitnum = 1, uptr2 = unit_array + 1;
+	    unitnum <= MaxUnitNo;
+	    ++unitnum, ++uptr2) {
+	    if(uptr2 == unit_ptr)  break;
+	}   
+	res = PyObject_CallFunction(func,"i",unitnum);
+	d = PyFloat_AsDouble(res);	
+	Py_DECREF(res);
+	return d;
+}	
+
+static int getNoOfFuncs()
+{
+	int num=0;
+	Py_ssize_t i=0, j;
+
+	PyObject *key, *value, *key2, *value2;
+	while(PyDict_Next(funcdict, &i, &key, &value)) {
+		j=0;
+		while(PyDict_Next(value, &j, &key2, &value2)) {
+			++num;
+		}	
+	}	
+	return num;
+}
+
+static krui_err getFuncInfo(int mode, struct FuncInfoDescriptor *desc)
+{
+	PyObject *func, *res, *tmpnone;
+	char *tmpstr;
+	krui_err ret;
+	ret = KRERR_PARAMETERS;
+	tmpnone = Py_BuildValue("");
+	func = PyDict_GetItemString(utildict,"internalGetFuncInfo");
+	if(!func) {
+		fputs("can't locate Python function 'internalGetFuncInfo'\n",stderr);
+	} else {
+		res = PyObject_CallFunction(func,"iisiiiO",mode,desc->number,
+					    (mode == SEARCH_FUNC ||
+					     mode == GET_FUNC_NAME) ? 
+					    	desc->func_name : "",
+		                            desc->func_type,
+					    desc->no_of_input_parameters,
+					    desc->no_of_output_parameters,
+					    (mode == GET_FUNC_NAME) ? 
+					    	desc->function : 
+						(FunctionPtr)tmpnone);
+		if(res && PyArg_ParseTuple(res,"iisiiO",&desc->number,
+					&desc->func_type,
+					&tmpstr,
+					&desc->no_of_input_parameters,
+					&desc->no_of_output_parameters,
+					(mode == GET_FUNC_NAME) ?
+					   tmpnone : 
+					   (PyObject *)&desc->function)
+			&& desc->number != 0) {
+			strncpy(desc->func_name,tmpstr,FUNCTION_NAME_MAX_LEN-1);
+			desc->func_name[FUNCTION_NAME_MAX_LEN-1] = 0;
+			ret = KRERR_NO_ERROR;	
+		}
+		Py_DECREF(tmpnone);				
+	}
+	if(res) Py_DECREF(res);
+	return ret;
+}
 static struct PyModuleDef moduledef = {
     PyModuleDef_HEAD_INIT,
     "krui",                   /* m_name */
@@ -3015,12 +3017,12 @@ PyInit_krui(void)
 		NULL
 	};
 
-//	kr_PythonOutFunctionHook = OutFunctionCaller;	
-//	kr_PythonActFunctionHook = ActFunctionCaller;
-//	kr_findPythonFunctionHook = getCustomFunction;
-//	kr_getPythonFuncInfoHook = getFuncInfo;
-//	kr_getNoOfPythonFunctionsHook = getNoOfFuncs;
-//
+	kr_PythonOutFunctionHook = OutFunctionCaller;	
+	kr_PythonActFunctionHook = ActFunctionCaller;
+	kr_findPythonFunctionHook = getCustomFunction;
+	kr_getPythonFuncInfoHook = getFuncInfo;
+	kr_getNoOfPythonFunctionsHook = getNoOfFuncs;
+
 	utilmod = PyImport_Import(PyString_FromString("util"));
 	if(!utilmod) {
 		fprintf(stderr, "Problem with loading 'util' module.\n");

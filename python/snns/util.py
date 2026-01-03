@@ -13,7 +13,7 @@ def registerFunction(func, fname, ftype, inparam, outparam) :
 	custom_functions[fname][ftype]=(inparam,outparam,func)
 
 custom_functions = {}
-#from snns import krui
+from snns import krui
 
 unit_types = {	krui.UNKNOWN : 'Unknown',
 		krui.INPUT : 'Input',
