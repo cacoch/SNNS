@@ -576,26 +576,26 @@ snns_saveResultParam(PyObject *self, PyObject *args)
 	return Py_BuildValue("");
 }
 
-//static PyObject *
-//snns_GetPatInfo(PyObject *self, PyObject *args)
-//{
-//	PyObject *patseto, *patdeso;
-//	krui_err err;
-//
-//	Py_INCREF((PyObject *)&snns_pattern_set_info_type);
-//	patseto = PyType_GenericNew(&snns_pattern_set_info_type, NULL,NULL);
-//	if(!patseto) return NULL;
-//
-//	patdeso = PyType_GenericNew(&snns_pattern_descriptor_type, NULL, NULL);
-//	if(!patdeso) return NULL;
-//	
-//	if((err = krui_GetPatInfo(&((snns_pattern_set_info_object *)patseto)->psi,
-//				&((snns_pattern_descriptor_object *)patdeso)->pd))) {
-//		return make_exception(err);
-//	}
-//	return Py_BuildValue("(OO)",patseto, patdeso);
-//				
-//}
+static PyObject *
+snns_GetPatInfo(PyObject *self, PyObject *args)
+{
+	PyObject *patseto, *patdeso;
+	krui_err err;
+
+	Py_INCREF((PyObject *)&snns_pattern_set_info_type);
+	patseto = PyType_GenericNew(&snns_pattern_set_info_type, NULL,NULL);
+	if(!patseto) return NULL;
+
+	patdeso = PyType_GenericNew(&snns_pattern_descriptor_type, NULL, NULL);
+	if(!patdeso) return NULL;
+	
+	if((err = krui_GetPatInfo(&((snns_pattern_set_info_object *)patseto)->psi,
+				&((snns_pattern_descriptor_object *)patdeso)->pd))) {
+		return make_exception(err);
+	}
+	return Py_BuildValue("(OO)",patseto, patdeso);
+				
+}
 
 /*
 	Build a tuple of integers from an integer array
@@ -2628,9 +2628,9 @@ static PyMethodDef MylibMethods[] = {
       "Same as learnAllPatterns, but teaches only the pattern with the\n"
       "given number"},
      
-//     {"GetPatInfo",snns_GetPatInfo,METH_NOARGS,
-//      "GetPatInfo() -> (pattern_set_info, pattern_descriptor)\n\n"
-//      "Returns a pattern_set_info and a pattern_descriptor"},
+     {"GetPatInfo",snns_GetPatInfo,METH_NOARGS,
+      "GetPatInfo() -> (pattern_set_info, pattern_descriptor)\n\n"
+      "Returns a pattern_set_info and a pattern_descriptor"},
      
      {"getVersion",snns_getVersion, METH_NOARGS,
       "getVersion() -> version string\n\n"
@@ -2667,9 +2667,9 @@ static PyMethodDef MylibMethods[] = {
      {"getNoOfPatterns",snns_getNoOfPatterns, METH_NOARGS,
       "getNoOfPatterns() -> number of patterns\n\n"
       "Returns the nu//mber of patterns in the current pattern set"},
-                     //
-     {"getTotalNoOfSu//bPatterns",snns_getTotalNoOfSubPatterns, METH_NOARGS,
-      "getTotalNoOfSu//bPatterns() -> number of subpatterns\n\n"
+                     
+     {"getTotalNoOfSubPatterns",snns_getTotalNoOfSubPatterns, METH_NOARGS,
+      "getTotalNoOfSubPatterns() -> number of subpatterns\n\n"
       "Returns the total number of subpatterns contained in all patterns of the current pattern set"},
      
      {"allocNewPatternSet",snns_allocNewPatternSet,METH_NOARGS,
@@ -3045,7 +3045,7 @@ PyInit_krui(void)
 	PyModule_AddObject(m,"__doc__", PyString_FromString(moduledoc));
 
 	snns_pattern_set_info_type.tp_new = PyType_GenericNew;
-	if (PyType_Ready(&snns_pattern_set_info_type) < 0) return;
+	if (PyType_Ready(&snns_pattern_set_info_type) < 0) return NULL;
 	Py_INCREF(&snns_pattern_set_info_type);
 	
 	for(txt=patsetinfodoc; *txt; txt+=2) {
@@ -3056,7 +3056,7 @@ PyInit_krui(void)
 	PyModule_AddObject(m,"pattern_set_info",(PyObject *)&snns_pattern_set_info_type);
 
 	snns_pattern_descriptor_type.tp_new = PyType_GenericNew;
-	if (PyType_Ready(&snns_pattern_descriptor_type) < 0) return;
+	if (PyType_Ready(&snns_pattern_descriptor_type) < 0) return NULL;
 	Py_INCREF(&snns_pattern_descriptor_type);
 
 	for(txt=patdesdoc; *txt; txt+=2) {
